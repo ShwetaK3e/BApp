@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<android.support.v7.widget.CardView
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="110dp"
+    android:layout_height="50dp"
+    android:id="@+id/grid_view"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardCornerRadius="8dp"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/bg_rounded_square_holder"
+    android:padding="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp">
+
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="10sp"
+            android:text="FOOD"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/bg_ech_category_holder"
+            android:layout_gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="1dp"
+            android:paddingLeft="1dp">
+        </TextView>
+
+
+
+</android.support.v7.widget.CardView>
+

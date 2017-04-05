@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADD OTHER DETAILS"
+            android:textSize="15sp"
+            android:typeface="serif"
+            android:textColor="@color/first_color"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"/>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_grey"
+            android:layout_marginTop="5dp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".33"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="2.5dp"
+                    android:background="@color/light_grey"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:id="@+id/phone_header">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_add_phone_no"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/bg_circle"
+                        android:padding="10dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Contact No"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".33"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_marginLeft="2.5dp"
+                    android:background="@color/light_grey"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:id="@+id/website_header">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_add_website"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/bg_circle"
+                        android:padding="10dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Website"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".33"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginRight="2.5dp"
+                    android:layout_marginLeft="2.5dp"
+                    android:background="@color/light_grey"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp"
+                    android:id="@+id/mobile_app_header">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@drawable/ic_add_app"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/bg_circle"
+                        android:padding="10dp"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile App"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/detail_1_layout">
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:hint="CONTACT NO"
+                    android:textSize="15sp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/business_details_edittext"
+                    android:id="@+id/detail_1"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight=".2"
+                    android:layout_height="wrap_content"
+                    android:text="SAVE"
+                    android:id="@+id/save_details_1"
+                    android:textSize="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:id="@+id/detail_2_layout">
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight=".8"
+                    android:layout_height="wrap_content"
+                    android:hint="CONTACT NO"
+                    android:textSize="15sp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/business_details_edittext"
+                    android:id="@+id/detail_2"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight=".2"
+                    android:layout_height="wrap_content"
+                    android:text="SAVE"
+                    android:id="@+id/save_details_2"
+                    android:textSize="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:gravity="center"
+                    android:background="@android:color/transparent"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/light_grey"
+            android:layout_marginTop="5dp" />
+
+
+    </LinearLayout>
+
+</ScrollView>
+    </LinearLayout>

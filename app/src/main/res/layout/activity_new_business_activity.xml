@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="5dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_bcover_pic"
+                    android:scaleType="centerCrop"
+                    android:id="@+id/bprof_pic" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/scheme_color"
+                    android:id="@+id/bprof_scheme"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/add_profile_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:background="@color/add_layout"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Profile Image "
+                        android:textColor="@color/black"
+                        android:textSize="15sp"/>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:paddingLeft="2dp"
+                        android:src="@drawable/ic_add_image_0"   />
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:background="@color/light_grey"
+                    android:id="@+id/edit_profile_pic"
+                    android:layout_alignBottom="@id/bprof_pic"
+                    android:layout_alignRight="@id/bprof_pic">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit "
+                        android:textColor="@color/colorPrimary" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:paddingLeft="2dp"
+                        android:src="@drawable/ic_edit"   />
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/top_rounded_corners_bg">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_logo"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/b_logo"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/scheme_color"
+                    android:id="@+id/logo_scheme"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/add_layout"
+                    android:gravity="center"
+                    android:id="@+id/add_logo">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add Logo "
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/light_grey"
+                    android:id="@+id/edit_logo"
+                    android:layout_alignRight="@id/b_logo"
+                    android:layout_alignBottom="@id/b_logo">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit "
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/textView2"
+                        android:textSize="10sp"/>
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:paddingLeft="2dp"
+                        android:src="@drawable/ic_edit"   />
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Business Name"
+                    android:textStyle="bold"
+                    android:textSize="20sp"
+                    android:typeface="serif"
+                    android:textColorHint="@color/text_color"
+                    android:textColor="@color/text_color"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/bName"
+                    android:gravity="center"/>
+                <ImageButton
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:src="@drawable/ic_edit_text"
+                    android:scaleType="centerInside"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="40dp"
+                    android:padding="6dp"
+                    android:id="@+id/edit_bName"
+                    android:background="@android:color/transparent"/>
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Alias Name"
+                    android:textColorHint="@color/colorPrimary"
+                    android:textSize="15sp"
+                    android:typeface="serif"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_gravity="center"
+                    android:background="@android:color/transparent"
+                    android:id="@+id/alias_name"
+                    android:gravity="center"/>
+
+                <ImageButton
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_edit_text"
+                    android:scaleType="centerInside"
+                    android:layout_marginLeft="10dp"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="80dp"
+                    android:padding="6dp"
+                    android:id="@+id/edit_aliasName"
+                    android:background="@android:color/transparent"/>
+            </FrameLayout>
+
+        </LinearLayout>
+        <android.support.design.widget.TabLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"
+            android:layout_gravity="center"
+            app:tabSelectedTextColor="@color/colorPrimary"
+            app:tabTextColor="@color/light_grey"
+            android:id="@+id/tab">
+
+
+        </android.support.design.widget.TabLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/light_grey"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:background="@android:color/white"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        />
+
+
+
+</LinearLayout>
