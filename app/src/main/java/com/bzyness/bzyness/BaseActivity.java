@@ -37,6 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -193,17 +195,24 @@ public class BaseActivity {
     }
 
 
-
-
-
-
-
-
     public static void imageChooser(int requestCode, String chooserTitle, Activity activity){
         BaseActivity.activity=activity;
         Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         activity.startActivityForResult(Intent.createChooser(intent,chooserTitle),requestCode);
+    }
+
+    public static String getLoginParams(String name,String password){
+        String login_params="";
+        try {
+            login_params = URLEncoder.encode("username", "UTF-8")
+                + "=" + URLEncoder.encode(name, "UTF-8");
+            login_params += "&" + URLEncoder.encode("password", "UTF-8") + "="
+                    + URLEncoder.encode(password, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return login_params;
     }
 
 

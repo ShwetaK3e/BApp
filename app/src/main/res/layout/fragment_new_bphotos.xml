@@ -394,7 +394,7 @@
         </LinearLayout>
 
 
-        <LinearLayout
+      <!--  <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -403,7 +403,7 @@
             android:padding="5dp"
             android:visibility="gone">
 
-            <LinearLayout
+           &lt;!&ndash; <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".2"
@@ -414,9 +414,9 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/ic_business_name"/>
-            </LinearLayout>
+            </LinearLayout>&ndash;&gt;
 
-            <LinearLayout
+        &lt;!&ndash;    <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight=".8"
@@ -442,7 +442,7 @@
 
 
             </LinearLayout>
-
+&ndash;&gt;
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -451,7 +451,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"/>
 
-        </LinearLayout>
+        </LinearLayout>-->
 
 
        <!-- <LinearLayout

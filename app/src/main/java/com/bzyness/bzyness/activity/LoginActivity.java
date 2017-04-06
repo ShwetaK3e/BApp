@@ -1,25 +1,29 @@
 package com.bzyness.bzyness.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.models.UserDetails;
 import com.bzyness.bzyness.services.LoginService;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.deser.Deserializers;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -28,10 +32,12 @@ public class LoginActivity extends AppCompatActivity {
 
     TextInputEditText userNameEdit, passwordEdit;
     TextInputLayout userName, password;
-
+    CheckBox showPasswordButton;
+    Button btnLinkToRegScreen;
 
     SessionManager session;
     private final String TAG = getClass().getSimpleName();
+    private TextView signIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,33 @@ public class LoginActivity extends AppCompatActivity {
            userNameEdit.setText(session.getOldSession().getUserName());
            passwordEdit.setText(session.getOldSession().getPassword());
         }
+
+        showPasswordButton=(CheckBox)findViewById(R.id.show_password_btn);
+        showPasswordButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    showPasswordButton.setText("Hide Password");
+                    passwordEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordEdit.requestFocus();
+                    passwordEdit.setSelection(passwordEdit.getText().toString().length());
+                }else{
+                    showPasswordButton.setText("Show Password");
+                    passwordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordEdit.requestFocus();
+                    passwordEdit.setSelection(passwordEdit.getText().toString().length());
+                }
+            }
+        });
+
+       /* btnLinkToRegScreen=(Button)findViewById(R.id.btnLinkToRegScreen);
+        Typeface tf=Typeface.createFromAsset(getAssets(),"fonts/face_your_fears.ttf");
+        btnLinkToRegScreen.setTypeface(tf);*/
+
+        signIn=(TextView)findViewById(R.id.log_direction);
+        Typeface tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
+        signIn.setTypeface(tf);
+
     }
 
 
@@ -60,27 +93,25 @@ public class LoginActivity extends AppCompatActivity {
 
         if(validateForm()) {
             Log.i(TAG, "Login");
-            String name=userNameEdit.getText().toString().trim();
+            String uName=userNameEdit.getText().toString().trim();
             String password=passwordEdit.getText().toString().trim();
-            session.saveUser(name,password);
-                String login_params="";
-                try {
-                    login_params = URLEncoder.encode("username", "UTF-8")
-                            + "=" + URLEncoder.encode(name, "UTF-8");
-
-                    login_params += "&" + URLEncoder.encode("password", "UTF-8") + "="
-                            + URLEncoder.encode(password, "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-                new LoginService(this,this.session).execute(Constants.LOGIN_URL,login_params,name);
-
+            session.saveUser(uName,password);
+                String login_params= BaseActivity.getLoginParams(uName,password);
+                new LoginService(this).execute(Constants.LOGIN_URL,login_params,uName);
         }
     }
 
     boolean validateForm(){
-        if(!UserFormValidity.isName(userNameEdit, UserFormValidity.REQUIRED))return false;
-        if(!UserFormValidity.isPassword(passwordEdit, UserFormValidity.REQUIRED))return false;
+        if(!UserFormValidity.isName(userNameEdit, UserFormValidity.REQUIRED)){
+            userNameEdit.requestFocus();
+            userNameEdit.setSelection(userNameEdit.getText().toString().length());
+            return false;
+        }
+        if(!UserFormValidity.isPassword(passwordEdit, UserFormValidity.REQUIRED)){
+            passwordEdit.requestFocus();
+            passwordEdit.setSelection(passwordEdit.getText().toString().length());
+            return false;
+        }
         return true;
     }
 

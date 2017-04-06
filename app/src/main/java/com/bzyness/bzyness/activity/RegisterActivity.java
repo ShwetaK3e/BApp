@@ -1,64 +1,36 @@
 package com.bzyness.bzyness.activity;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.ColorFilter;
 import android.graphics.Typeface;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.models.ChatUser;
 import com.bzyness.bzyness.models.UserDetails;
 import com.bzyness.bzyness.services.RegistrationService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.firebase.client.Firebase;
-import com.google.common.collect.ImmutableMap;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
-import com.google.firebase.database.ValueEventListener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
     TextInputEditText firstNameEdit, lastNameEdit, emailEdit, phoneEdit,userNameEdit, passwordEdit;
@@ -69,19 +41,16 @@ public class RegisterActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     ProgressDialog pd;
     CheckBox showPasswordButton;
-    Button btnLinkToLoginScreen;
-    SessionManager session;
     TextView joinUs;
-    private boolean dontShowPassword=false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reg);
+        setContentView(R.layout.activity_register);
 
         pd=new ProgressDialog(this);
-        session=new SessionManager(this);
+
         /*if(session.isFirstInstalled()){
             this.startActivity(new Intent(this, UploadImageActivity.class));
         }*/
@@ -122,31 +91,26 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         showPasswordButton=(CheckBox)findViewById(R.id.show_password_btn);
-        showPasswordButton.setOnClickListener(new View.OnClickListener() {
+        showPasswordButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                if(dontShowPassword){
-                    showPasswordButton.setText("Show Password");
-                    passwordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordEdit.requestFocus();
-                    passwordEdit.setSelection(passwordEdit.getText().toString().length());
-                    dontShowPassword=false;
-                }else{
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
                     showPasswordButton.setText("Hide Password");
                     passwordEdit.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     passwordEdit.requestFocus();
                     passwordEdit.setSelection(passwordEdit.getText().toString().length());
-                    dontShowPassword=true;
+                }else{
+                    showPasswordButton.setText("Show Password");
+                    passwordEdit.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordEdit.requestFocus();
+                    passwordEdit.setSelection(passwordEdit.getText().toString().length());
                 }
             }
         });
 
-        btnLinkToLoginScreen=(Button)findViewById(R.id.btnLinkToLoginScreen);
-        Typeface tf=Typeface.createFromAsset(getAssets(),"fonts/face_your_fears.ttf");
-        btnLinkToLoginScreen.setTypeface(tf);
 
         joinUs=(TextView)findViewById(R.id.reg_direction);
-        tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
+        Typeface tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
         joinUs.setTypeface(tf);
 
     }
@@ -165,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
                 newUser.setConfirmPassword(newUser.getPassword());
                 ObjectMapper objectMapper=new ObjectMapper();
                 String jsonNewUserDetStr=objectMapper.writeValueAsString(newUser);
-                new RegistrationService(this).execute(Constants.REGISTRATION_URL,jsonNewUserDetStr,newUser.getFirstName(),TAG);
+                new RegistrationService(this).execute(Constants.REGISTRATION_URL,jsonNewUserDetStr,newUser.getUserName(),newUser.getPassword());
                // addChatUserT(newUser.getUserName(),newUser.getFirstName()+" "+newUser.getLastName(),newUser.getPhoneNumber());
             } catch (Exception e) {
                 e.printStackTrace();

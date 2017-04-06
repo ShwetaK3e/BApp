@@ -33,9 +33,16 @@ public class Constants {
 
 
     //SharedPreferences
-    public static final String USERDETAILS="USERDETAILS";
-    public static final String USERNAME="USERNAME";
-    public static final String BUSINESSNAME="BUSINESSNAME";
+
+    public  static final String LOGIN_PREF_NAME="LOGIN_DETAILS";
+    public static final String pref_uname="USERNAME";
+    public static final String pref_pass="PASSWORD";
+    public static final String pref_accessToken="ACCES_TOKEN";
+    public static final String pref_expiresIn="EXPIRES_IN";
+    public static final String pref_isLoggedIN="IS_LOGGEDIN";
+    public static final String pref_isFIRST_INSTALLED="IS_FIRSTINSTALLED";
+    public static final String pref_Login_Date="LOGIN_DATE";
+    public static final String pref_Business_Name="BUSINESSNAME";
 
 
 }

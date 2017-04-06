@@ -5,6 +5,7 @@
     <color name="theme_color">#779FFD</color>
     <color name="light_theme_color">#66778FFD</color>
     <color name="first_color">#FF9803</color>
+    <color name="light_first_color">#AAFF9803</color>
     <color name="dark_first_color">#ff8401</color>
     <color name="second_color">#FEE767</color>
     <color name="third_color">#005371</color>

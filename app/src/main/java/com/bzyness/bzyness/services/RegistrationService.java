@@ -8,10 +8,13 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
+import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.AppUtils.UserFormValidity;
+import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.activity.LoginActivity;
 import com.bzyness.bzyness.activity.UploadImageActivity;
@@ -40,19 +43,18 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
     OkHttpClient client;
     Activity activity;
     private int responseCode;
-    private String userName;
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
+    private String userName,password;
     ProgressDialog pd;
+    private final static String TAG= RegistrationService.class.getSimpleName();
 
     public RegistrationService(Activity activity){
+        Log.i(TAG,"Registration service Initiated");
         this.activity=activity;
-        this.pref=activity.getSharedPreferences(Constants.USERDETAILS, Context.MODE_PRIVATE);
-        this.editor=pref.edit();
         this.pd = new ProgressDialog(activity);
     }
 
     String doPostRequest(String url, String json) throws IOException {
+        Log.i(TAG,"Registration service post Request");
         RequestBody body= RequestBody.create(JSON,json);
         Request request=new Request.Builder().url(url).post(body).build();
         Response response=client.newCall(request).execute();
@@ -62,6 +64,7 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
+        Log.i(TAG,"Registration service preExecute");
         super.onPreExecute();
         pd.setCancelable(false);
         pd.show();
@@ -69,10 +72,12 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
 
     @Override
     protected String doInBackground(String... params) {
+        Log.i(TAG,"Registration service doInBackGround");
         client = new OkHttpClient();
         String url=params[0];
         String JsonDATA=params[1];
         userName=params[2];
+        password=params[3];
         String JsonResponse=null;
         try {
              JsonResponse = doPostRequest(url, JsonDATA);
@@ -84,17 +89,18 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPostExecute(String result) {
+        Log.i(TAG,"Registration service postExecute");
         super.onPostExecute(result);
         if (responseCode==200) {
-            editor.putString(Constants.USERNAME,userName);
-            editor.commit();
+            Log.i(TAG,"Registration service Success");
+            String login_params= BaseActivity.getLoginParams(userName,password);
+            new LoginService(activity).execute(Constants.LOGIN_URL,login_params,userName);
             pd.dismiss();
-            Toast.makeText(activity, "Welcome, "+userName, Toast.LENGTH_SHORT).show();
-            activity.startActivity(new Intent(activity, LoginActivity.class));
         }else{
+            pd.dismiss();
             List<ServerError> errorDetails = new ArrayList<ServerError>();
             if (result != null) {
-                try {
+                /*try {
                     errorDetails = objectMapper.readValue(result, TypeFactory.defaultInstance().constructCollectionType(List.class, ServerError.class));
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -107,10 +113,11 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
                         txt_layout=(TextInputLayout)activity.findViewById(R.id.rTextUName);
                         UserFormValidity.userNameExists(txt,txt_layout);
                     }
-                }
+                }*/
 
             }
+            Log.i(TAG,"Registration service Error , responseCode:" + responseCode);
+
         }
     }
-
 }
