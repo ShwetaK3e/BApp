@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.BaseActivity;
+import com.bzyness.bzyness.activity.HomeActivity;
 import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
 import com.bzyness.bzyness.models.UserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -95,7 +96,7 @@ public class LoginService extends AsyncTask<String,Void,String> {
             }
             BaseActivity.session.createSession(logDetails.getAccessToken(),logDetails.getExpiresIn());
             Log.i(TAG,"Login service Success AccessToken:"+logDetails.getAccessToken()+"ExpiresIn:"+logDetails.getExpiresIn());
-            activity.startActivity(new Intent(activity, NewBusinessDetailsActivity.class));
+            activity.startActivity(new Intent(activity, HomeActivity.class));
        }else{
             Log.i(TAG, "Login Service error, Response Code:"+ responseCode);
         }

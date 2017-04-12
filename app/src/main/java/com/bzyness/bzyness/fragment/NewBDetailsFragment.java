@@ -131,7 +131,7 @@ public class NewBDetailsFragment extends Fragment {
     void populateTypes(){
         names=new ArrayList<String>();
         images=new ArrayList<Drawable>();
-        BaseActivity.listNames(names,images,getActivity());
+        BaseActivity.listTypeNames(names,images,getActivity());
         typeAdapter=new BusinessTypeAdapter(getActivity(), names, images, new BusinessTypeAdapter.OnMyItemClickListener() {
             @Override
             public void onClick(String name, Drawable img) {

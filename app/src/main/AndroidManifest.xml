@@ -33,7 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/title_activity_register"
@@ -56,7 +55,8 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.ChatUsersActivity" />
-        <activity android:name=".activity.ChatActivity"></activity>
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.HomeActivity"></activity>
     </application>
 
 </manifest>

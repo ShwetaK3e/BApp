@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bzyness.bzyness.AppUtils.SessionManager;
+import com.bzyness.bzyness.activity.HomeActivity;
 import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
 import com.bzyness.bzyness.activity.RegisterActivity;
 
@@ -29,7 +30,7 @@ public class SplashActivity extends AppCompatActivity{
                 //Start your app main activity
                 Intent i;
                 if(BaseActivity.session.isLoggedIn()){
-                    i= new Intent(SplashActivity.this, NewBusinessDetailsActivity.class);
+                    i= new Intent(SplashActivity.this, HomeActivity.class);
                 }else{
                     i= new Intent(SplashActivity.this, RegisterActivity.class);
                 }

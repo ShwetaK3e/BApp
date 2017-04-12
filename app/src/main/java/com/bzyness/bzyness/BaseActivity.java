@@ -55,9 +55,7 @@ public class BaseActivity {
     public  static SessionManager session;
     public  static GoogleApiClient client;
     private static Context context;
-    private static Activity activity;
-
-    public static Firebase reference;
+    private static FirebaseDatabase mDatabase;
 
     public static ServerError error=new ServerError();
 
@@ -73,7 +71,7 @@ public class BaseActivity {
 
 
 
-    public static void listNames(List<String> names,List<Drawable> images,Context context){
+    public static void listTypeNames(List<String> names,List<Drawable> images,Context context){
         BaseActivity.context=context;
         names.add(context.getResources().getString(R.string.manufacturer));
         listImages(names.get(names.size()-1),images);
@@ -156,6 +154,12 @@ public class BaseActivity {
         }
     }
 
+    public static void listFeaturedBusiness(List<Drawable> images){
+        images.add(context.getResources().getDrawable(R.drawable.business_collage_1));
+        images.add(context.getResources().getDrawable(R.drawable.business_collage_2));
+        images.add(context.getResources().getDrawable(R.drawable.business_collage_3));
+    }
+
 
     private static  void getChatUserList(Context context){
 
@@ -184,7 +188,7 @@ public class BaseActivity {
         rQueue.add(request);
     }
 
-    private static FirebaseDatabase mDatabase;
+
 
     public static FirebaseDatabase getDatabase() {
         if (mDatabase == null) {
@@ -196,7 +200,6 @@ public class BaseActivity {
 
 
     public static void imageChooser(int requestCode, String chooserTitle, Activity activity){
-        BaseActivity.activity=activity;
         Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         activity.startActivityForResult(Intent.createChooser(intent,chooserTitle),requestCode);
