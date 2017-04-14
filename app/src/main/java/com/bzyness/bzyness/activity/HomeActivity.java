@@ -1,15 +1,19 @@
 package com.bzyness.bzyness.activity;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.BusinessTypeHomeAdapter;
+import com.bzyness.bzyness.adapters.ChatUsersAdapter;
 import com.bzyness.bzyness.adapters.FeaturedBusinessHomeAdapter;
 
 import java.util.ArrayList;
@@ -21,9 +25,15 @@ public class HomeActivity extends AppCompatActivity {
     RecyclerView featuredList;
     BusinessTypeHomeAdapter businessTypeHomeAdapter;
     FeaturedBusinessHomeAdapter featuredBusinessHomeAdapter;
+
     List<String> typeNames=new ArrayList<>();
     List<Drawable> typeImages=new ArrayList<>();
-    List<Drawable> featuredImages=new ArrayList<>();
+
+    Button buildBusiness,newsFeed;
+
+    List<Drawable> featuredProfileImgs=new ArrayList<>();
+    List<Drawable> featuredLogoImgs=new ArrayList<>();
+    List<String> featuredBusinessNames=new ArrayList<>();
 
     TextView  editor_pick_text_header;
     @Override
@@ -34,12 +44,28 @@ public class HomeActivity extends AppCompatActivity {
         typeList=(RecyclerView)findViewById(R.id.type_list);
         populateTypes();
 
-        featuredList=(RecyclerView)findViewById(R.id.feature_list);
+        buildBusiness=(Button)findViewById(R.id.build_business);
+        buildBusiness.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,NewBusinessDetailsActivity.class));
+            }
+        });
+
+        newsFeed=(Button)findViewById(R.id.news_feed);
+        newsFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, ChatUsersActivity.class));
+            }
+        });
+
+        featuredList=(RecyclerView)findViewById(R.id.featured_shops);
         populateFeatureList();
 
-        editor_pick_text_header=(TextView)findViewById(R.id.editor_pick_text_header);
+        /*editor_pick_text_header=(TextView)findViewById(R.id.editor_pick_text_header);
         Typeface tf=Typeface.createFromAsset(getAssets(),"fonts/barbie.ttf");
-        editor_pick_text_header.setTypeface(tf);
+        editor_pick_text_header.setTypeface(tf);*/
 
     }
 
@@ -55,8 +81,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     void populateFeatureList(){
-      BaseActivity.listFeaturedBusiness(featuredImages);
-      featuredBusinessHomeAdapter=new FeaturedBusinessHomeAdapter(this, featuredImages, new FeaturedBusinessHomeAdapter.OnMyItemClickListener() {
+      BaseActivity.listFeaturedBusiness(featuredProfileImgs,featuredLogoImgs,featuredBusinessNames);
+      featuredBusinessHomeAdapter=new FeaturedBusinessHomeAdapter(this, featuredProfileImgs,featuredLogoImgs,featuredBusinessNames, new FeaturedBusinessHomeAdapter.OnMyItemClickListener() {
           @Override
           public void onClick(String name, Drawable img) {
 
@@ -64,6 +90,4 @@ public class HomeActivity extends AppCompatActivity {
       });
       featuredList.setAdapter(featuredBusinessHomeAdapter);
     }
-
-
 }

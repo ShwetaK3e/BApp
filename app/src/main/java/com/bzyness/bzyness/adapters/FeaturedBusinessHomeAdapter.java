@@ -20,14 +20,18 @@ import java.util.List;
 
 public class FeaturedBusinessHomeAdapter extends RecyclerView.Adapter<FeaturedBusinessHomeAdapter.Holder> {
 
-    private List<Drawable> images=new ArrayList<>();
+    private List<Drawable> profileImages=new ArrayList<>();
+    private List<Drawable> logoImages=new ArrayList<>();
+    List<String> businessNames=new ArrayList<>();
     private Context context;
     private OnMyItemClickListener onMyItemClickListener;
 
 
-    public FeaturedBusinessHomeAdapter(Context context, List<Drawable> images, OnMyItemClickListener onMyItemClickListener) {
+    public FeaturedBusinessHomeAdapter(Context context, List<Drawable> profileImages,List<Drawable> logoImages, List<String> businessNames, OnMyItemClickListener onMyItemClickListener) {
         this.context=context;
-        this.images = images;
+        this.profileImages = profileImages;
+        this.logoImages=logoImages;
+        this.businessNames=businessNames;
         this.onMyItemClickListener=onMyItemClickListener;
     }
 
@@ -42,20 +46,25 @@ public class FeaturedBusinessHomeAdapter extends RecyclerView.Adapter<FeaturedBu
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-          holder.img.setImageDrawable(images.get(position));
+          holder.profileImg.setImageDrawable(profileImages.get(position));
+          holder.logoImg.setImageDrawable(logoImages.get(position));
+          holder.businessName.setText(businessNames.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return images.size();
+        return profileImages.size();
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-
-       ImageView img;
+       ImageView profileImg;
+       ImageView logoImg;
+       TextView businessName;
         public Holder(View itemView) {
             super(itemView);
-            img=(ImageView)itemView.findViewById(R.id.feature_image);
+            profileImg=(ImageView)itemView.findViewById(R.id.featured_profile_img);
+            logoImg=(ImageView)itemView.findViewById(R.id.featured_logo_img);
+            businessName=(TextView)itemView.findViewById(R.id.featured_busi_name);
         }
     }
 

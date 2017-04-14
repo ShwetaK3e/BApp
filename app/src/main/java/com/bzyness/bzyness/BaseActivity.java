@@ -154,10 +154,19 @@ public class BaseActivity {
         }
     }
 
-    public static void listFeaturedBusiness(List<Drawable> images){
-        images.add(context.getResources().getDrawable(R.drawable.business_collage_1));
-        images.add(context.getResources().getDrawable(R.drawable.business_collage_2));
-        images.add(context.getResources().getDrawable(R.drawable.business_collage_3));
+    public static void listFeaturedBusiness(List<Drawable> profileImgs,List<Drawable> logoImgs, List<String> businessNames){
+        profileImgs.add(context.getResources().getDrawable(R.drawable.pro));
+        profileImgs.add(context.getResources().getDrawable(R.drawable.pro));
+        profileImgs.add(context.getResources().getDrawable(R.drawable.pro));
+        profileImgs.add(context.getResources().getDrawable(R.drawable.pro));
+        logoImgs.add(context.getResources().getDrawable(R.drawable.bg_circle_first_color));
+        logoImgs.add(context.getResources().getDrawable(R.drawable.bg_circle_first_color));
+        logoImgs.add(context.getResources().getDrawable(R.drawable.bg_circle_first_color));
+        logoImgs.add(context.getResources().getDrawable(R.drawable.bg_circle_first_color));
+        businessNames.add("Tantra");
+        businessNames.add("Tantra");
+        businessNames.add("Tantra");
+        businessNames.add("Tantra");
     }
 
 
