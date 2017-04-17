@@ -56,7 +56,8 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".activity.ChatUsersActivity" />
         <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.HomeActivity"></activity>
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.AddProductActivity"></activity>
     </application>
 
 </manifest>
