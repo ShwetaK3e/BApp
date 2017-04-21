@@ -37,7 +37,7 @@ public class NewBDetailsFragment extends Fragment {
     BusinessTypeAdapter typeAdapter;
     BusinessCategoryAdapter categoryAdapter;
     List<String> names=new ArrayList<>();
-    List<Drawable> images=new ArrayList<>();
+    List<String> typeImages=new ArrayList<>();
     LinearLayout detailsSummaryLayout;
     LinearLayout categoryHeader, subCategoryHeader;
     TextView typeName, categoryName,subcategoryName, guideLine;
@@ -130,9 +130,9 @@ public class NewBDetailsFragment extends Fragment {
 
     void populateTypes(){
         names=new ArrayList<String>();
-        images=new ArrayList<Drawable>();
-        BaseActivity.listTypeNames(names,images,getActivity());
-        typeAdapter=new BusinessTypeAdapter(getActivity(), names, images, new BusinessTypeAdapter.OnMyItemClickListener() {
+        typeImages=new ArrayList<String >();
+        BaseActivity.listTypeNames(names,typeImages,getActivity());
+        typeAdapter=new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
             @Override
             public void onClick(String name, Drawable img) {
                 if(getResources().getString(R.string.other).equals(name)){
@@ -152,7 +152,6 @@ public class NewBDetailsFragment extends Fragment {
         String type=name;
         setCategoryGuideLine(type);
         names=new ArrayList<>();
-        images=new ArrayList<>();
         BaseActivity.listCategoryNames(names,getActivity());
         categoryAdapter =new BusinessCategoryAdapter(getActivity(), names, new BusinessCategoryAdapter.OnMyItemClickListener() {
             @Override
@@ -170,7 +169,6 @@ public class NewBDetailsFragment extends Fragment {
 
     void populateSubCategory(String name) {
         names=new ArrayList<>();
-        images=new ArrayList<>();
         BaseActivity.listSubCategoryNames(names,getActivity());
         if (names.isEmpty()) {
             subCategoryNotAvilable();
@@ -186,7 +184,6 @@ public class NewBDetailsFragment extends Fragment {
                     }
                     subcategoryName.setText(name);
                     names = new ArrayList<>();
-                    images = new ArrayList<>();
                     businessDetails.setAdapter(null);
                     detailsSummaryLayout.setVisibility(VISIBLE);
                     editDetails.setVisibility(VISIBLE);
@@ -224,7 +221,7 @@ public class NewBDetailsFragment extends Fragment {
                 guideLine.setText("WHAT DO YOU RENT ?");
                 break;
             default:
-                images.add(getResources().getDrawable(R.drawable.ic_loading));
+
 
         }
     }

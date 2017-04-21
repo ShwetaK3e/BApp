@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
     FeaturedBusinessHomeAdapter featuredBusinessHomeAdapter;
 
     List<String> typeNames=new ArrayList<>();
-    List<Drawable> typeImages=new ArrayList<>();
+    List<String> typeImagesURI=new ArrayList<>();
 
     Button buildBusiness,newsFeed;
 
@@ -70,8 +70,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     void populateTypes(){
-        BaseActivity.listTypeNames(typeNames,typeImages,this);
-        businessTypeHomeAdapter =new BusinessTypeHomeAdapter(this,typeNames,typeImages, new BusinessTypeHomeAdapter.OnMyItemClickListener() {
+        BaseActivity.listTypeNames(typeNames,typeImagesURI,this);
+        businessTypeHomeAdapter =new BusinessTypeHomeAdapter(this,typeNames,typeImagesURI, new BusinessTypeHomeAdapter.OnMyItemClickListener() {
             @Override
             public void onClick(String name, Drawable img) {
 

@@ -19,12 +19,13 @@ public class Constants {
     //Intent Request constants
     public static final int PICK_PROFILE_IMAGE_REQUEST=100;
     public static final int PICK_LOGO_IMAGE_REQUEST=101;
-    public static final int PLACE_PICKER_REQUEST = 1001;
-    public static final int PICK_IMAGE1_REQUEST = 1;
-    public static final int PICK_IMAGE2_REQUEST = 2;
-    public static final int PICK_IMAGE3_REQUEST = 3;
-    public static final int PICK_IMAGE4_REQUEST = 4;
-    public static final int PICK_IMAGE5_REQUEST = 5;
+    public static final int PLACE_PICKER_REQUEST = 102;
+    public static final int PICK_IMAGE1_REQUEST = 103;
+    public static final int PICK_IMAGE2_REQUEST = 104;
+    public static final int PICK_IMAGE3_REQUEST = 105;
+    public static final int PICK_IMAGE4_REQUEST = 106;
+    public static final int PICK_IMAGE5_REQUEST = 107;
+    public static final int PICK_PRODUCT_IMG_REQUEST = 108;
 
     //chat Urls
     public static final String CHAT_USERS_TABLE = "https://bzyness-84772.firebaseio.com/users";

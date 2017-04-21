@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bzyness.bzyness.R;
 
 import java.util.ArrayList;
@@ -21,15 +22,15 @@ import java.util.List;
 public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapter.Holder> {
 
     private List<String> names=new ArrayList<>();
-    private List<Drawable> images=new ArrayList<>();
+    private List<String> imagesURI=new ArrayList<>();
     private Context context;
     private OnMyItemClickListener onMyItemClickListener;
 
 
-    public BusinessTypeAdapter(Context context, List<String> names, List<Drawable> images, OnMyItemClickListener onMyItemClickListener) {
+    public BusinessTypeAdapter(Context context, List<String> names, List<String> imagesURI, OnMyItemClickListener onMyItemClickListener) {
         this.context=context;
         this.names = names;
-        this.images = images;
+        this.imagesURI = imagesURI;
         this.onMyItemClickListener=onMyItemClickListener;
     }
 
@@ -51,7 +52,7 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
     @Override
     public void onBindViewHolder(Holder holder, int position) {
           holder.name.setText(names.get(position));
-          holder.img.setImageDrawable(images.get(position));
+          Glide.with(context).load(imagesURI.get(position)).into(holder.img);
     }
 
     @Override

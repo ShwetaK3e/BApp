@@ -71,7 +71,7 @@ public class BaseActivity {
 
 
 
-    public static void listTypeNames(List<String> names,List<Drawable> images,Context context){
+    public static void listTypeNames(List<String> names,List<String> images,Context context){
         BaseActivity.context=context;
         names.add(context.getResources().getString(R.string.manufacturer));
         listImages(names.get(names.size()-1),images);
@@ -119,38 +119,38 @@ public class BaseActivity {
         names.add(context.getResources().getString(R.string.other));
     }
 
-    private static void listImages(String name,List<Drawable> images){
+    private static void listImages(String name,List<String> images){
 
         switch (name) {
             case "MANUFACTURER":
-                images.add(context.getResources().getDrawable(R.drawable.ic_manufacture_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_manufacture_type");
                 break;
             case "DISTRIBUTOR":
-                images.add(context.getResources().getDrawable(R.drawable.ic_distributor_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_distributor_type");
                 break;
             case "SUPPLIER":
-                images.add(context.getResources().getDrawable(R.drawable.ic_supplier_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_supplier_type");
                 break;
             case "SERVICE PROVIDER":
-                images.add(context.getResources().getDrawable(R.drawable.ic_service_provider_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_service_provider_type");
                 break;
             case "RETAILER":
-                images.add(context.getResources().getDrawable(R.drawable.ic_retailer_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_retailer_type");
                 break;
             case "WHOLE SELLER":
-                images.add(context.getResources().getDrawable(R.drawable.ic_wholeseller_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_wholeseller_type");
                 break;
             case "PROFESSIONAL":
-                images.add(context.getResources().getDrawable(R.drawable.ic_professional_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_professional_type");
                 break;
             case "RENTALS":
-                images.add(context.getResources().getDrawable(R.drawable.ic_rental_type));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_rental_type");
                 break;
             case "OTHER":
-                images.add(context.getResources().getDrawable(R.drawable.ic_other));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_other");
                 break;
             default:
-                images.add(context.getResources().getDrawable(R.drawable.ic_loading));
+                images.add("android.resource://com.bzyness.bzyness/drawable/ic_loading");
         }
     }
 
@@ -225,6 +225,11 @@ public class BaseActivity {
             e.printStackTrace();
         }
         return login_params;
+    }
+
+    public static void getProductImages(Context context,String BusinessName, String Category, List<Drawable> imgList){
+        BaseActivity.context=context;
+        imgList.add(context.getResources().getDrawable(R.drawable.ic_add_product));
     }
 
 
