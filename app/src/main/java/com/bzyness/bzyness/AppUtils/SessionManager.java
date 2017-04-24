@@ -13,9 +13,12 @@ import com.bzyness.bzyness.models.UserDetails;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.bzyness.bzyness.AppUtils.Constants.pref_Login_Date;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_accessToken;
+import static com.bzyness.bzyness.AppUtils.Constants.pref_email;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_expiresIn;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_isFIRST_INSTALLED;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_isLoggedIN;
@@ -31,7 +34,6 @@ public class SessionManager {
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context context;
-    UserDetails existingUser;
     private final static String TAG=SessionManager.class.getSimpleName();
 
 
@@ -70,13 +72,7 @@ public class SessionManager {
         Log.i(TAG,"SessionManager updated expiresIN:"+getExpiresIn());
     }
 
-    public UserDetails getOldSession(){
-        existingUser=new UserDetails();
-        existingUser.setUserName(getUserName());
-        existingUser.setPassword(getPassword());
-        Log.i(TAG,"SessionManager started Old Session:"+existingUser.getUserName()+existingUser.getPassword());
-        return existingUser;
-    }
+
 
     public boolean isLoggedIn(){
         updateExpiresIn();
@@ -93,6 +89,11 @@ public class SessionManager {
     public String getUserName(){
         Log.i(TAG,"SessionManager userName:"+pref.getString(pref_uname,null));
         return pref.getString(pref_uname,null);
+    }
+
+    public String getEmail(){
+        Log.i(TAG,"SessionManager userEmail:"+pref.getString(pref_email,null));
+        return pref.getString(pref_email,null);
     }
     public String getPassword(){
         Log.i(TAG,"SessionManager passWord:"+pref.getString(pref_pass,null));

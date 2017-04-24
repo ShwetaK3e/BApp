@@ -30,8 +30,8 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextInputEditText userNameEdit, passwordEdit;
-    TextInputLayout userName, password;
+    TextInputEditText emailEdit, passwordEdit;
+    TextInputLayout email, password;
     CheckBox showPasswordButton;
     Button btnLinkToRegScreen;
 
@@ -46,9 +46,9 @@ public class LoginActivity extends AppCompatActivity {
 
         session=new SessionManager(this);
 
-        userName=(TextInputLayout)findViewById(R.id.rTextUName);
-        userNameEdit=(TextInputEditText) findViewById(R.id.rEditUName);
-        userNameEdit.addTextChangedListener(new LoginFormTextWatcher(userNameEdit));
+        email=(TextInputLayout)findViewById(R.id.rTextEmail);
+        emailEdit=(TextInputEditText) findViewById(R.id.rEditEmail);
+        emailEdit.addTextChangedListener(new LoginFormTextWatcher(emailEdit));
 
         password=(TextInputLayout)findViewById(R.id.rTextPassword);
         passwordEdit=(TextInputEditText) findViewById(R.id.rEditPassword);
@@ -56,8 +56,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
        if(!session.isFirstInstalled()){
-           userNameEdit.setText(session.getOldSession().getUserName());
-           passwordEdit.setText(session.getOldSession().getPassword());
+           emailEdit.setText(session.getEmail());
+           passwordEdit.setText(session.getPassword());
         }
 
         showPasswordButton=(CheckBox)findViewById(R.id.show_password_btn);
@@ -78,10 +78,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-       /* btnLinkToRegScreen=(Button)findViewById(R.id.btnLinkToRegScreen);
-        Typeface tf=Typeface.createFromAsset(getAssets(),"fonts/face_your_fears.ttf");
-        btnLinkToRegScreen.setTypeface(tf);*/
-
         signIn=(TextView)findViewById(R.id.log_direction);
         Typeface tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
         signIn.setTypeface(tf);
@@ -93,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(validateForm()) {
             Log.i(TAG, "Login");
-            String uName=userNameEdit.getText().toString().trim();
+            String uName=emailEdit.getText().toString().trim();
             String password=passwordEdit.getText().toString().trim();
             session.saveUser(uName,password);
                 String login_params= BaseActivity.getLoginParams(uName,password);
@@ -102,9 +98,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     boolean validateForm(){
-        if(!UserFormValidity.isName(userNameEdit, UserFormValidity.REQUIRED)){
-            userNameEdit.requestFocus();
-            userNameEdit.setSelection(userNameEdit.getText().toString().length());
+        if(!UserFormValidity.isEmailAddress(emailEdit, UserFormValidity.REQUIRED)){
+            emailEdit.requestFocus();
+            emailEdit.setSelection(emailEdit.getText().toString().length());
             return false;
         }
         if(!UserFormValidity.isPassword(passwordEdit, UserFormValidity.REQUIRED)){
@@ -143,7 +139,7 @@ public class LoginActivity extends AppCompatActivity {
         public void afterTextChanged(Editable s) {
            switch (view.getId()){
                case R.id.rEditUName:
-                   UserFormValidity.isName(userNameEdit, UserFormValidity.REQUIRED);
+                   UserFormValidity.isEmailAddress(emailEdit, UserFormValidity.REQUIRED);
                    break;
                case R.id.rEditPassword:
                    UserFormValidity.isPassword(passwordEdit, UserFormValidity.REQUIRED);

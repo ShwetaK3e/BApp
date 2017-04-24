@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,33 +17,19 @@ import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "firstName",
-        "lastName",
-        "email",
-        "phoneNumber",
-        "userName",
-        "password",
-        "confirmPassword",
+
         "access_token",
         "expires_in"
 })
 
 public class UserDetails {
 
-    @JsonProperty("firstName")
-    private String firstName;
-    @JsonProperty("lastName")
-    private String lastName;
-    @JsonProperty("email")
+    private String fullName;
     private String email;
-    @JsonProperty("phoneNumber")
-    private String phoneNumber;
-    @JsonProperty("userName")
-    private String userName;
-    @JsonProperty("password")
+    private String phone;
     private String password;
-    @JsonProperty("confirmPassword")
-    private String confirmPassword;
+    private Date joiningDate;
+
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("expires_in")
@@ -50,75 +37,7 @@ public class UserDetails {
 
 
 
-    @JsonProperty("firstName")
-    public String getFirstName() {
-        return firstName;
-    }
 
-    @JsonProperty("firstName")
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    @JsonProperty("lastName")
-    public String getLastName() {
-        return lastName;
-    }
-
-    @JsonProperty("lastName")
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    @JsonProperty("email")
-    public String getEmail() {
-        return email;
-    }
-
-    @JsonProperty("email")
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @JsonProperty("phoneNumber")
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    @JsonProperty("phoneNumber")
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    @JsonProperty("userName")
-    public String getUserName() {
-        return userName;
-    }
-
-    @JsonProperty("userName")
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @JsonProperty("password")
-    public String getPassword() {
-        return password;
-    }
-
-    @JsonProperty("password")
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    @JsonProperty("confirmPassword")
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    @JsonProperty("confirmPassword")
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
 
     @JsonProperty("access_token")
     public String getAccessToken() {
@@ -140,4 +59,43 @@ public class UserDetails {
         this.expiresIn = expiresIn;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Date getJoiningDate() {
+        return joiningDate;
+    }
+
+    public void setJoiningDate(Date joiningDate) {
+        this.joiningDate = joiningDate;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

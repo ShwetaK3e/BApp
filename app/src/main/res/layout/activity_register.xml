@@ -142,81 +142,31 @@
     android:layout_marginLeft="10dp"
     android:background="@color/white"
     android:layout_marginTop="5dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp">
+
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/rTextFName"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:layout_weight="0.5"
-                android:layout_marginRight="2dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
                 android:background="@drawable/text_input_layout_bg"
                 android:padding="4dp"
                 android:textColorHint="@color/colorPrimary">
 
                 <android.support.design.widget.TextInputEditText
                     android:id="@+id/rEditFName"
-                    android:text="Sheeta"
+                    android:text="Shweta Kumar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/hint_fname"
-                    android:padding="4dp"
+                    android:padding="5dp"
                     android:textColorHint="@color/colorPrimary"
                     android:background="@drawable/reg_login_text_edit_bg"
                     />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/rTextLName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_weight="0.5"
-                android:layout_marginLeft="2dp"
-                android:background="@drawable/text_input_layout_bg"
-                android:padding="4dp"
-                android:textColorHint="@color/colorPrimary">
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/rEditLName"
-                    android:text="Kumar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_lname"
-                    android:padding="4dp"
-                    android:background="@drawable/reg_login_text_edit_bg"
-                    />
-            </android.support.design.widget.TextInputLayout>
-
-
-        </LinearLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/rTextUName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:padding="4dp"
-            android:background="@drawable/text_input_layout_bg"
-            android:textColorHint="@color/colorPrimary">
-
-            <android.support.design.widget.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:id="@+id/rEditUName"
-                android:hint="@string/hint_uname"
-                android:padding="4dp"
-                android:background="@drawable/reg_login_text_edit_bg"/>
-
-        </android.support.design.widget.TextInputLayout>
 
 
         <android.support.design.widget.TextInputLayout
@@ -234,10 +184,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rEditEmail"
-                android:text="kumar.mimi@gmail.com"
+                android:text="kumar.miki@gmail.com"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
-                android:padding="4dp"
+                android:padding="5dp"
                 android:background="@drawable/reg_login_text_edit_bg"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -260,8 +210,8 @@
                 android:id="@+id/rEditPhone"
                 android:hint="@string/hint_phone"
                 android:inputType="phone"
-                android:padding="4dp"
-                android:text="7207700401"
+                android:padding="5dp"
+                android:text="7207700480"
                 android:background="@drawable/reg_login_text_edit_bg"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -283,7 +233,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rEditPassword"
                 android:hint="@string/hint_password"
-                android:padding="4dp"
+                android:padding="5dp"
+                android:text="String3e@"
                 android:inputType="textPassword"
                 android:background="@drawable/reg_login_text_edit_bg" />
         </android.support.design.widget.TextInputLayout>

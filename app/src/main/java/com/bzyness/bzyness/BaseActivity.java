@@ -4,13 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,27 +15,16 @@ import com.android.volley.toolbox.Volley;
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.models.ChatUser;
-import com.bzyness.bzyness.models.ServerError;
-import com.bzyness.bzyness.models.UserDetails;
-import com.fasterxml.jackson.core.JsonParseException;
+import com.bzyness.bzyness.models.ServerResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.firebase.client.Firebase;
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.places.Places;
 import com.google.firebase.database.FirebaseDatabase;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +40,7 @@ public class BaseActivity {
     private static Context context;
     private static FirebaseDatabase mDatabase;
 
-    public static ServerError error=new ServerError();
+    public static ServerResponse error=new ServerResponse();
 
 
 

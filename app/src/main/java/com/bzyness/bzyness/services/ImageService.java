@@ -7,10 +7,8 @@ import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 
-import com.bzyness.bzyness.AppUtils.UserFormValidity;
-import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.activity.UploadImageActivity;
-import com.bzyness.bzyness.models.ServerError;
+import com.bzyness.bzyness.models.ServerResponse;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.IOException;
@@ -76,10 +74,10 @@ public class ImageService extends AsyncTask<String,Void,String>  {
         } else if("no content".equalsIgnoreCase(result)) {
             Log.i("TAG",result);
         }else{
-            List<ServerError> errorDetails = new ArrayList<ServerError>();
+            List<ServerResponse> errorDetails = new ArrayList<ServerResponse>();
             if (result != null) {
                 try {
-                    errorDetails = objectMapper.readValue(result, TypeFactory.defaultInstance().constructCollectionType(List.class, ServerError.class));
+                    errorDetails = objectMapper.readValue(result, TypeFactory.defaultInstance().constructCollectionType(List.class, ServerResponse.class));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

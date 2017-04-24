@@ -138,7 +138,7 @@
             android:layout_marginRight="10dp">
 
             <android.support.design.widget.TextInputLayout
-                android:id="@+id/rTextUName"
+                android:id="@+id/rTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -149,8 +149,8 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/rEditUName"
-                    android:hint="@string/hint_uname_login"
+                    android:id="@+id/rEditEmail"
+                    android:hint="@string/hint_email"
                     android:padding="10dp"
                     android:textColorHint="@color/colorPrimary"
                     android:background="@drawable/reg_login_text_edit_bg"/>

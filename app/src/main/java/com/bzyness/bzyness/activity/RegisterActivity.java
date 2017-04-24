@@ -32,9 +32,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
-    TextInputEditText firstNameEdit, lastNameEdit, emailEdit, phoneEdit,userNameEdit, passwordEdit;
-    TextInputLayout   firstName, lastName, email, phone,userName, password;
+    TextInputEditText fullNameEdit,  emailEdit, phoneEdit,passwordEdit;
+    TextInputLayout   fullName, email, phone, password;
     UserDetails newUser;
     final String TAG= getClass().getSimpleName();
     SharedPreferences pref;
@@ -42,6 +47,12 @@ public class RegisterActivity extends AppCompatActivity {
     ProgressDialog pd;
     CheckBox showPasswordButton;
     TextView joinUs;
+
+    private static final String FULL_NAME_PARAM_KEY="fullName";
+    private static final String EMAIL_PARAM_KEY="email";
+    private static final String PASSWORD_PARAM_KEY="password";
+    private static final String PHONE_PARAM_KEY="mobile";
+
 
 
     @Override
@@ -56,18 +67,13 @@ public class RegisterActivity extends AppCompatActivity {
         }*/
 
         newUser=new UserDetails();
-        pref=getSharedPreferences("USERDETAILS",MODE_PRIVATE);
+        pref=getSharedPreferences(Constants.LOGIN_PREF_NAME,MODE_PRIVATE);
         editor=pref.edit();
 
 
-        firstName=(TextInputLayout)findViewById(R.id.rTextFName);
-        firstNameEdit = (TextInputEditText) findViewById(R.id.rEditFName);
-        firstNameEdit.addTextChangedListener(new NewUserTextWatcher(firstNameEdit));
-
-
-        lastName=(TextInputLayout)findViewById(R.id.rTextLName);
-        lastNameEdit = (TextInputEditText) findViewById(R.id.rEditLName);
-        lastNameEdit.addTextChangedListener(new NewUserTextWatcher(lastNameEdit));
+        fullName=(TextInputLayout)findViewById(R.id.rTextFName);
+        fullNameEdit = (TextInputEditText) findViewById(R.id.rEditFName);
+        fullNameEdit.addTextChangedListener(new NewUserTextWatcher(fullNameEdit));
 
 
         email=(TextInputLayout)findViewById(R.id.rTextEmail);
@@ -78,11 +84,6 @@ public class RegisterActivity extends AppCompatActivity {
         phone=(TextInputLayout)findViewById(R.id.rTextPhone);
         phoneEdit=(TextInputEditText) findViewById(R.id.rEditPhone);
         phoneEdit.addTextChangedListener(new NewUserTextWatcher(phoneEdit));
-
-
-        userName=(TextInputLayout)findViewById(R.id.rTextUName);
-        userNameEdit=(TextInputEditText) findViewById(R.id.rEditUName);
-        userNameEdit.addTextChangedListener(new NewUserTextWatcher(userNameEdit));
 
 
         password=(TextInputLayout)findViewById(R.id.rTextPassword);
@@ -108,7 +109,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
         joinUs=(TextView)findViewById(R.id.reg_direction);
         Typeface tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
         joinUs.setTypeface(tf);
@@ -120,16 +120,17 @@ public class RegisterActivity extends AppCompatActivity {
 
         if(validateForm()) {
             try {
-                newUser.setFirstName(firstNameEdit.getText().toString().trim());
-                newUser.setLastName(lastNameEdit.getText().toString().trim());
-                newUser.setUserName(userNameEdit.getText().toString().trim());
+                newUser.setFullName(fullNameEdit.getText().toString().trim());
                 newUser.setEmail(emailEdit.getText().toString().trim());
-                newUser.setPhoneNumber(phoneEdit.getText().toString().trim());
+                newUser.setPhone(phoneEdit.getText().toString().trim());
                 newUser.setPassword(passwordEdit.getText().toString().trim());
-                newUser.setConfirmPassword(newUser.getPassword());
-                ObjectMapper objectMapper=new ObjectMapper();
-                String jsonNewUserDetStr=objectMapper.writeValueAsString(newUser);
-                new RegistrationService(this).execute(Constants.REGISTRATION_URL,jsonNewUserDetStr,newUser.getUserName(),newUser.getPassword());
+
+                Map<String, String> newUserDetails=new HashMap<>();
+                newUserDetails.put(FULL_NAME_PARAM_KEY,fullNameEdit.getText().toString().trim());
+                newUserDetails.put(EMAIL_PARAM_KEY,emailEdit.getText().toString().trim());
+                newUserDetails.put(PHONE_PARAM_KEY,phoneEdit.getText().toString().trim());
+                newUserDetails.put(PASSWORD_PARAM_KEY,passwordEdit.getText().toString().trim());
+                new RegistrationService(this).execute(newUserDetails);
                // addChatUserT(newUser.getUserName(),newUser.getFirstName()+" "+newUser.getLastName(),newUser.getPhoneNumber());
             } catch (Exception e) {
                 e.printStackTrace();
@@ -138,21 +139,12 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     boolean validateForm(){
-        if(!UserFormValidity.isName(firstNameEdit, UserFormValidity.REQUIRED)) {
-            firstNameEdit.requestFocus();
-            firstNameEdit.setSelection(firstNameEdit.getText().toString().length());
+        if(!UserFormValidity.isName(fullNameEdit, UserFormValidity.REQUIRED)) {
+            fullNameEdit.requestFocus();
+            fullNameEdit.setSelection(fullNameEdit.getText().toString().length());
             return false;
         }
-        if(!UserFormValidity.isName(lastNameEdit, UserFormValidity.REQUIRED)){
-            lastNameEdit.requestFocus();
-            lastNameEdit.setSelection(lastNameEdit.getText().toString().length());
-            return false;
-        }
-        if(!UserFormValidity.isName(userNameEdit, UserFormValidity.REQUIRED)){
-            userNameEdit.requestFocus();
-            userNameEdit.setSelection(userNameEdit.getText().toString().length());
-            return false;
-        }
+
         if(!UserFormValidity.isEmailAddress(emailEdit, UserFormValidity.REQUIRED)){
             emailEdit.requestFocus();
             emailEdit.setSelection(emailEdit.getText().toString().length());
@@ -214,17 +206,11 @@ public class RegisterActivity extends AppCompatActivity {
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
                 case R.id.rEditFName:
-                    UserFormValidity.isName(firstNameEdit, UserFormValidity.REQUIRED);
-                    break;
-                case R.id.rEditLName:
-                    UserFormValidity.isName(lastNameEdit, UserFormValidity.REQUIRED);
+                    UserFormValidity.isName(fullNameEdit, UserFormValidity.REQUIRED);
                     break;
                 case R.id.rEditEmail:
                     UserFormValidity.isEmailAddress(emailEdit, UserFormValidity.REQUIRED);
                     break;
-                case R.id.rEditUName:
-                    UserFormValidity.isName(userNameEdit, UserFormValidity.REQUIRED);
-                break;
                 case R.id.rEditPhone:
                     UserFormValidity.isPhoneNumber(phoneEdit, UserFormValidity.REQUIRED);
                     break;

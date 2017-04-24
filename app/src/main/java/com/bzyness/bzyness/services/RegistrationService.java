@@ -2,50 +2,39 @@ package com.bzyness.bzyness.services;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
-import com.bzyness.bzyness.AppUtils.SessionManager;
-import com.bzyness.bzyness.AppUtils.UserFormValidity;
-import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.activity.LoginActivity;
-import com.bzyness.bzyness.activity.UploadImageActivity;
-import com.bzyness.bzyness.models.ServerError;
-import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.bzyness.bzyness.models.ServerResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
-import okhttp3.MediaType;
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static com.bzyness.bzyness.BaseActivity.objectMapper;
-
 /**
  * Created by Pervacio on 2/7/2017.
  */
 
-public class RegistrationService extends AsyncTask<String,Void,String> {
+public class RegistrationService extends AsyncTask<Map<String,String>,Void,String> {
 
-    public static MediaType JSON=MediaType.parse("application/json; charset=utf-8");
     OkHttpClient client;
     Activity activity;
     private int responseCode;
-    private String userName,password;
     ProgressDialog pd;
     private final static String TAG= RegistrationService.class.getSimpleName();
+
+    private final static String EMAIL_ERROR_MSG="Sorry, this user already exists";
+    private final static String PHONE_ERROR_MSG="Oops! An error occurred while registering";
+
 
     public RegistrationService(Activity activity){
         Log.i(TAG,"Registration service Initiated");
@@ -53,13 +42,32 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
         this.pd = new ProgressDialog(activity);
     }
 
-    String doPostRequest(String url, String json) throws IOException {
+    String doPostRequest(String url, Map<String,String> params) throws IOException {
         Log.i(TAG,"Registration service post Request");
-        RequestBody body= RequestBody.create(JSON,json);
+        FormBody.Builder builder=new FormBody.Builder();
+        for(Map.Entry<String ,String> entry:params.entrySet()){
+            builder.add(entry.getKey(),entry.getValue());
+            Log.i(TAG,"Registration params: "+entry.getKey()+"  "+entry.getValue());
+        }
+        RequestBody body=builder.build();
         Request request=new Request.Builder().url(url).post(body).build();
         Response response=client.newCall(request).execute();
         responseCode=response.code();
         return response.body().string();
+    }
+
+    @Override
+    protected String doInBackground(Map<String, String>... params) {
+
+        client=new OkHttpClient();
+        String url=Constants.REGISTRATION_URL;
+        String JsonResponse=null;
+        try {
+            JsonResponse = doPostRequest(url, params[0]);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return JsonResponse;
     }
 
     @Override
@@ -70,54 +78,34 @@ public class RegistrationService extends AsyncTask<String,Void,String> {
         pd.show();
     }
 
-    @Override
-    protected String doInBackground(String... params) {
-        Log.i(TAG,"Registration service doInBackGround");
-        client = new OkHttpClient();
-        String url=params[0];
-        String JsonDATA=params[1];
-        userName=params[2];
-        password=params[3];
-        String JsonResponse=null;
-        try {
-             JsonResponse = doPostRequest(url, JsonDATA);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return JsonResponse;
-}
 
     @Override
     protected void onPostExecute(String result) {
         Log.i(TAG,"Registration service postExecute");
         super.onPostExecute(result);
-        if (responseCode==200) {
-            Log.i(TAG,"Registration service Success");
-            String login_params= BaseActivity.getLoginParams(userName,password);
-            new LoginService(activity).execute(Constants.LOGIN_URL,login_params,userName);
-            pd.dismiss();
-        }else{
-            pd.dismiss();
-            List<ServerError> errorDetails = new ArrayList<ServerError>();
-            if (result != null) {
-                /*try {
-                    errorDetails = objectMapper.readValue(result, TypeFactory.defaultInstance().constructCollectionType(List.class, ServerError.class));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                TextInputEditText txt;
-                TextInputLayout txt_layout;
-                for (int i = 0; i < errorDetails.size(); i++) {
-                    if("DuplicateUserName".equalsIgnoreCase(errorDetails.get(i).getErrorDescription())){
-                        txt=(TextInputEditText)activity.findViewById(R.id.rEditUName);
-                        txt_layout=(TextInputLayout)activity.findViewById(R.id.rTextUName);
-                        UserFormValidity.userNameExists(txt,txt_layout);
-                    }
-                }*/
-
-            }
-            Log.i(TAG,"Registration service Error , responseCode:" + responseCode);
-
+        pd.dismiss();
+        ObjectMapper objectMapper=new ObjectMapper();
+        ServerResponse serverResponse=new ServerResponse();
+        try {
+            serverResponse=objectMapper.readValue(result,ServerResponse.class);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        TextInputEditText txtInputEditTxt=null;
+            if(serverResponse.getError()){
+                if(EMAIL_ERROR_MSG.equalsIgnoreCase(serverResponse.getMessage())){
+                    txtInputEditTxt=(TextInputEditText)activity.findViewById(R.id.rEditEmail);
+                    Log.i(TAG,"Registration service , email error " );
+                }else if(PHONE_ERROR_MSG.equalsIgnoreCase(serverResponse.getMessage())){
+                    txtInputEditTxt=(TextInputEditText)activity.findViewById(R.id.rEditPhone);
+                    Log.i(TAG,"Registration service , phone error " );
+                }
+                txtInputEditTxt.setText("");
+                txtInputEditTxt.requestFocus();
+            }
+            else{
+                Log.i(TAG,"Registration service , success" );
+            }
+        Log.i(TAG,"Registration service , responseCode:" + responseCode);
     }
 }
