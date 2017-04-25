@@ -22,7 +22,10 @@ import static com.bzyness.bzyness.AppUtils.Constants.pref_email;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_expiresIn;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_isFIRST_INSTALLED;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_isLoggedIN;
-import static com.bzyness.bzyness.AppUtils.Constants.pref_pass;
+import static com.bzyness.bzyness.AppUtils.Constants.pref_mobile;
+import static com.bzyness.bzyness.AppUtils.Constants.pref_role;
+import static com.bzyness.bzyness.AppUtils.Constants.pref_type_of_user;
+import static com.bzyness.bzyness.AppUtils.Constants.pref_uid;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_uname;
 
 /**
@@ -45,10 +48,14 @@ public class SessionManager {
         editor=pref.edit();
     }
 
-    public void saveUser(String uName, String pass){
-        Log.i(TAG,"SessionManager saved User"+ uName+" "+pass);
-        editor.putString(pref_uname,uName);
-        editor.putString(pref_pass,pass);
+    public void saveUser(String email, String fName,String role, String typeOfUser,String mobile, long uid){
+        Log.i(TAG,"SessionManager saved User"+ email+" "+fName+" "+role+" "+typeOfUser+" "+mobile+" "+uid);
+        editor.putString(pref_email,email);
+        editor.putString(pref_uname,fName);
+        editor.putString(pref_role,role);
+        editor.putString(pref_type_of_user,typeOfUser);
+        editor.putString(pref_mobile,mobile);
+        editor.putLong(pref_uid,uid);
         editor.commit();
     }
 
@@ -90,15 +97,16 @@ public class SessionManager {
         Log.i(TAG,"SessionManager userName:"+pref.getString(pref_uname,null));
         return pref.getString(pref_uname,null);
     }
+    public void setUserName(String fName){
+        editor.putString(pref_uname,fName);
+        Log.i(TAG,"SessionManager userName:"+pref.getString(pref_uname,null));
+    }
 
     public String getEmail(){
         Log.i(TAG,"SessionManager userEmail:"+pref.getString(pref_email,null));
         return pref.getString(pref_email,null);
     }
-    public String getPassword(){
-        Log.i(TAG,"SessionManager passWord:"+pref.getString(pref_pass,null));
-        return pref.getString(pref_pass,null);
-    }
+
     public String getAccessToken(){
             Log.i(TAG,"SessionManager accessstoken:"+pref.getString(pref_accessToken,null));
         return pref.getString(pref_accessToken,null);

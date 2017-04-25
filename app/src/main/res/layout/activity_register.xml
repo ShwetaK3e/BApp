@@ -266,8 +266,7 @@
                 android:textColor="@color/black"
                 android:textStyle="bold"
                 android:id="@+id/btnRegister"
-                android:layout_gravity="center_horizontal"
-                android:onClick="register"/>
+                android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 <LinearLayout

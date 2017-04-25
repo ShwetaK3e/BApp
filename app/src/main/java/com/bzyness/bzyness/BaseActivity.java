@@ -200,7 +200,7 @@ public class BaseActivity {
     public static String getLoginParams(String name,String password){
         String login_params="";
         try {
-            login_params = URLEncoder.encode("username", "UTF-8")
+            login_params = URLEncoder.encode("email", "UTF-8")
                 + "=" + URLEncoder.encode(name, "UTF-8");
             login_params += "&" + URLEncoder.encode("password", "UTF-8") + "="
                     + URLEncoder.encode(password, "UTF-8");

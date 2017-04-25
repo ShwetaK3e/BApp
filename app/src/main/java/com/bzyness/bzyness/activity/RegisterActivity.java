@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -40,11 +41,9 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     TextInputEditText fullNameEdit,  emailEdit, phoneEdit,passwordEdit;
     TextInputLayout   fullName, email, phone, password;
-    UserDetails newUser;
+    Button btnRegister;
     final String TAG= getClass().getSimpleName();
-    SharedPreferences pref;
-    SharedPreferences.Editor editor;
-    ProgressDialog pd;
+
     CheckBox showPasswordButton;
     TextView joinUs;
 
@@ -54,22 +53,10 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String PHONE_PARAM_KEY="mobile";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        pd=new ProgressDialog(this);
-
-        /*if(session.isFirstInstalled()){
-            this.startActivity(new Intent(this, UploadImageActivity.class));
-        }*/
-
-        newUser=new UserDetails();
-        pref=getSharedPreferences(Constants.LOGIN_PREF_NAME,MODE_PRIVATE);
-        editor=pref.edit();
-
 
         fullName=(TextInputLayout)findViewById(R.id.rTextFName);
         fullNameEdit = (TextInputEditText) findViewById(R.id.rEditFName);
@@ -109,21 +96,29 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+
+        btnRegister=(Button)findViewById(R.id.btnRegister);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               btnRegister.setEnabled(false);
+               register();
+            }
+        });
+
         joinUs=(TextView)findViewById(R.id.reg_direction);
         Typeface tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
         joinUs.setTypeface(tf);
 
+        Log.i(TAG,"onCreate");
     }
 
 
-    public void register(View v){
+    public void register(){
 
         if(validateForm()) {
+            Log.i(TAG,"register validated");
             try {
-                newUser.setFullName(fullNameEdit.getText().toString().trim());
-                newUser.setEmail(emailEdit.getText().toString().trim());
-                newUser.setPhone(phoneEdit.getText().toString().trim());
-                newUser.setPassword(passwordEdit.getText().toString().trim());
 
                 Map<String, String> newUserDetails=new HashMap<>();
                 newUserDetails.put(FULL_NAME_PARAM_KEY,fullNameEdit.getText().toString().trim());
@@ -135,10 +130,24 @@ public class RegisterActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }else{
+            Log.i(TAG,"registration invalidated");
         }
+
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        btnRegister.setEnabled(true);
+    }
+
+
+
     boolean validateForm(){
+
+        Log.i(TAG,"validating Form");
+
         if(!UserFormValidity.isName(fullNameEdit, UserFormValidity.REQUIRED)) {
             fullNameEdit.requestFocus();
             fullNameEdit.setSelection(fullNameEdit.getText().toString().length());
@@ -164,6 +173,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void gotoLogin(View v){
+        Log.i(TAG,"going to login Page");
         startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
     }
 
@@ -180,11 +190,7 @@ public class RegisterActivity extends AppCompatActivity {
         final DatabaseReference lastOnlineRef=database.getReference("Users/"+userName+"/"+businessName+"/lastOnline");
         lastOnlineRef.onDisconnect().setValue(ServerValue.TIMESTAMP);
 
-        editor.putString("USERNAME",userName);
-        editor.putString("BUSINESSNAME",businessName);
-        editor.commit();
         Toast.makeText(RegisterActivity.this, "registration successful", Toast.LENGTH_LONG).show();
-        pd.dismiss();
         startActivity(new Intent(RegisterActivity.this,ChatUsersActivity.class));
     }
 
@@ -217,7 +223,6 @@ public class RegisterActivity extends AppCompatActivity {
                 case R.id.rEditPassword:
                     UserFormValidity.isPassword(passwordEdit, UserFormValidity.REQUIRED);
                     break;
-
             }
         }
     }

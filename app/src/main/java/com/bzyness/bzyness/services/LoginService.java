@@ -30,6 +30,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import static com.bzyness.bzyness.BaseActivity.objectMapper;
+import static com.bzyness.bzyness.BaseActivity.session;
 
 /**
  *
@@ -40,7 +41,6 @@ public class LoginService extends AsyncTask<String,Void,String> {
 
     public static final MediaType URL_ENCODED=MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
     OkHttpClient client;
-    String userName=null;
     Activity activity;
     int responseCode=0;
     SharedPreferences pref;
@@ -61,7 +61,11 @@ public class LoginService extends AsyncTask<String,Void,String> {
     String doPostRequest(String url, String url_encoded) throws IOException {
         Log.i(TAG,"Login service Post Request");
         RequestBody body= RequestBody.create(URL_ENCODED,url_encoded);
-        Request request=new Request.Builder().url(url).post(body).build();
+        Request request=new Request.Builder()
+                .url(url)
+                .addHeader("Content-Type","application/x-www-form-urlencoded")
+                .post(body)
+                .build();
         Response response=client.newCall(request).execute();
         responseCode=response.code();
         return response.body().string();
@@ -69,7 +73,7 @@ public class LoginService extends AsyncTask<String,Void,String> {
 
     @Override
     protected void onPreExecute() {
-        Log.i(TAG,"Registration service preExecute");
+        Log.i(TAG,"Login service preExecute");
         super.onPreExecute();
         pd.setCancelable(false);
         pd.show();
@@ -80,9 +84,9 @@ public class LoginService extends AsyncTask<String,Void,String> {
     protected String doInBackground(String... params) {
         Log.i(TAG,"Login service doInBackground");
         client = new OkHttpClient();
-        String url=params[0];
-        String login_params=params[1];
-        userName=params[2];
+        String url=Constants.LOGIN_URL;
+        String login_params=params[0];
+        Log.i(TAG,"Login service params: "+ login_params);
         String JsonResponse=null;
         try {
             JsonResponse = doPostRequest(url,login_params);
@@ -96,6 +100,7 @@ public class LoginService extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         Log.i(TAG,"Login service post Execute");
         super.onPostExecute(result);
+        pd.dismiss();
         if(result!=null){
             ServerResponse serverResponse=new ServerResponse();
             ObjectMapper objectMapper=new ObjectMapper();
@@ -105,28 +110,21 @@ public class LoginService extends AsyncTask<String,Void,String> {
                 e.printStackTrace();
             }
 
-            if(responseCode==200){
-                Toast.makeText(activity, "Welcome, "+userName, Toast.LENGTH_SHORT).show();
-                editor.putString(Constants.pref_uname,userName);
-                editor.commit();
-                BaseActivity.session.createSession(serverResponse.getAccessToken(),serverResponse.getExpiresIn());
-                Log.i(TAG,"Login service Success AccessToken:"+serverResponse.getAccessToken()+"ExpiresIn:"+serverResponse.getExpiresIn());
-                activity.startActivity(new Intent(activity, HomeActivity.class));
+            if(!serverResponse.getError()){
+                new ValidateLoginService(activity).execute(serverResponse.getAccessToken(),Long.toString(serverResponse.getExpiresIn()));
             }else{
                 TextInputEditText txtInputEditTxt1=null,txtInputEditTxt2=null;
                 txtInputEditTxt1=(TextInputEditText)activity.findViewById(R.id.rEditEmail);
                 txtInputEditTxt2=(TextInputEditText)activity.findViewById(R.id.rEditPassword);
-                Log.i(TAG,"Registration service , email error " );
+                Log.i(TAG,"Login service , email error " );
                 txtInputEditTxt1.setText("");
                 txtInputEditTxt2.setText("");
                 txtInputEditTxt1.requestFocus();
+                Toast.makeText(activity, "Sorry,Invalid Details. ", Toast.LENGTH_SHORT).show();
                 }
             }
 
         Log.i(TAG, "Login Service error, Response Code:"+ responseCode);
         }
-
-
-
 
 }

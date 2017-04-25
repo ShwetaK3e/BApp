@@ -1,5 +1,7 @@
 package com.bzyness.bzyness.models;
 
+import java.util.HashMap;
+import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,95 +9,122 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-
-/**
- * Created by Pervacio on 2/14/2017.
- */
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-
-        "access_token",
-        "expires_in"
+        "error",
+        "user"
 })
-
 public class UserDetails {
 
-    private String fullName;
-    private String email;
-    private String phone;
-    private String password;
-    private Date joiningDate;
+    @JsonProperty("error")
+    private Boolean error;
+    @JsonProperty("user")
+    private User user;
 
-    @JsonProperty("access_token")
-    private String accessToken;
-    @JsonProperty("expires_in")
-    private Long expiresIn;
-
-
-
-
-
-    @JsonProperty("access_token")
-    public String getAccessToken() {
-        return accessToken;
+    @JsonProperty("error")
+    public Boolean getError() {
+        return error;
     }
 
-    @JsonProperty("access_token")
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    @JsonProperty("error")
+    public void setError(Boolean error) {
+        this.error = error;
     }
 
-    @JsonProperty("expires_in")
-    public Long getExpiresIn() {
-        return expiresIn;
+    @JsonProperty("user")
+    public User getUser() {
+        return user;
     }
 
-    @JsonProperty("expires_in")
-    public void setExpiresIn(Long expiresIn) {
-        this.expiresIn = expiresIn;
+    @JsonProperty("user")
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public String getFullName() {
-        return fullName;
-    }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    @JsonPropertyOrder({
+            "userId",
+            "fullName",
+            "email",
+            "mobile",
+            "role",
+            "typeOfUser"
+    })
+    public class User {
 
-    public String getEmail() {
-        return email;
-    }
+        @JsonProperty("userId")
+        private Long userId;
+        @JsonProperty("fullName")
+        private String fullName;
+        @JsonProperty("email")
+        private String email;
+        @JsonProperty("mobile")
+        private String mobile;
+        @JsonProperty("role")
+        private String role;
+        @JsonProperty("typeOfUser")
+        private String typeOfUser;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
-    public String getPhone() {
-        return phone;
-    }
+        @JsonProperty("userId")
+        public Long getUserId() {
+            return userId;
+        }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+        @JsonProperty("userId")
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
 
-    public Date getJoiningDate() {
-        return joiningDate;
-    }
+        @JsonProperty("fullName")
+        public String getFullName() {
+            return fullName;
+        }
 
-    public void setJoiningDate(Date joiningDate) {
-        this.joiningDate = joiningDate;
-    }
+        @JsonProperty("fullName")
+        public void setFullName(String fullName) {
+            this.fullName = fullName;
+        }
 
-    public String getPassword() {
-        return password;
-    }
+        @JsonProperty("email")
+        public String getEmail() {
+            return email;
+        }
 
-    public void setPassword(String password) {
-        this.password = password;
+        @JsonProperty("email")
+        public void setEmail(String email) {
+            this.email = email;
+        }
+
+        @JsonProperty("mobile")
+        public String getMobile() {
+            return mobile;
+        }
+
+        @JsonProperty("mobile")
+        public void setMobile(String mobile) {
+            this.mobile = mobile;
+        }
+
+        @JsonProperty("role")
+        public String getRole() {
+            return role;
+        }
+
+        @JsonProperty("role")
+        public void setRole(String role) {
+            this.role = role;
+        }
+
+        @JsonProperty("typeOfUser")
+        public String getTypeOfUser() {
+            return typeOfUser;
+        }
+
+        @JsonProperty("typeOfUser")
+        public void setTypeOfUser(String typeOfUser) {
+            this.typeOfUser = typeOfUser;
+        }
+
     }
 }

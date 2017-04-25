@@ -35,8 +35,7 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox showPasswordButton;
     Button btnLinkToRegScreen;
 
-    SessionManager session;
-    private final String TAG = getClass().getSimpleName();
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private TextView signIn;
 
     @Override
@@ -44,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        session=new SessionManager(this);
+        BaseActivity.session=new SessionManager(this);
 
         email=(TextInputLayout)findViewById(R.id.rTextEmail);
         emailEdit=(TextInputEditText) findViewById(R.id.rEditEmail);
@@ -55,9 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         passwordEdit.addTextChangedListener(new LoginFormTextWatcher(passwordEdit));
 
 
-       if(!session.isFirstInstalled()){
-           emailEdit.setText(session.getEmail());
-           passwordEdit.setText(session.getPassword());
+       if(!BaseActivity.session.isFirstInstalled()){
+           emailEdit.setText(BaseActivity.session.getEmail());
         }
 
         showPasswordButton=(CheckBox)findViewById(R.id.show_password_btn);
@@ -89,11 +87,10 @@ public class LoginActivity extends AppCompatActivity {
 
         if(validateForm()) {
             Log.i(TAG, "Login");
-            String uName=emailEdit.getText().toString().trim();
+            String email=emailEdit.getText().toString().trim();
             String password=passwordEdit.getText().toString().trim();
-            session.saveUser(uName,password);
-                String login_params= BaseActivity.getLoginParams(uName,password);
-                new LoginService(this).execute(Constants.LOGIN_URL,login_params,uName);
+            String login_params= BaseActivity.getLoginParams(email,password);
+            new LoginService(this).execute(login_params,email);
         }
     }
 
@@ -138,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
            switch (view.getId()){
-               case R.id.rEditUName:
+               case R.id.rEditEmail:
                    UserFormValidity.isEmailAddress(emailEdit, UserFormValidity.REQUIRED);
                    break;
                case R.id.rEditPassword:
