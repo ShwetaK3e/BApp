@@ -10,6 +10,12 @@ import android.support.design.widget.TextInputEditText;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.BaseActivity;
@@ -22,6 +28,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.Deserializers;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -100,31 +108,88 @@ public class LoginService extends AsyncTask<String,Void,String> {
     protected void onPostExecute(String result) {
         Log.i(TAG,"Login service post Execute");
         super.onPostExecute(result);
-        pd.dismiss();
-        if(result!=null){
-            ServerResponse serverResponse=new ServerResponse();
-            ObjectMapper objectMapper=new ObjectMapper();
+        if(result!=null) {
+            ServerResponse serverResponse = new ServerResponse();
+            ObjectMapper objectMapper = new ObjectMapper();
             try {
-                serverResponse=objectMapper.readValue(result, ServerResponse.class);
+                serverResponse = objectMapper.readValue(result, ServerResponse.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            if(!serverResponse.getError()){
-                new ValidateLoginService(activity).execute(serverResponse.getAccessToken(),Long.toString(serverResponse.getExpiresIn()));
-            }else{
-                TextInputEditText txtInputEditTxt1=null,txtInputEditTxt2=null;
-                txtInputEditTxt1=(TextInputEditText)activity.findViewById(R.id.rEditEmail);
-                txtInputEditTxt2=(TextInputEditText)activity.findViewById(R.id.rEditPassword);
-                Log.i(TAG,"Login service , email error " );
-                txtInputEditTxt1.setText("");
-                txtInputEditTxt2.setText("");
-                txtInputEditTxt1.requestFocus();
-                Toast.makeText(activity, "Sorry,Invalid Details. ", Toast.LENGTH_SHORT).show();
+            if (serverResponse != null) {
+                if (!serverResponse.getError()) {
+                    pd.dismiss();
+                    Log.i(TAG, serverResponse.getAccessToken());
+                    requestWithSomeHttpHeaders(serverResponse.getAccessToken());
+                    //new ValidateLoginService(activity).execute(serverResponse.getAccessToken(),Long.toString(serverResponse.getExpiresIn()));
+                } else {
+                    pd.dismiss();
+                    TextInputEditText txtInputEditTxt1 = null, txtInputEditTxt2 = null;
+                    txtInputEditTxt1 = (TextInputEditText) activity.findViewById(R.id.rEditEmail);
+                    txtInputEditTxt2 = (TextInputEditText) activity.findViewById(R.id.rEditPassword);
+                    Log.i(TAG, "Login service , email error ");
+                    txtInputEditTxt1.setText("");
+                    txtInputEditTxt2.setText("");
+                    txtInputEditTxt1.requestFocus();
+                    Toast.makeText(activity, "Sorry,Invalid Details. ", Toast.LENGTH_SHORT).show();
                 }
+            } else {
+                pd.dismiss();
+                Log.i(TAG, "serverResponse is null");
             }
-
-        Log.i(TAG, "Login Service error, Response Code:"+ responseCode);
         }
+
+        Log.i(TAG, "Login Service response, Response Code:"+ responseCode);
+        }
+
+    public void requestWithSomeHttpHeaders(final String accessToken) {
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        String url = Constants.VALIDATE_LOGIN_URL;
+        final StringRequest postRequest = new StringRequest(com.android.volley.Request.Method.GET, url,
+                new com.android.volley.Response.Listener<String>()
+                {
+                    @Override
+                    public void onResponse(String response) {
+                        // response
+                        Log.d(TAG+"Success Response", response);
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO Auto-generated method stub
+                        Log.d(TAG+"ERROR","error => "+error.toString()+" Code:"+error.networkResponse.statusCode);
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String>  params = new HashMap<String, String>();
+                Log.i(TAG,"headers");
+                params.put("Authorization", "Bearer "+ accessToken);
+                Log.i(TAG,"headers1");
+                return params;
+            }
+        };
+        postRequest.setRetryPolicy(new DefaultRetryPolicy(
+                0,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+
+        /*try {
+            for( Map.Entry entry: postRequest.getHeaders().entrySet()) {
+                Log.i(TAG, entry.getKey()+ " : "+entry.getValue());
+            }
+        } catch (AuthFailureError authFailureError) {
+            Log.i(TAG,authFailureError.getMessage());
+            authFailureError.printStackTrace();
+        }*/
+        queue.add(postRequest);
+
+    }
 
 }

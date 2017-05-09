@@ -1,8 +1,11 @@
 package com.bzyness.bzyness.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
+import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.services.LoginService;
 import com.fasterxml.jackson.databind.deser.Deserializers;
@@ -30,6 +35,7 @@ import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity {
 
+    LinearLayout log_layout;
     TextInputEditText emailEdit, passwordEdit;
     TextInputLayout email, password;
     CheckBox showPasswordButton;
@@ -37,6 +43,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private TextView signIn;
+    BroadcastReceiver nonetwork;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +52,17 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         BaseActivity.session=new SessionManager(this);
+        log_layout=(LinearLayout)findViewById(R.id.log_layout);
+
+        nonetwork=new DetectNetworkConnectivity() {
+            @Override
+            protected void onNetworkChange() {
+                Snackbar snackbar=Snackbar.make(log_layout,Constants.NO_NETWORK,Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        };
+        IntentFilter filter=new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(nonetwork,filter);
 
         email=(TextInputLayout)findViewById(R.id.rTextEmail);
         emailEdit=(TextInputEditText) findViewById(R.id.rEditEmail);

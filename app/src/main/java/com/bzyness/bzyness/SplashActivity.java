@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity{
                 //Start your app main activity
                 Intent i;
                 if(BaseActivity.session.isLoggedIn()){
-                    i= new Intent(SplashActivity.this, AddProductActivity.class);
+                    i= new Intent(SplashActivity.this, NewBusinessDetailsActivity.class);
                 }else{
                     i= new Intent(SplashActivity.this, RegisterActivity.class);
                 }

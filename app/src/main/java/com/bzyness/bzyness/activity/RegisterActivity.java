@@ -1,9 +1,12 @@
 package com.bzyness.bzyness.activity;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +29,7 @@ import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
+import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.models.UserDetails;
 import com.bzyness.bzyness.services.RegistrationService;
@@ -39,6 +44,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
+    LinearLayout reg_layout;
     TextInputEditText fullNameEdit,  emailEdit, phoneEdit,passwordEdit;
     TextInputLayout   fullName, email, phone, password;
     Button btnRegister;
@@ -52,11 +58,26 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String PASSWORD_PARAM_KEY="password";
     private static final String PHONE_PARAM_KEY="mobile";
 
+    BroadcastReceiver nonetwork;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        reg_layout=(LinearLayout)findViewById(R.id.reg_layout);
+
+        nonetwork=new DetectNetworkConnectivity() {
+            @Override
+            protected void onNetworkChange() {
+                Snackbar snackbar=Snackbar.make(reg_layout,Constants.NO_NETWORK,Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        };
+        IntentFilter filter=new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(nonetwork,filter);
+
 
         fullName=(TextInputLayout)findViewById(R.id.rTextFName);
         fullNameEdit = (TextInputEditText) findViewById(R.id.rEditFName);

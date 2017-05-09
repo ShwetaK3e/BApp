@@ -1,11 +1,15 @@
 package com.bzyness.bzyness.activity;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
+import android.net.LinkAddress;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bzyness.bzyness.AppUtils.Constants;
+import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.NewBDetailsAdapter;
 import com.bzyness.bzyness.fragment.NewBLocFragment;
@@ -35,6 +40,8 @@ import java.io.IOException;
 public class NewBusinessDetailsActivity extends AppCompatActivity {
 
 
+    LinearLayout new_bzyness_layout;
+
     ImageView profilePic,logo;
     LinearLayout profilePicScheme,logoScheme;
     LinearLayout addProfilePic, addLogo;
@@ -43,6 +50,8 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
     EditText businessName, aliasName;
     ImageButton editBusinessName, editAliasName;
 
+    BroadcastReceiver nonetwork;
+
 
 
     @Override
@@ -50,7 +59,16 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_business_activity);
 
-
+        new_bzyness_layout=(LinearLayout)findViewById(R.id.new_bzyness_layout);
+        nonetwork=new DetectNetworkConnectivity() {
+            @Override
+            protected void onNetworkChange() {
+                Snackbar snackbar=Snackbar.make(new_bzyness_layout,Constants.NO_NETWORK,Snackbar.LENGTH_LONG);
+                snackbar.show();
+            }
+        };
+        IntentFilter filter=new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(nonetwork,filter);
 
         profilePic=(ImageView)findViewById(R.id.bprof_pic);
         profilePicScheme=(LinearLayout)findViewById(R.id.bprof_scheme);

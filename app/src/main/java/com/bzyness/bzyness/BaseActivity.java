@@ -14,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
+import com.bzyness.bzyness.models.BusinessTypeDetails;
 import com.bzyness.bzyness.models.ChatUser;
 import com.bzyness.bzyness.models.ServerResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -54,26 +55,13 @@ public class BaseActivity {
 
 
 
-    public static void listTypeNames(List<String> names,List<String> images,Context context){
-        BaseActivity.context=context;
-        names.add(context.getResources().getString(R.string.manufacturer));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.distributor));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.supplier));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.service_provider));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.retailer));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.wholeseller));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.professionals));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.rentals));
-        listImages(names.get(names.size()-1),images);
-        names.add(context.getResources().getString(R.string.other));
-        listImages(names.get(names.size()-1),images);
+    public static void listTypeNames(Map<String,String> names,Map<String,String> images,Activity activity){
+        //businessTypeDetails=new BusinessTypeDetails();
+       // new FetchBusinessTypeService(activity).execute();
+     /*   for(BusinessTypeDetails.TypesOfBzyness type: businessTypeDetails.getTypesOfBzyness()){
+            names.put(type.getId(),type.getName());
+            images.put(type.getId(),(String)type.getIcon());
+        }*/
     }
 
     public static void listCategoryNames(List<String> names,Context context){
@@ -105,19 +93,19 @@ public class BaseActivity {
     private static void listImages(String name,List<String> images){
 
         switch (name) {
-            case "MANUFACTURER":
+            case "Manufacturer":
                 images.add("android.resource://com.bzyness.bzyness/drawable/ic_manufacture_type");
                 break;
-            case "DISTRIBUTOR":
+            case "Distributor":
                 images.add("android.resource://com.bzyness.bzyness/drawable/ic_distributor_type");
                 break;
-            case "SUPPLIER":
+            case "Supplier":
                 images.add("android.resource://com.bzyness.bzyness/drawable/ic_supplier_type");
                 break;
-            case "SERVICE PROVIDER":
+            case "Service Provider":
                 images.add("android.resource://com.bzyness.bzyness/drawable/ic_service_provider_type");
                 break;
-            case "RETAILER":
+            case "Retailer":
                 images.add("android.resource://com.bzyness.bzyness/drawable/ic_retailer_type");
                 break;
             case "WHOLE SELLER":
@@ -214,8 +202,6 @@ public class BaseActivity {
         BaseActivity.context=context;
         imgList.add(context.getResources().getDrawable(R.drawable.ic_add_product));
     }
-
-
 
 }
 

@@ -2,13 +2,16 @@ package com.bzyness.bzyness.services;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.TextInputEditText;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
+import com.bzyness.bzyness.activity.LoginActivity;
 import com.bzyness.bzyness.models.ServerResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -112,6 +115,7 @@ public class RegistrationService extends AsyncTask<Map<String,String>,Void,Strin
             } else {
                 String login_params= BaseActivity.getLoginParams(email,password);
                 new LoginService(activity).execute(login_params,email);
+                Toast.makeText(activity, "Registered Successfully !!!", Toast.LENGTH_LONG).show();
                 Log.i(TAG, "Registration service , success");
             }
             Log.i(TAG, "Registration service , responseCode:" + responseCode);

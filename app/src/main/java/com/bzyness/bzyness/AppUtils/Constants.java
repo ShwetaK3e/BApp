@@ -8,6 +8,8 @@ public class Constants {
     public static final String REGISTRATION_URL="http://api.bzyness.com/v1/createUser";
     public static final String LOGIN_URL="http://api.bzyness.com/v1/userLogin";
     public static final String VALIDATE_LOGIN_URL="http://api.bzyness.com/v1/validateLogin";
+    public static final String BUSINESS_TYPE_URL="http://api.bzyness.com/v1/typesOfBzyness";
+    public static final String BUSINESS_CATEGORY_URL="http://api.bzyness.com/v1/chooseCategory/";
     public static final String UPLOAD_IMAGE_URL="http://coreenginex.azurewebsites.net/api/Account/AddProfilePicture";
     public static final String CREATE_BUSINESS_URL="http://coreenginex.azurewebsites.net/api/BListing/Create";
 
@@ -49,6 +51,11 @@ public class Constants {
     public static final String pref_isFIRST_INSTALLED="IS_FIRSTINSTALLED";
     public static final String pref_Login_Date="LOGIN_DATE";
     public static final String pref_Business_Name="BUSINESSNAME";
+
+
+    // Network Connections
+    public  static final String NO_NETWORK="Network Connection Missing !!";
+
 
 
 }

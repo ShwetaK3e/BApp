@@ -1,6 +1,7 @@
 package com.bzyness.bzyness.models;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -12,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
         "error",
-        "user"
+        "user",
+        "message"
 })
 public class UserDetails {
 
@@ -20,6 +22,8 @@ public class UserDetails {
     private Boolean error;
     @JsonProperty("user")
     private User user;
+    @JsonProperty("message")
+    private String message= null;
 
     @JsonProperty("error")
     public Boolean getError() {
@@ -41,6 +45,15 @@ public class UserDetails {
         this.user = user;
     }
 
+    @JsonProperty("message")
+    public String getMessage() {
+        return message;
+    }
+
+    @JsonProperty("message")
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     @JsonPropertyOrder({
             "userId",
@@ -127,4 +140,5 @@ public class UserDetails {
         }
 
     }
+
 }

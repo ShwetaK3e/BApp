@@ -42,7 +42,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         typeList=(RecyclerView)findViewById(R.id.type_list);
-        populateTypes();
+       // populateTypes();
 
         buildBusiness=(Button)findViewById(R.id.build_business);
         buildBusiness.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         featuredList=(RecyclerView)findViewById(R.id.featured_shops);
-        populateFeatureList();
+       // populateFeatureList();
 
         /*editor_pick_text_header=(TextView)findViewById(R.id.editor_pick_text_header);
         Typeface tf=Typeface.createFromAsset(getAssets(),"fonts/barbie.ttf");
@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    void populateTypes(){
+   /* void populateTypes(){
         BaseActivity.listTypeNames(typeNames,typeImagesURI,this);
         businessTypeHomeAdapter =new BusinessTypeHomeAdapter(this,typeNames,typeImagesURI, new BusinessTypeHomeAdapter.OnMyItemClickListener() {
             @Override
@@ -89,5 +89,5 @@ public class HomeActivity extends AppCompatActivity {
           }
       });
       featuredList.setAdapter(featuredBusinessHomeAdapter);
-    }
+    }*/
 }

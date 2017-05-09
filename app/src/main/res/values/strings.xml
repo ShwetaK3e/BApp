@@ -91,7 +91,7 @@
 
     <!--Business Details -->
     <string name="type_guideline">WHAT IS THE TYPE OF YOUR BUSINESS ?</string>
-    <string name="other_details">Other*</string>
+    <string name="subcategory_tag">SubCategory*</string>
     <string name="category_header">Category</string>
     <string name="type_header">Type</string>
     <string name="subCategory_header">SubCategory</string>

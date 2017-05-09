@@ -1,25 +1,37 @@
 package com.bzyness.bzyness.fragment;
 
-import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bzyness.bzyness.BaseActivity;
+import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.BusinessCategoryAdapter;
 import com.bzyness.bzyness.adapters.BusinessTypeAdapter;
+import com.bzyness.bzyness.models.BusinessTypeDetails;
+import com.bzyness.bzyness.models.TypesOfBzyness;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static android.view.View.VISIBLE;
 
@@ -36,15 +48,14 @@ public class NewBDetailsFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     BusinessTypeAdapter typeAdapter;
     BusinessCategoryAdapter categoryAdapter;
-    List<String> names=new ArrayList<>();
-    List<String> typeImages=new ArrayList<>();
+
     LinearLayout detailsSummaryLayout;
-    LinearLayout categoryHeader, subCategoryHeader;
-    TextView typeName, categoryName,subcategoryName, guideLine;
+    LinearLayout categoryHeader;
+    TextView typeName, categoryName, guideLine;
     Button editDetails;
-    LinearLayout otherLayout;
-    EditText otherType;
-    Button saveOtherType;
+    LinearLayout sub_category_layout,add_sub_category_layout;
+    EditText subCategoryTag;
+    ImageButton saveSubCategory,removeSubCategory;
 
 
 
@@ -85,36 +96,38 @@ public class NewBDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 editDetails.setVisibility(View.GONE);
-                otherLayout.setVisibility(View.GONE);
+                add_sub_category_layout.setVisibility(View.GONE);
                 populateTypes();
                 detailsSummaryLayout.setVisibility(View.GONE);
                 guideLine.setText(getResources().getString(R.string.type_guideline));
                 categoryHeader.setBackgroundColor(getResources().getColor(R.color.colorSky));
-                subCategoryHeader.setBackgroundColor(getResources().getColor(R.color.colorSky));
             }
         });
 
         categoryHeader=(LinearLayout)view.findViewById(R.id.category_header);
-        subCategoryHeader=(LinearLayout)view.findViewById(R.id.subcategory_header);
         typeName=(TextView)view.findViewById(R.id.type_name);
         categoryName=(TextView)view.findViewById(R.id.category_name);
-        subcategoryName=(TextView)view.findViewById(R.id.subcategory_name);
-        otherLayout=(LinearLayout)view.findViewById(R.id.other_layout);
-        otherLayout.setVisibility(View.GONE);
-        otherType=(EditText)view.findViewById(R.id.other_type);
-        saveOtherType=(Button)view.findViewById(R.id.save_other);
-        saveOtherType.setOnClickListener(new View.OnClickListener() {
+
+        sub_category_layout=(LinearLayout)view.findViewById(R.id.sub_category_layout);
+        sub_category_layout.setVisibility(View.GONE);
+        add_sub_category_layout=(LinearLayout)view.findViewById(R.id.ech_subcategory_layout);
+        subCategoryTag=(EditText)view.findViewById(R.id.sub_category_tag);
+        saveSubCategory=(ImageButton)view.findViewById(R.id.save_sub_category);
+        saveSubCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String other=otherType.getText().toString().trim().toUpperCase();
-                if(getResources().getString(R.string.other).equalsIgnoreCase(typeName.getText().toString().trim())) {
-                    typeName.setText(other);
-                }else if(getResources().getString(R.string.other).equalsIgnoreCase(categoryName.getText().toString().trim())){
-                    categoryName.setText(other);
-                }else{
-                    subcategoryName.setText(other);
-                }
-                otherLayout.setVisibility(View.GONE);
+               // sub_category_layout.addView(add_sub_category_layout);
+                saveSubCategory.setVisibility(View.INVISIBLE);
+                removeSubCategory.setVisibility(VISIBLE);
+            }
+        });
+        removeSubCategory=(ImageButton)view.findViewById(R.id.remove_sub_category);
+        removeSubCategory.setVisibility(View.INVISIBLE);
+        removeSubCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveSubCategory.setVisibility(VISIBLE);
+                removeSubCategory.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -129,69 +142,22 @@ public class NewBDetailsFragment extends Fragment {
 
 
     void populateTypes(){
-        names=new ArrayList<String>();
-        typeImages=new ArrayList<String >();
-        BaseActivity.listTypeNames(names,typeImages,getActivity());
-        typeAdapter=new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
-            @Override
-            public void onClick(String name, Drawable img) {
-                if(getResources().getString(R.string.other).equals(name)){
-                   categoryNotAvilable();
-                }else {
-                    populateCategory(name);
-                }
-                editDetails.setVisibility(VISIBLE);
-                typeName.setText(name);
-            }
-        });
-        businessDetails.setAdapter(typeAdapter);
+        new FetchBusinessTypeService().execute();
+
     }
 
+   void populateCategory(String type_id){
+       new FetchBusinessCategoryService().execute(type_id);
 
-    void populateCategory(String name){
-        String type=name;
-        setCategoryGuideLine(type);
-        names=new ArrayList<>();
-        BaseActivity.listCategoryNames(names,getActivity());
-        categoryAdapter =new BusinessCategoryAdapter(getActivity(), names, new BusinessCategoryAdapter.OnMyItemClickListener() {
-            @Override
-            public void onClick(String name) {
-                if(getResources().getString(R.string.other).equals(name)) {
-                    subCategoryNotAvilable();
-                }else {
-                    populateSubCategory(name);
-                }
-                categoryName.setText(name);
-            }
-        });
-        businessDetails.setAdapter(categoryAdapter);
     }
 
-    void populateSubCategory(String name) {
-        names=new ArrayList<>();
-        BaseActivity.listSubCategoryNames(names,getActivity());
-        if (names.isEmpty()) {
-            subCategoryNotAvilable();
-            //next.setEnabled(true);
-        } else {
-            categoryAdapter = new BusinessCategoryAdapter(getActivity(), names, new BusinessCategoryAdapter.OnMyItemClickListener() {
-                @Override
-                public void onClick(String name) {
-
-                    if(getResources().getString(R.string.other).equals(name)) {
-                        otherLayout.setVisibility(VISIBLE);
-                        otherType.setText("");
-                    }
-                    subcategoryName.setText(name);
-                    names = new ArrayList<>();
-                    businessDetails.setAdapter(null);
-                    detailsSummaryLayout.setVisibility(VISIBLE);
-                    editDetails.setVisibility(VISIBLE);
-                   // next.setEnabled(true);
-                }
-            });
-            businessDetails.setAdapter(categoryAdapter);
-        }
+    void addSubCategory() {
+        businessDetails.setAdapter(null);
+        detailsSummaryLayout.setVisibility(VISIBLE);
+        sub_category_layout.setVisibility(VISIBLE);
+        businessDetails.setAdapter(null);
+        subCategoryTag.setText("");
+        editDetails.setVisibility(VISIBLE);
     }
 
     private void setCategoryGuideLine(String type){
@@ -211,13 +177,13 @@ public class NewBDetailsFragment extends Fragment {
             case "RETAILER":
                 guideLine.setText("WHAT DO YOU SELL ?");
                 break;
-            case "WHOLE SELLER":
+            case "WHOLESALER":
                 guideLine.setText("WHAT DO YOU WHOLE SELL ?");
                 break;
-            case "PROFESSIONAL":
+            case "PROFESSIONALS":
                 guideLine.setText("WHAT IS YOUR PROFESSION ?");
                 break;
-            case "RENTALS":
+            case "RENTAL SERVICES":
                 guideLine.setText("WHAT DO YOU RENT ?");
                 break;
             default:
@@ -226,26 +192,166 @@ public class NewBDetailsFragment extends Fragment {
         }
     }
 
-    public void subCategoryNotAvilable(){
-        subcategoryName.setText("NOT AVAILABLE");
-        businessDetails.setAdapter(null);
-        detailsSummaryLayout.setVisibility(VISIBLE);
-        otherLayout.setVisibility(VISIBLE);
-        otherType.setText("");
-        editDetails.setVisibility(VISIBLE);
-        subCategoryHeader.setBackgroundColor(getResources().getColor(R.color.light_grey));
-    }
 
 
-    public void categoryNotAvilable(){
-        detailsSummaryLayout.setVisibility(VISIBLE);
-        otherLayout.setVisibility(VISIBLE);
-        businessDetails.setAdapter(null);
-        otherType.setText("");
-        categoryName.setText("NOT AVAILABLE");
-        subcategoryName.setText("NOT AVAILABLE");
-        categoryHeader.setBackgroundColor(getResources().getColor(R.color.light_grey));
-        subCategoryHeader.setBackgroundColor(getResources().getColor(R.color.light_grey));
+
+
+       class FetchBusinessTypeService extends AsyncTask<Void,Void,String > {
+           private OkHttpClient client;
+           int responsecode=0;
+           private String TAG= FetchBusinessTypeService.class.getSimpleName();
+           Map<String,String> names=new HashMap<>();
+           Map<String,String> typeImages=new HashMap<>();
+
+           public FetchBusinessTypeService() {
+               Log.i(TAG,"Type Constructor");
+           }
+
+           String fetchTypes(String url) throws IOException {
+               Log.i(TAG,"fetching Types");
+               Request request=new Request.Builder().url(url).get().build();
+               Response response=client.newCall(request).execute();
+               responsecode=response.code();
+               return response.body().string();
+           }
+
+           @Override
+           protected String doInBackground(Void... params) {
+               Log.i(TAG,"background");
+               client=new OkHttpClient();
+               String url= Constants.BUSINESS_TYPE_URL;
+               String jsonString=null;
+               try {
+                   jsonString=fetchTypes(url);
+               } catch (IOException e) {
+                   Log.i(TAG,e.toString());
+                   e.printStackTrace();
+               }
+               Log.i(TAG,jsonString);
+               return jsonString;
+           }
+
+           @Override
+           protected void onPostExecute(String result) {
+               Log.i(TAG,"types onpostExecute");
+               super.onPostExecute(result);
+               if(result!=null) {
+                   Log.i(TAG,result);
+                   ObjectMapper objectMapper = new ObjectMapper();
+                   BusinessTypeDetails businessTypeDetails=new BusinessTypeDetails();
+                   try {
+                       businessTypeDetails = objectMapper.readValue(result, BusinessTypeDetails.class);
+                   } catch (IOException e) {
+                       Log.i(TAG,e.toString());
+                       e.printStackTrace();
+                   }
+                   if(businessTypeDetails!=null){
+
+
+                       for(TypesOfBzyness type: businessTypeDetails.getTypesOfBzyness()){
+                           Log.i(TAG,responsecode+"  "+type.getName());
+                           names.put(type.getId(),type.getName());
+                           typeImages.put(type.getId(),type.getName());
+                       }
+                       typeAdapter=new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
+                           @Override
+                           public void onClick(String name) {
+
+                                   String id=null;
+                                    for(Map.Entry entry:names.entrySet()){
+                                      if(name.equalsIgnoreCase(entry.getValue().toString())){
+                                          id=entry.getKey().toString();
+                                      }
+                                    }
+                                    setCategoryGuideLine(name.toUpperCase());
+                                    typeName.setText(name);
+                                    populateCategory(id);
+                                    editDetails.setVisibility(VISIBLE);
+                                    typeName.setText(name);
+                           }
+                       });
+                       businessDetails.setAdapter(typeAdapter);
+                   }else{
+                       Log.i(TAG, "Error"+ responsecode);
+                   }
+               }
+           }
+         }
+
+
+
+       class FetchBusinessCategoryService extends AsyncTask<String,Void,String > {
+        private OkHttpClient client;
+        int responsecode=0;
+        private String TAG= FetchBusinessCategoryService.class.getSimpleName();
+
+        List<String> names=new ArrayList<>();
+
+        public FetchBusinessCategoryService() {
+            Log.i(TAG,"CategoryConstructor");
+        }
+
+        String fetchCategory(String url, String type_id) throws IOException {
+            Log.i(TAG,"fetching Category");
+            Request request=new Request.Builder().url(url+type_id).get().build();
+            Response response=client.newCall(request).execute();
+            responsecode=response.code();
+            return response.body().string();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.i(TAG,"background");
+            client=new OkHttpClient();
+            String type_id=params[0];
+            String url= Constants.BUSINESS_CATEGORY_URL;
+            String jsonString=null;
+            try {
+                jsonString=fetchCategory(url,type_id);
+            } catch (IOException e) {
+                Log.i(TAG,e.toString());
+                e.printStackTrace();
+            }
+            Log.i(TAG,jsonString);
+            return jsonString;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG,"category onpostExecute");
+            super.onPostExecute(result);
+            if(result!=null) {
+                Log.i(TAG,result);
+                ObjectMapper objectMapper = new ObjectMapper();
+                BusinessTypeDetails businessTypeDetails=new BusinessTypeDetails();
+                try {
+                    businessTypeDetails = objectMapper.readValue(result, BusinessTypeDetails.class);
+                } catch (IOException e) {
+                    Log.i(TAG,e.toString());
+                    e.printStackTrace();
+                }
+                if(businessTypeDetails!=null){
+
+                    Log.i(TAG,businessTypeDetails.getError()+"");
+                    for(TypesOfBzyness category: businessTypeDetails.getCategories()){
+                        Log.i(TAG,responsecode+category.getId()+"  "+category.getName());
+                        names.add(category.getName());
+                    }
+                    categoryAdapter =new BusinessCategoryAdapter(getActivity(), names, new BusinessCategoryAdapter.OnMyItemClickListener() {
+                        @Override
+                        public void onClick(String name) {
+                            addSubCategory();
+                            categoryName.setText(name);
+                        }
+                    });
+                    businessDetails.setAdapter(categoryAdapter);
+                }else{
+                    Log.i(TAG, "Error"+ responsecode);
+                }
+            }
+        }
     }
+
 
 }
+
