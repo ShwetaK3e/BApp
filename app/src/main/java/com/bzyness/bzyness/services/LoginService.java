@@ -121,8 +121,8 @@ public class LoginService extends AsyncTask<String,Void,String> {
                 if (!serverResponse.getError()) {
                     pd.dismiss();
                     Log.i(TAG, serverResponse.getAccessToken());
-                    requestWithSomeHttpHeaders(serverResponse.getAccessToken());
-                    //new ValidateLoginService(activity).execute(serverResponse.getAccessToken(),Long.toString(serverResponse.getExpiresIn()));
+                    //requestWithSomeHttpHeaders(serverResponse.getAccessToken());
+                    new ValidateLoginService(activity).execute(serverResponse.getAccessToken(),Long.toString(serverResponse.getExpiresIn()));
                 } else {
                     pd.dismiss();
                     TextInputEditText txtInputEditTxt1 = null, txtInputEditTxt2 = null;
