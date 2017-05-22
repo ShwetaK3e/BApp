@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="5dp"
-    android:id="@+id/new_bzyness_layout">
+    android:id="@+id/new_bzyness_layout"
+    android:weightSum="1">
 
 
         <RelativeLayout
@@ -176,7 +176,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/bzyness_name"
+                    android:hint="@string/hint_bzyness_name"
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:typeface="serif"
@@ -206,7 +206,7 @@
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="Alias Name"
+                    android:hint="@string/hint_alias_name"
                     android:textColorHint="@color/colorPrimary"
                     android:textSize="15sp"
                     android:typeface="serif"
@@ -229,7 +229,23 @@
                     android:background="@android:color/transparent"/>
             </FrameLayout>
 
+            <Button
+                android:id="@+id/save_new_bzyness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/buttons_bg"
+                android:text="save" />
+
         </LinearLayout>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:weightSum="1"
+         android:layout_weight="1"
+         android:orientation="vertical">
+
         <android.support.design.widget.TabLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -252,13 +268,14 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="0px"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@android:color/white"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
+        android:paddingBottom="5dp"
         />
 
-
+     </LinearLayout>
 
 </LinearLayout>

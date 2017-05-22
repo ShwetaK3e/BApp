@@ -11,7 +11,8 @@ public class Constants {
     public static final String BUSINESS_TYPE_URL="http://api.bzyness.com/v1/typesOfBzyness";
     public static final String BUSINESS_CATEGORY_URL="http://api.bzyness.com/v1/chooseCategory/";
     public static final String UPLOAD_IMAGE_URL="http://coreenginex.azurewebsites.net/api/Account/AddProfilePicture";
-    public static final String CREATE_BUSINESS_URL="http://coreenginex.azurewebsites.net/api/BListing/Create";
+    public static final String CREATE_BUSINESS_URL="http://api.bzyness.com/v1/startBzyness";
+    public static final String ADD_BUSINESS_TAG_URL="http://api.bzyness.com/v1/addBzynessTag";
 
     // LOG/ INTENT TAGS
     public static final String TYPE="type";

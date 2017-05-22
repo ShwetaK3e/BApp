@@ -87,6 +87,7 @@
     <color name="other_pic_5_bg">#66c873f4</color>
     <color name="other_pic_1_bg">#66d6d6d6</color>
     <color name="add_layout">#66FEE767</color>
+    <color name="light_red">#AAd72d2d</color>
 
 
 </resources>

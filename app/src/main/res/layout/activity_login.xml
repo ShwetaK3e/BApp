@@ -14,42 +14,44 @@
         android:layout_weight="0.3">
 
         <ImageView
+            android:id="@+id/reg_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@drawable/reg_login_header_bg"
+            android:layout_centerInParent="true"
             android:scaleType="centerCrop"
-            android:id="@+id/reg_bg"
-            android:layout_centerInParent="true"/>
+            android:src="@drawable/reg_login_header_bg" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#AA000000"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:background="#AA000000" />
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/reg_login_header_text_bg"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:padding="5dp"
-            android:layout_marginBottom="120dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="120dp"
+            android:background="@drawable/reg_login_header_text_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
             <ImageView
                 android:layout_width="8dp"
                 android:layout_height="8dp"
-                android:src="@drawable/bg_circle_first_color"/>
+                android:src="@drawable/bg_circle_first_color" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  RISE.  SHINE.  REACH.  OFFER.  DESTINY  "
-                android:paddingRight="5dp"
                 android:paddingLeft="5dp"
-                android:textColor="@color/white"/>
+                android:paddingRight="5dp"
+                android:text="  RISE.  SHINE.  REACH.  OFFER.  DESTINY  "
+                android:textColor="@color/white" />
 
             <ImageView
                 android:layout_width="8dp"
@@ -62,24 +64,26 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/reg_login_header_text_bg"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:padding="5dp"
-            android:layout_marginBottom="80dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/reg_login_header_text_bg"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
             <ImageView
                 android:layout_width="8dp"
                 android:layout_height="8dp"
-                android:src="@drawable/bg_circle_first_color"/>
+                android:src="@drawable/bg_circle_first_color" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="  RISE.  SHINE.  REACH  "
-                android:paddingRight="5dp"
                 android:paddingLeft="5dp"
-                android:textColor="@color/white"/>
+                android:paddingRight="5dp"
+                android:text="  RISE.  SHINE.  REACH  "
+                android:textColor="@color/white" />
 
             <ImageView
                 android:layout_width="8dp"
@@ -92,15 +96,15 @@
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginBottom="-30dp"
-            android:orientation="vertical"
             android:background="@drawable/reg_login_bubble_header"
             android:gravity="center_horizontal|top"
-            android:paddingTop="10dp"
+            android:orientation="vertical"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:paddingRight="5dp"
+            android:paddingTop="10dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -108,16 +112,16 @@
                 android:src="@drawable/ic_logo" />
 
             <TextView
+                android:id="@+id/log_direction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-9dp"
+                android:gravity="center"
+                android:padding="5dp"
                 android:text="@string/sign_in"
                 android:textColor="@color/black"
                 android:textSize="28sp"
-                android:padding="5dp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:id="@+id/log_direction"
-                android:layout_marginTop="-9dp"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
     </RelativeLayout>

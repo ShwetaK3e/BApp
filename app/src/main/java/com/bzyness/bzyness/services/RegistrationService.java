@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.activity.LoginActivity;
+import com.bzyness.bzyness.activity.RegisterActivity;
 import com.bzyness.bzyness.models.ServerResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -93,7 +96,12 @@ public class RegistrationService extends AsyncTask<Map<String,String>,Void,Strin
         Log.i(TAG, "Registration service postExecute");
         super.onPostExecute(result);
         pd.dismiss();
-        if (result != null) {
+        if(responseCode==0){
+            LinearLayout layout=null;
+            layout = (LinearLayout) activity.findViewById(R.id.reg_layout);
+            Snackbar snackbar = Snackbar.make(layout, Constants.NO_NETWORK, Snackbar.LENGTH_LONG);
+            snackbar.show();
+        } else if (result != null) {
             ObjectMapper objectMapper = new ObjectMapper();
             ServerResponse serverResponse = new ServerResponse();
             try {

@@ -27,7 +27,19 @@ public class ServerResponse {
     private String accessToken;
     @JsonProperty("expires")
     private Long expiresIn;
+    @JsonProperty("bzynessId")
+    private Integer bzynessId;
 
+
+    @JsonProperty("bzynessId")
+    public Integer getBzynessId() {
+        return bzynessId;
+    }
+
+    @JsonProperty("bzynessId")
+    public void setBzynessId(Integer bzynessId) {
+        this.bzynessId = bzynessId;
+    }
 
     @JsonProperty("error")
     public boolean getError() {
@@ -50,18 +62,22 @@ public class ServerResponse {
         this.message = message;
     }
 
+    @JsonProperty("token")
     public String getAccessToken() {
         return accessToken;
     }
 
+    @JsonProperty("token")
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
     }
 
+    @JsonProperty("expires")
     public Long getExpiresIn() {
         return expiresIn;
     }
 
+    @JsonProperty("expires")
     public void setExpiresIn(Long expiresIn) {
         this.expiresIn = expiresIn;
     }

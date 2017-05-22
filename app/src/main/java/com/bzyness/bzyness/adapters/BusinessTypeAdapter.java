@@ -46,21 +46,21 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
         Log.i(TAG,"adapter onCreateViewHolder");
         View itemView= LayoutInflater.from(parent.getContext()).inflate(R.layout.image_text_grid_view,parent,false);
         final Holder holder= new Holder(itemView);
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onMyItemClickListener.onClick(holder.name.getText().toString());
-            }
-        });
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
+    public void onBindViewHolder(Holder holder, final int position) {
         Log.i(TAG,"adapter onBindViewHolder");
-        String key= String.valueOf(position+1);
-          holder.name.setText(names.get(key).toUpperCase());
-          Glide.with(context).load(imagesURI.get(key)).into(holder.img);
+        final String key= String.valueOf(position+1);
+        holder.name.setText(names.get(key).toUpperCase());
+        Glide.with(context).load(imagesURI.get(key)).into(holder.img);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onMyItemClickListener.onClick(key);
+            }
+        });
     }
 
     @Override
@@ -81,7 +81,7 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
     }
 
     public interface OnMyItemClickListener{
-        public void onClick(String type_id);
+        void onClick(String type_id);
     }
 
 }

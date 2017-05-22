@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bzyness.bzyness.R;
+import com.bzyness.bzyness.models.BzynessDetails;
 
 import java.io.IOException;
 
@@ -39,15 +40,17 @@ public class NewBOthrDetailsFragment extends Fragment {
     int headerColorDone, headerColorInactive, headerColorActive;
     boolean  phoneSaved=false, websiteSaved=false, androidAppSaved=false,iphoneAppSaved=false;
 
+    BzynessDetails bzynessDetails;
 
     public NewBOthrDetailsFragment() {
         // Required empty public constructor
     }
-    public static NewBOthrDetailsFragment newInstance(int page) {
+    public static NewBOthrDetailsFragment newInstance(int page,BzynessDetails bzynessDetails) {
         NewBOthrDetailsFragment fragment = new NewBOthrDetailsFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_MSG, page);
         fragment.setArguments(args);
+        fragment.bzynessDetails=bzynessDetails;
         return fragment;
     }
 

@@ -3,8 +3,10 @@ package com.bzyness.bzyness;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -201,6 +203,11 @@ public class BaseActivity {
     public static void getProductImages(Context context,String BusinessName, String Category, List<Drawable> imgList){
         BaseActivity.context=context;
         imgList.add(context.getResources().getDrawable(R.drawable.ic_add_product));
+    }
+
+    public static String getStringFromPref(Context context,String key){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.LOGIN_PREF_NAME,Context.MODE_PRIVATE);
+        return sharedPreferences.getString(key,"");
     }
 
 }

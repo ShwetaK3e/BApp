@@ -6,14 +6,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.BaseActivity;
+import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.activity.HomeActivity;
 import com.bzyness.bzyness.activity.LoginActivity;
 import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
+import com.bzyness.bzyness.activity.RegisterActivity;
 import com.bzyness.bzyness.models.UserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -81,7 +85,17 @@ public class ValidateLoginService extends AsyncTask<String,Void,String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        if(result!=null){
+        pd.dismiss();
+        if(responseCode==0){
+            LinearLayout layout=null;
+            if(activity.getClass().getCanonicalName().equalsIgnoreCase(LoginActivity.class.getCanonicalName())) {
+                layout = (LinearLayout) activity.findViewById(R.id.log_layout);
+            }else if(activity.getClass().getCanonicalName().equalsIgnoreCase(RegisterActivity.class.getCanonicalName())){
+                layout = (LinearLayout) activity.findViewById(R.id.reg_layout);
+            }
+            Snackbar snackbar = Snackbar.make(layout, Constants.NO_NETWORK, Snackbar.LENGTH_LONG);
+            snackbar.show();
+        } else if(result!=null){
             Log.i(TAG,"Result:" +result);
             UserDetails trueUser=new UserDetails();
             ObjectMapper objectMapper=new ObjectMapper();
@@ -103,5 +117,13 @@ public class ValidateLoginService extends AsyncTask<String,Void,String> {
                 activity.startActivity(new Intent(activity, LoginActivity.class));
             }
         }
+    }
+
+    @Override
+    protected void onPreExecute() {
+        Log.i(TAG,"ValidateLogin service preExecute");
+        super.onPreExecute();
+        pd.setCancelable(false);
+        pd.show();
     }
 }

@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
+import com.bzyness.bzyness.models.BzynessDetails;
 
 import java.io.IOException;
 
@@ -40,15 +41,17 @@ public class NewBPhotosFragment extends Fragment {
     LinearLayout editFeaturedPhoto1, editFeaturedPhoto2, editFeaturedPhoto3, editFeaturedPhoto4,editFeaturedPhoto5;
     LinearLayout featuredPhotoScheme1, featuredPhotoScheme2, featuredPhotoScheme3, featuredPhotoScheme4,featuredPhotoScheme5;
 
+    BzynessDetails bzynessDetails;
 
     public NewBPhotosFragment() {
         // Required empty public constructor
     }
-    public static NewBPhotosFragment newInstance(int page) {
+    public static NewBPhotosFragment newInstance(int page, BzynessDetails bzynessDetails) {
         NewBPhotosFragment fragment = new NewBPhotosFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_MSG, page);
         fragment.setArguments(args);
+        fragment.bzynessDetails=bzynessDetails;
         return fragment;
     }
 

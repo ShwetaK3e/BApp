@@ -14,7 +14,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
         "error",
         "user",
-        "message"
+        "message",
+        "token"
 })
 public class UserDetails {
 
@@ -24,6 +25,18 @@ public class UserDetails {
     private User user;
     @JsonProperty("message")
     private String message= null;
+    @JsonProperty("token")
+    private String accessToken= null;
+
+    @JsonProperty("token")
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    @JsonProperty("token")
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     @JsonProperty("error")
     public Boolean getError() {

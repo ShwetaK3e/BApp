@@ -124,7 +124,8 @@
     <string name="edit">Edit</string>
     <string name="join_us">Join Us</string>
     <string name="sign_in">Sign In</string>
-    <string name="bzyness_name">Bzyness Name</string>
+    <string name="hint_bzyness_name">Bzyness Name</string>
+    <string name="hint_alias_name">Alias Name</string>
     <string name="product_category_name">Category Name</string>
 
 

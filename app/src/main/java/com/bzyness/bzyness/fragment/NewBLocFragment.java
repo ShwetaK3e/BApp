@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.R;
+import com.bzyness.bzyness.models.BzynessDetails;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -86,13 +87,16 @@ public class NewBLocFragment extends Fragment implements OnMapReadyCallback {
     GoogleMapOptions mapOptions;
     static CameraPosition savedCameraPostion;
 
+    BzynessDetails bzynessDetails;
 
 
-    public static NewBLocFragment newInstance(int page) {
+
+    public static NewBLocFragment newInstance(int page,BzynessDetails bzynessDetails) {
         NewBLocFragment fragment = new NewBLocFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_MSG, page);
         fragment.setArguments(args);
+        fragment.bzynessDetails=bzynessDetails;
         return fragment;
     }
 

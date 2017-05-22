@@ -1,5 +1,7 @@
 package com.bzyness.bzyness.activity;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +9,18 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.LinkAddress;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -23,13 +29,25 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bzyness.bzyness.AppUtils.Constants;
+import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.NewBDetailsAdapter;
 import com.bzyness.bzyness.fragment.NewBLocFragment;
 import com.bzyness.bzyness.fragment.NewBPhotosFragment;
+import com.bzyness.bzyness.models.BzynessDetails;
+import com.bzyness.bzyness.models.ServerResponse;
+import com.bzyness.bzyness.services.LoginService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 /**
  * Created by Pervacio on 3/25/2017.
@@ -49,6 +67,21 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
 
     EditText businessName, aliasName;
     ImageButton editBusinessName, editAliasName;
+
+    Button save_details;
+    private final String NONE="NONE";
+    private final String BZYNESS_CREATED="BZYNESS_CREATED";
+    private final String BZYNESS_TAG_SAVED="BZYNESS_TAG_SAVED";
+    private final String BZYNESS_LOC_SAVED="BZYNESS_LOC_SAVED";
+    private final String BZYNESS_PHOTO_SAVED="BZYNESS_PHOTO_SAVED";
+    private final String BZYNESS_COVER_PIC_SAVED="BZYNESS_COVER_PIC_SAVED";
+    private final String BZYNESS_LOGO_SAVED="BZYNESS_LOGO_SAVED";
+    private String what_is_saved=NONE;
+
+    BzynessDetails bzynessDetails;
+
+    private final String TAG=NewBusinessDetailsActivity.class.getSimpleName();
+
 
     BroadcastReceiver nonetwork;
 
@@ -152,14 +185,56 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
         });
 
 
+        save_details=(Button)findViewById(R.id.save_new_bzyness);
+        save_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (what_is_saved){
+                    case NONE:
+                          String bzyness_name = businessName.getText().toString().trim();
+                          Log.i(TAG, bzyness_name + "------");
+                          if (bzyness_name.length() == 0) {
+                              businessName.requestFocus();
+                              lManager.showSoftInput(businessName, 0);
+                              Toast.makeText(NewBusinessDetailsActivity.this, "Bzyness Name Missing", Toast.LENGTH_SHORT).show();
+                          } else {
+                              bzynessDetails.setBzyness_name(bzyness_name);
+                              String alias_name = aliasName.getText().toString().trim();
+                              Log.i(TAG, alias_name + "------");
+                              if (alias_name.length() == 0) {
+                                  aliasName.requestFocus();
+                                  lManager.showSoftInput(aliasName, 0);
+                                  Toast.makeText(NewBusinessDetailsActivity.this, "Alias Name Missing", Toast.LENGTH_SHORT).show();
+                              } else {
+                                  bzynessDetails.setAlias_name(alias_name);
+                                  if (bzynessDetails.getBzyness_type_id() == null) {
+                                      Toast.makeText(NewBusinessDetailsActivity.this, "Select Bzyness Type", Toast.LENGTH_SHORT).show();
+                                  } else if (bzynessDetails.getBzyness_category_id() == null) {
+                                      Toast.makeText(NewBusinessDetailsActivity.this, "Select Bzyness Category", Toast.LENGTH_SHORT).show();
+                                  } else {
+                                      new SaveNewBzynessService().execute();
+                                  }
+                              }
+                          }
+                          break;
+                    case BZYNESS_CREATED:
+                        }
+        }
+        });
+
+        bzynessDetails=new BzynessDetails();
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(3);
-        viewPager.setAdapter(new NewBDetailsAdapter(getSupportFragmentManager(), this));
+        viewPager.setAdapter(new NewBDetailsAdapter(getSupportFragmentManager(), this,bzynessDetails));
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
         tabLayout.setupWithViewPager(viewPager);
+
+
+
     }
 
     private void imageChooser(int requestCode, String chooserTitle){
@@ -202,4 +277,192 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
          }
        }
     }
+
+
+    class SaveNewBzynessService extends AsyncTask<Void, Void, String> {
+
+        OkHttpClient client;
+        private int responseCode;
+        ProgressDialog pd;
+        String email, password;
+        private final String TAG = SaveNewBzynessService.class.getSimpleName();
+
+
+        public SaveNewBzynessService() {
+            Log.i(TAG, "New Bzyness Add Ctor");
+            pd=new ProgressDialog(NewBusinessDetailsActivity.this);
+
+        }
+
+        String doPostRequest(String url) throws IOException {
+            Log.i(TAG, "Add new Bzyness service post Request"+ bzynessDetails.getBzyness_name()+ " "+ bzynessDetails.getAlias_name()+" "+bzynessDetails.getBzyness_type_id()+" "+bzynessDetails.getBzyness_category_id());
+            FormBody.Builder builder = new FormBody.Builder();
+                   builder.add("name",bzynessDetails.getBzyness_name());
+                   builder.add("aliasName",bzynessDetails.getAlias_name());
+                   builder.add("typeId",bzynessDetails.getBzyness_type_id());
+                   builder.add("categoryId",bzynessDetails.getBzyness_category_id());
+            RequestBody body = builder.build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization","Bearer "+ BaseActivity.getStringFromPref(NewBusinessDetailsActivity.this,Constants.pref_accessToken))
+                    .post(body).build();
+            Response response = client.newCall(request).execute();
+            responseCode = response.code();
+            return response.body().string();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            client = new OkHttpClient();
+            String url = Constants.CREATE_BUSINESS_URL;
+            String JsonResponse = null;
+            try {
+                JsonResponse = doPostRequest(url);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.i(TAG, "Add new Bzyness service postExecute"+JsonResponse);
+            return JsonResponse;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "Add new Bzyness service preExecute");
+            super.onPreExecute();
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG, "Add new Bzyness service postExecute");
+            super.onPostExecute(result);
+            pd.dismiss();
+            if (responseCode == 0) {
+                LinearLayout layout = null;
+                layout = (LinearLayout) NewBusinessDetailsActivity.this.findViewById(R.id.new_bzyness_layout);
+                Snackbar snackbar = Snackbar.make(layout, Constants.NO_NETWORK, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            } else if (result != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                ServerResponse serverResponse = new ServerResponse();
+                try {
+                    serverResponse = objectMapper.readValue(result, ServerResponse.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (serverResponse.getError()) {
+                    Toast.makeText(NewBusinessDetailsActivity.this, "Try Again !!", Toast.LENGTH_SHORT).show();
+                } else {
+                    what_is_saved=BZYNESS_CREATED;
+                    bzynessDetails.setBzyness_id(serverResponse.getBzynessId());
+                    if(bzynessDetails.getBzyness_tags()!=null){
+                        new SaveNewBzynessTagService().execute();
+                    }
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Log.i(TAG, "Add new Bzyness service , success");
+                }
+                Log.i(TAG, "Add new Bzyness service , responseCode:" + responseCode);
+            } else {
+                Log.i(TAG, "Add new Bzyness service , null result");
+            }
+        }
+    }
+
+
+
+    class SaveNewBzynessTagService extends AsyncTask<Void, Void, String> {
+
+        OkHttpClient client;
+        private int responseCode;
+        ProgressDialog pd;
+
+        private final String TAG = SaveNewBzynessTagService.class.getSimpleName();
+
+
+        public SaveNewBzynessTagService() {
+            Log.i(TAG, "New Bzyness Tag Add Ctor");
+            pd=new ProgressDialog(NewBusinessDetailsActivity.this);
+
+        }
+
+        String doPostRequest(String url, String tag) throws IOException {
+            Log.i(TAG, "Add new Bzyness Tag service post Request"+ bzynessDetails.getBzyness_name()+ " "+ bzynessDetails.getAlias_name()+" "+bzynessDetails.getBzyness_type_id()+" "+bzynessDetails.getBzyness_category_id());
+            FormBody.Builder builder = new FormBody.Builder();
+            builder.add("bzynessId",String.valueOf(bzynessDetails.getBzyness_id()));
+            builder.add("tag",tag);
+            RequestBody body = builder.build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization","Bearer "+ BaseActivity.getStringFromPref(NewBusinessDetailsActivity.this,Constants.pref_accessToken))
+                    .post(body).build();
+            Response response = client.newCall(request).execute();
+            responseCode = response.code();
+            return response.body().string();
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+
+            client = new OkHttpClient();
+            String url = Constants.ADD_BUSINESS_TAG_URL;
+            String JsonResponse = null;
+            List<String> tags=bzynessDetails.getBzyness_tags();
+            for(String Tag:tags) {
+                try {
+                    JsonResponse = doPostRequest(url,Tag);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            Log.i(TAG, "Add new Bzyness Tag service postExecute"+JsonResponse);
+            return JsonResponse;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.i(TAG, "Add new Bzyness Tag service preExecute");
+            super.onPreExecute();
+            pd.setCancelable(false);
+            pd.show();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            Log.i(TAG, "Add new Bzyness Tag service postExecute");
+            super.onPostExecute(result);
+            pd.dismiss();
+            if (responseCode == 0) {
+                LinearLayout layout = null;
+                layout = (LinearLayout) NewBusinessDetailsActivity.this.findViewById(R.id.new_bzyness_layout);
+                Snackbar snackbar = Snackbar.make(layout, Constants.NO_NETWORK, Snackbar.LENGTH_LONG);
+                snackbar.show();
+            } else if (result != null) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                ServerResponse serverResponse = new ServerResponse();
+                try {
+                    serverResponse = objectMapper.readValue(result, ServerResponse.class);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (serverResponse.getError()) {
+                    Toast.makeText(NewBusinessDetailsActivity.this, "Try Again !!", Toast.LENGTH_SHORT).show();
+                } else {
+                    what_is_saved=BZYNESS_TAG_SAVED;
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Log.i(TAG, "Add new Bzyness Tag service , success");
+                }
+                Log.i(TAG, "Add new Bzyness Tag service , responseCode:" + responseCode);
+            } else {
+                Log.i(TAG, "Add new Bzyness Tag service , null result");
+            }
+        }
+    }
+
+
 }
