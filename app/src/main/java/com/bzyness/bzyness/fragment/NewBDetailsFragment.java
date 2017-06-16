@@ -73,7 +73,6 @@ public class NewBDetailsFragment extends Fragment {
 
     List<String> subCategories = new ArrayList<>();
 
-
     BzynessDetails bzynessDetails;
 
     public static final String TAG = NewBDetailsFragment.class.getSimpleName();
@@ -257,7 +256,7 @@ public class NewBDetailsFragment extends Fragment {
                 Log.i(TAG, e.toString());
                 e.printStackTrace();
             }
-            Log.i(TAG, jsonString);
+            Log.i(TAG, "nul"+jsonString);
             return jsonString;
         }
 

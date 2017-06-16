@@ -10,15 +10,20 @@ public class Constants {
     public static final String VALIDATE_LOGIN_URL="http://api.bzyness.com/v1/validateLogin";
     public static final String BUSINESS_TYPE_URL="http://api.bzyness.com/v1/typesOfBzyness";
     public static final String BUSINESS_CATEGORY_URL="http://api.bzyness.com/v1/chooseCategory/";
-    public static final String UPLOAD_IMAGE_URL="http://coreenginex.azurewebsites.net/api/Account/AddProfilePicture";
     public static final String CREATE_BUSINESS_URL="http://api.bzyness.com/v1/startBzyness";
     public static final String ADD_BUSINESS_TAG_URL="http://api.bzyness.com/v1/addBzynessTag";
+    public static final String ADD_BUSINESS_LOGO_URL="http://api.bzyness.com/v1/uploadLogo";
+    public static final String ADD_BUSINESS_COVER1_URL="http://api.bzyness.com/v1/uploadCoverImage";
+    public static final String ADD_BUSINESS_COVER2_URL="http://api.bzyness.com/v1/uploadLogo";
+    public static final String ADD_BUSINESS_COVER3_URL="http://api.bzyness.com/v1/uploadLogo";
+    public static final String ADD_BUSINESS_COVER4_URL="http://api.bzyness.com/v1/uploadLogo";
+    public static final String ADD_BUSINESS_COVER5_URL="http://api.bzyness.com/v1/uploadLogo";
+    public static final String ADD_BUSINESS_LOC_URL="http://api.bzyness.com/v1/addBzynessLocation";
+    public static final String ADD_BUSINESS_PHONE_URL="http://api.bzyness.com/v1/bzyness/phone";
+    public static final String ADD_BUSINESS_WEBSITE_URL="http://api.bzyness.com/v1/bzyness/website";
+    public static final String ADD_BUSINESS_APK_URL="http://api.bzyness.com/v1/bzyness/apk";
+    public static final String ADD_BUSINESS_IPA_URL="http://api.bzyness.com/v1/bzyness/ipa";
 
-    // LOG/ INTENT TAGS
-    public static final String TYPE="type";
-
-    //FireBase urls
-    public static final String REGISTER_FIREBASE_URL="https://chatappfirebase-e48ea.firebaseio.com/users.json";
 
     //Intent Request constants
     public static final int PICK_PROFILE_IMAGE_REQUEST=100;

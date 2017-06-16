@@ -79,8 +79,6 @@ public class SessionManager {
         Log.i(TAG,"SessionManager updated expiresIN:"+getExpiresIn());
     }
 
-
-
     public boolean isLoggedIn(){
         updateExpiresIn();
         if(getExpiresIn()<=0)
@@ -96,10 +94,6 @@ public class SessionManager {
     public String getUserName(){
         Log.i(TAG,"SessionManager userName:"+pref.getString(pref_uname,null));
         return pref.getString(pref_uname,null);
-    }
-    public void setUserName(String fName){
-        editor.putString(pref_uname,fName);
-        Log.i(TAG,"SessionManager userName:"+pref.getString(pref_uname,null));
     }
 
     public String getEmail(){

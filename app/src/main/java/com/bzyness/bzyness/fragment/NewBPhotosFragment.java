@@ -20,9 +20,11 @@ import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.models.BzynessDetails;
 
+import java.io.File;
 import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
+import static com.bzyness.bzyness.BaseActivity.getPath;
 
 
 public class NewBPhotosFragment extends Fragment {
@@ -181,26 +183,32 @@ public class NewBPhotosFragment extends Fragment {
 
         if (resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imagePath = data.getData();
+            File coverPic= new File(getPath(getActivity(),imagePath));
+
             switch (requestCode){
                 case Constants.PICK_IMAGE1_REQUEST:
+                    bzynessDetails.setCoverImage2(coverPic);
                     Glide.with(getActivity()).load(imagePath).into(featuredPhoto1);
                     addFeaturedPhoto1.setVisibility(View.INVISIBLE);
                     editFeaturedPhoto1.setVisibility(View.VISIBLE);
                     featuredPhotoScheme1.setVisibility(View.INVISIBLE);
                     break;
                 case Constants.PICK_IMAGE2_REQUEST:
+                    bzynessDetails.setCoverImage3(coverPic);
                     Glide.with(getActivity()).load(imagePath).into(featuredPhoto2);
                     addFeaturedPhoto2.setVisibility(View.INVISIBLE);
                     editFeaturedPhoto2.setVisibility(View.VISIBLE);
                     featuredPhotoScheme2.setVisibility(View.INVISIBLE);
                     break;
                 case Constants.PICK_IMAGE3_REQUEST:
+                    bzynessDetails.setCoverImage4(coverPic);
                     Glide.with(getActivity()).load(imagePath).into(featuredPhoto3);
                     addFeaturedPhoto3.setVisibility(View.INVISIBLE);
                     editFeaturedPhoto3.setVisibility(View.VISIBLE);
                     featuredPhotoScheme3.setVisibility(View.INVISIBLE);
                     break;
                 case Constants.PICK_IMAGE4_REQUEST:
+                    bzynessDetails.setCoverImage5(coverPic);
                     Glide.with(getActivity()).load(imagePath).into(featuredPhoto4);
                     addFeaturedPhoto4.setVisibility(View.INVISIBLE);
                     editFeaturedPhoto4.setVisibility(View.VISIBLE);

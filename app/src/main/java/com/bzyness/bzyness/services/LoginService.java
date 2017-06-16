@@ -12,14 +12,10 @@ import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
+import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.activity.HomeActivity;
@@ -139,13 +135,11 @@ public class LoginService extends AsyncTask<String,Void,String> {
                     Toast.makeText(activity, "Log in Successful", Toast.LENGTH_SHORT).show();
                     new ValidateLoginService(activity).execute(serverResponse.getAccessToken(),Long.toString(serverResponse.getExpiresIn()));
                 } else {
-                    TextInputEditText txtInputEditTxt1 = null, txtInputEditTxt2 = null;
-                    txtInputEditTxt1 = (TextInputEditText) activity.findViewById(R.id.rEditEmail);
-                    txtInputEditTxt2 = (TextInputEditText) activity.findViewById(R.id.rEditPassword);
+                    TextInputEditText userName = null, passWord = null;
+                    userName = (TextInputEditText) activity.findViewById(R.id.rEditEmail);
+                    passWord = (TextInputEditText) activity.findViewById(R.id.rEditPassword);
                     Log.i(TAG, "Login service , email error ");
-                    txtInputEditTxt1.setText("");
-                    txtInputEditTxt2.setText("");
-                    txtInputEditTxt1.requestFocus();
+                    UserFormValidity.invalidLoginCredentials(userName,passWord);
                     Toast.makeText(activity, "Sorry,Invalid Details. ", Toast.LENGTH_SHORT).show();
                 }
             } else {
@@ -154,7 +148,7 @@ public class LoginService extends AsyncTask<String,Void,String> {
         }
 
         Log.i(TAG, "Login Service response, Response Code:"+ responseCode);
-        }
+    }
 
 
 

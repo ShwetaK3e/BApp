@@ -21,8 +21,6 @@ import android.widget.TextView;
 public abstract class DetectNetworkConnectivity extends BroadcastReceiver {
 
         public static final String TAG = DetectNetworkConnectivity.class.getSimpleName();
-        Dialog myDialog = null;
-        public boolean dilaogStatus=false;
         Context mContext;
 
         @Override
@@ -39,18 +37,10 @@ public abstract class DetectNetworkConnectivity extends BroadcastReceiver {
             ConnectivityManager cm = (ConnectivityManager)mContext
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-                return true;
-            }
-            return false;
-        }
-
-        // Alert Dialogue
-       /* public void networkMessageDialog(String title, String message) {
-            Snackbar snackbar=Snackbar.make()
-        }*/
-
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+ }
 
 
 

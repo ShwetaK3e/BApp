@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.models.BusinessTypeDetails;
@@ -145,7 +143,7 @@ public class BaseActivity {
 
     private static  void getChatUserList(Context context){
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constants.CHAT_USERS_TABLE_CREATE_URL, new Response.Listener<String>(){
+        /*StringRequest request = new StringRequest(Request.Method.GET, Constants.CHAT_USERS_TABLE_CREATE_URL, new Response.Listener<String>(){
             @Override
             public void onResponse(String s) {
                 ObjectMapper objectMapper=new ObjectMapper();
@@ -167,7 +165,7 @@ public class BaseActivity {
         });
 
         RequestQueue rQueue = Volley.newRequestQueue(context);
-        rQueue.add(request);
+        rQueue.add(request);*/
     }
 
 
@@ -185,6 +183,22 @@ public class BaseActivity {
         Intent intent=new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
         activity.startActivityForResult(Intent.createChooser(intent,chooserTitle),requestCode);
+    }
+
+    public static String getPath(Context context,Uri uri) {
+
+        String result;
+
+        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = uri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
     }
 
     public static String getLoginParams(String name,String password){
@@ -205,10 +219,6 @@ public class BaseActivity {
         imgList.add(context.getResources().getDrawable(R.drawable.ic_add_product));
     }
 
-    public static String getStringFromPref(Context context,String key){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Constants.LOGIN_PREF_NAME,Context.MODE_PRIVATE);
-        return sharedPreferences.getString(key,"");
-    }
 
 }
 

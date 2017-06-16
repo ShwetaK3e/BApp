@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
+import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.activity.LoginActivity;
@@ -113,13 +114,14 @@ public class RegistrationService extends AsyncTask<Map<String,String>,Void,Strin
             if (serverResponse.getError()) {
                 if (EMAIL_ERROR_MSG.equalsIgnoreCase(serverResponse.getMessage())) {
                     txtInputEditTxt = (TextInputEditText) activity.findViewById(R.id.rEditEmail);
+                    UserFormValidity.userExists(txtInputEditTxt,"email");
                     Log.i(TAG, "Registration service , email error ");
                 } else if (PHONE_ERROR_MSG.equalsIgnoreCase(serverResponse.getMessage())) {
                     txtInputEditTxt = (TextInputEditText) activity.findViewById(R.id.rEditPhone);
+                    UserFormValidity.userExists(txtInputEditTxt,"phone");
                     Log.i(TAG, "Registration service , phone error ");
                 }
-                txtInputEditTxt.setText("");
-                txtInputEditTxt.requestFocus();
+
             } else {
                 String login_params= BaseActivity.getLoginParams(email,password);
                 new LoginService(activity).execute(login_params,email);

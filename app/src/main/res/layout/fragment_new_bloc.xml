@@ -59,14 +59,7 @@
                     android:orientation="horizontal"
                     android:background="#8888"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="@android:color/transparent"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:id="@+id/add_loc_btn">
+
 
                     <LinearLayout
                         android:id="@+id/add_loc_from_google"
@@ -76,7 +69,7 @@
                         android:padding="5dp"
                         android:background="#66FEE767"
                         android:layout_marginTop="10dp"
-                        android:layout_centerHorizontal="true"
+                        android:layout_centerInParent="true"
                         android:layout_marginBottom="5dp">
 
 
@@ -84,52 +77,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Add Location From Google"
+                            android:text="SNAP YOUR LOCATION"
                             android:textColor="@color/black"
-                            android:textSize="15sp"/>
+                            android:textSize="15sp"
+                            android:background="@android:color/transparent"/>
 
-                        <ImageView
+                        <de.hdodenhof.circleimageview.CircleImageView
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:paddingLeft="2dp"
+                            android:paddingLeft="5dp"
                             android:src="@drawable/ic_map_icon"
-                            android:scaleType="centerInside"
+                            android:scaleType="centerCrop"
                             android:layout_gravity="center"/>
                     </LinearLayout>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="OR"
-                        android:textColor="@color/white"/>
-                    <LinearLayout
-                        android:id="@+id/add_new_loc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:orientation="horizontal"
-                        android:padding="5dp"
-                        android:background="#66FEE767"
-                        android:layout_marginTop="5dp"
-                        android:layout_centerHorizontal="true">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Add New Location"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"/>
-
-
-                        <ImageView
-                            android:layout_width="25dp"
-                            android:layout_height="25dp"
-                            android:paddingLeft="2dp"
-                            android:src="@drawable/ic_add_image"   />
-                    </LinearLayout>
 
 
 
-                </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -154,27 +119,7 @@
                         android:src="@drawable/ic_edit"   />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_alignParentRight="true"
-                    android:padding="2dp"
-                    android:background="@color/light_grey"
-                    android:id="@+id/cancel_edit">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Cancel "
-                        android:textColor="@color/colorPrimary" />
-
-                    <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:padding="2dp"
-                        android:src="@drawable/ic_cancel"   />
-                </LinearLayout>
 
 
 
@@ -187,94 +132,21 @@
                 android:layout_marginTop="2dp"
                 android:id="@+id/separator"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="If this is not the exact location. Scroll around and touch the exact location for 2s. "
+                    android:text=" If this is not your shop location, SKIP "
                     android:gravity="center"
-                    android:id="@+id/change_loc_guideline"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="If your place is not in G-Maps.Select 'Add Location to Google'. "
-                    android:gravity="center"
-                    android:id="@+id/add_place_guideline"/>
+                    android:textColor="@color/light_red"
+                    android:textStyle="bold"
+                    android:id="@+id/change_loc_guideline"
+                    android:padding="6dp"/>
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="1"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="2dp"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:id="@+id/loc_details">
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.6"
-                        android:text="10 DOWNING STREET"
-                        android:gravity="center_horizontal"
-                        android:textStyle="bold"
-                        android:id="@+id/loc_name"/>
 
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:weightSum="1"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center_horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_love"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="2dp"
-                            android:text="0"
-                            android:id="@+id/loc_love"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".2"
-                        android:weightSum="1"
-                        android:orientation="horizontal"
-                        android:layout_gravity="center_horizontal">
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_ratings"
-                            android:layout_gravity="center"/>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical"
-                            android:paddingLeft="2dp"
-                            android:text="3.5"
-                            android:id="@+id/loc_rating"/>
-                    </LinearLayout>
-                </LinearLayout>
-
-            </FrameLayout>
 
 
 
@@ -356,7 +228,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:weightSum="1"
-            android:id="@+id/loc_form">
+            android:id="@+id/loc_form"
+            android:visibility="gone">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
@@ -577,31 +450,10 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:textColor="@color/colorPrimary"
-            android:background="@android:color/transparent"
-            android:id="@+id/save_place"
-            android:layout_gravity="center"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"
-                android:textColor="@color/colorPrimary"
-                android:background="@android:color/transparent"
-                android:id="@+id/edit_place"
-                android:layout_gravity="center"/>
 
-        </LinearLayout>
+
 
 
 

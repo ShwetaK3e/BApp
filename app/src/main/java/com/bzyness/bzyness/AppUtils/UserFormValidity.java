@@ -35,15 +35,21 @@ public class UserFormValidity {
     private static final String PHONE_MSG = "##########";
     private static final String NAME_MSG = "invalid name";
     private static final String PASSWORD_MSG = "1 special char| 1 Caps | 1 Numeric (8)";
-    private static final String CPASSWORD_MSG="Doesn't match with the password";
+
 
     //Error Messages from Server-side
-    private static final String SAME_UNAME_MSG = "This username is already taken.";
-    private static final String NO_EMAIL_MSG = "This email doesn't exist.";
+    private static final String SAME_PHONE_NO_MSG = "This Phone No. is already Registered.";
+    private static final String SAME_EMAIL_MSG = "This Email is already Registered.";
+    private static final String SAME_EMAIL_ISSUE = "EMAIL";
+    private static final String SAME_PHONE_ISSUE = "PHONE";
 
 
-    //for maintaining edittxt bg color
-    private static ColorFilter defaultColorFilter;
+
+    // Error Login Messages
+    private static final String INVALID_UNAME_MSG = "This username doesn't exist.";
+    private static final String INVALID_PASSWORD_MSG = "Password doesn't match";
+
+
 
 
     // call this method when you need to check email validation
@@ -93,7 +99,6 @@ public class UserFormValidity {
     public static boolean hasText(TextInputEditText editText) {
 
         String text = editText.getText().toString().trim();
-        defaultColorFilter = DrawableCompat.getColorFilter(editText.getBackground());
         editText.setError(null);
 
         // length 0 means there is no text
@@ -106,23 +111,25 @@ public class UserFormValidity {
     }
 
 
-    public static void userNameExists(TextInputEditText editText,TextInputLayout layout){
+    public static void userExists(TextInputEditText editText, String duplicateIssue){
         editText.setText("");
-        defaultColorFilter = DrawableCompat.getColorFilter(editText.getBackground());
-        layout.setErrorEnabled(true);
-        layout.setError(SAME_UNAME_MSG);
-        editText.getBackground().setColorFilter(defaultColorFilter);
+        if(SAME_EMAIL_ISSUE.equalsIgnoreCase(duplicateIssue)){
+            editText.setError(SAME_EMAIL_MSG);
+        }else if(SAME_PHONE_ISSUE.equalsIgnoreCase(duplicateIssue)){
+            editText.setError(SAME_PHONE_NO_MSG);
+        }
+        editText.requestFocus();
+
     }
 
-    public static void invalidCredentials(TextInputEditText userName, TextInputEditText password,TextInputLayout layout){
+
+
+    public static void invalidLoginCredentials(TextInputEditText userName, TextInputEditText password){
         userName.setText("");
         password.setText("");
-        defaultColorFilter = DrawableCompat.getColorFilter(userName.getBackground());
-        layout.setErrorEnabled(true);
-        layout.setError(SAME_UNAME_MSG);
-        userName.getBackground().setColorFilter(defaultColorFilter);
-        password.getBackground().setColorFilter(defaultColorFilter);
-
+        userName.setError(INVALID_UNAME_MSG);
+        password.setError(INVALID_PASSWORD_MSG);
+        userName.requestFocus();
     }
 
 }

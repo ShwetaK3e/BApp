@@ -134,9 +134,18 @@ public class NewBOthrDetailsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 header.setBackgroundColor(headerColorDone);
-                if (header == websiteHeader) websiteSaved = true;
-                else if (header == phoneHeader) phoneSaved = true;
-                else androidAppSaved = true;
+                if (header == websiteHeader) {
+                    websiteSaved = true;
+                    bzynessDetails.setWebsite_link(details1.getText().toString().trim());
+                }
+                else if (header == phoneHeader){
+                    phoneSaved = true;
+                    bzynessDetails.setPhone_no(details1.getText().toString().trim());
+                }
+                else {
+                    androidAppSaved = true;
+                    bzynessDetails.setApk_link(details1.getText().toString().trim());
+                }
             }
         });
         saveDetails2 = (Button) view.findViewById(R.id.save_details_2);
@@ -145,9 +154,9 @@ public class NewBOthrDetailsFragment extends Fragment {
             public void onClick(View v) {
                 header.setBackgroundColor(headerColorDone);
                 iphoneAppSaved= true;
+                bzynessDetails.setIpa_link(details1.getText().toString().trim());
             }
         });
-
 
         return view;
     }
