@@ -1,10 +1,8 @@
 package com.bzyness.bzyness.activity;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -26,29 +24,34 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
-import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.models.UserDetails;
-import com.bzyness.bzyness.services.RegistrationService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.bzyness.bzyness.models.LoginServerResponse;
+import com.bzyness.bzyness.models.RegistrationServerResponse;
+import com.bzyness.bzyness.services.ServiceGenerator;
+import com.bzyness.bzyness.services.ValidateUserService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.bzyness.bzyness.BaseActivity.authenticatedBzynessClient;
+import static com.bzyness.bzyness.BaseActivity.bzynessClient;
 
 public class RegisterActivity extends AppCompatActivity {
     LinearLayout reg_layout;
     TextInputEditText fullNameEdit,  emailEdit, phoneEdit,passwordEdit;
     TextInputLayout   fullName, email, phone, password;
     Button btnRegister;
-    final String TAG= getClass().getSimpleName();
+    private  static final String TAG= RegisterActivity.class.getSimpleName();
 
     CheckBox showPasswordButton;
     TextView joinUs;
@@ -59,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String PHONE_PARAM_KEY="mobile";
 
     BroadcastReceiver nonetwork;
+
 
 
     @Override
@@ -135,26 +139,87 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    public void register(){
+    void register(){
 
         if(validateForm()) {
             Log.i(TAG,"register validated");
-            try {
 
-                Map<String, String> newUserDetails=new HashMap<>();
+                final Map<String, String> newUserDetails=new HashMap<>();
                 newUserDetails.put(FULL_NAME_PARAM_KEY,fullNameEdit.getText().toString().trim());
                 newUserDetails.put(EMAIL_PARAM_KEY,emailEdit.getText().toString().trim());
                 newUserDetails.put(PHONE_PARAM_KEY,phoneEdit.getText().toString().trim());
                 newUserDetails.put(PASSWORD_PARAM_KEY,passwordEdit.getText().toString().trim());
-                new RegistrationService(this).execute(newUserDetails);
+                if(bzynessClient!=null) {
+                    bzynessClient.registerClient(newUserDetails)
+                            .subscribeOn(Schedulers.newThread())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Subscriber<RegistrationServerResponse>() {
+                                @Override
+                                public void onCompleted() {
+                                    Log.i(TAG, "registration completed");
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    Log.i(TAG, "error");
+                                }
+
+                                @Override
+                                public void onNext(RegistrationServerResponse registrationServerResponse) {
+                                    if(!registrationServerResponse.getError()){
+                                        Map<String,String> user=new HashMap<>();
+                                        user.put(EMAIL_PARAM_KEY,newUserDetails.get(EMAIL_PARAM_KEY));
+                                        user.put(PASSWORD_PARAM_KEY,newUserDetails.get(PASSWORD_PARAM_KEY));
+                                        Log.i(TAG,"registered successfully");
+                                        Toast.makeText(RegisterActivity.this,"Successfully Registered",Toast.LENGTH_SHORT).show();
+                                        login(user);
+                                    }else{
+                                        Toast.makeText(RegisterActivity.this,registrationServerResponse.getMessage(),Toast.LENGTH_SHORT).show();
+                                        Log.i(TAG,registrationServerResponse.getMessage());
+                                    }
+                                }
+                            });
+                }
+                //new RegistrationService(this).execute(newUserDetails);
                // addChatUserT(newUser.getUserName(),newUser.getFirstName()+" "+newUser.getLastName(),newUser.getPhoneNumber());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
         }else{
             Log.i(TAG,"registration invalidated");
         }
 
+    }
+
+    void login(Map<String,String> user){
+        bzynessClient.loginClient(user)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<LoginServerResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.i(TAG,"Login Completed");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.i(TAG,e.getMessage());
+                        Toast.makeText(RegisterActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(LoginServerResponse loginServerResponse) {
+                        if(!loginServerResponse.getError()){
+                            authenticatedBzynessClient=ServiceGenerator.createService(ServiceGenerator.BzynessClient.class,loginServerResponse.getAccessToken());
+                            Toast.makeText(RegisterActivity.this, "Successfully Logged in", Toast.LENGTH_SHORT).show();
+                            Intent i=new Intent(RegisterActivity.this, ValidateUserService.class);
+                            i.putExtra("serverResponse",loginServerResponse);
+                            startService(i);
+                            Log.i(TAG,"Login Successfully");
+                        }else {
+                            Log.i(TAG,loginServerResponse.getMessage());
+                            Toast.makeText(RegisterActivity.this, "Try Logging In Again !!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     @Override

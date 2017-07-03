@@ -38,6 +38,7 @@ import com.bzyness.bzyness.adapters.NewBDetailsAdapter;
 import com.bzyness.bzyness.fragment.NewBLocFragment;
 import com.bzyness.bzyness.fragment.NewBPhotosFragment;
 import com.bzyness.bzyness.models.BzynessDetails;
+import com.bzyness.bzyness.models.CreateBzynessServerResponse;
 import com.bzyness.bzyness.models.ServerResponse;
 import com.bzyness.bzyness.services.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,7 +46,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.FormBody;
 import okhttp3.MediaType;
@@ -54,7 +57,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
+import static com.bzyness.bzyness.BaseActivity.authenticatedBzynessClient;
+import static com.bzyness.bzyness.BaseActivity.bzynessClient;
 import static com.bzyness.bzyness.BaseActivity.getPath;
 
 /**
@@ -97,7 +105,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
     BzynessDetails bzynessDetails;
 
     private final String TAG=NewBusinessDetailsActivity.class.getSimpleName();
-    String LOGO_IMAGE_PATH=new String();
+
 
 
     BroadcastReceiver nonetwork;
@@ -241,6 +249,9 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                                    } else if (bzynessDetails.getBzyness_category_id() == null) {
                                        Toast.makeText(NewBusinessDetailsActivity.this, "Select Bzyness Category", Toast.LENGTH_SHORT).show();
                                    } else {
+
+
+
                                        new SaveNewBzynessService(bzynessDetails.getBzyness_name(), bzynessDetails.getAlias_name(), bzynessDetails.getBzyness_type_id(), bzynessDetails.getBzyness_category_id()).execute();
                                    }
                                }
@@ -968,6 +979,41 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
             todos.add(BZYNESS_IPA);
         }
         return  todos;
+    }
+
+    private void createNewBzyness(String bzynessName, String aliasName, String typeId, String categoryId){
+
+       final Map<String, String> newBzyness=new HashMap<>();
+        newBzyness.put("name",bzynessName);
+        newBzyness.put("aliasName",aliasName);
+        newBzyness.put("typeId",typeId);
+        newBzyness.put("categoryId",categoryId);
+
+        if(authenticatedBzynessClient!=null){
+           authenticatedBzynessClient.createNewBzyness(newBzyness).subscribeOn(Schedulers.newThread())
+                   .observeOn(AndroidSchedulers.mainThread())
+                   .subscribe(new Subscriber<CreateBzynessServerResponse>() {
+                       @Override
+                       public void onCompleted() {
+
+                       }
+
+                       @Override
+                       public void onError(Throwable e) {
+
+                       }
+
+                       @Override
+                       public void onNext(CreateBzynessServerResponse createBzynessServerResponse) {
+                          if(!createBzynessServerResponse.getError()){
+                              done_lists.add(NEW_BZYNESS);
+                          }else{
+                              Toast.makeText(NewBusinessDetailsActivity.this, "Try Again !!", Toast.LENGTH_SHORT).show();
+                          }
+                       }
+                   });
+        }
+
     }
 
 }

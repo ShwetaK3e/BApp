@@ -20,6 +20,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
@@ -27,11 +28,19 @@ import com.bzyness.bzyness.AppUtils.UserFormValidity;
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.services.LoginService;
-import com.fasterxml.jackson.databind.deser.Deserializers;
+import com.bzyness.bzyness.models.LoginServerResponse;
+import com.bzyness.bzyness.services.ServiceGenerator;
+import com.bzyness.bzyness.services.ValidateUserService;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+import static com.bzyness.bzyness.BaseActivity.authenticatedBzynessClient;
+import static com.bzyness.bzyness.BaseActivity.bzynessClient;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,6 +53,10 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = LoginActivity.class.getSimpleName();
     private TextView signIn;
     BroadcastReceiver nonetwork;
+
+    private static final String EMAIL_PARAM_KEY="email";
+    private static final String PASSWORD_PARAM_KEY="password";
+
 
 
     @Override
@@ -99,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
         Typeface tf= Typeface.createFromAsset(getAssets(),"fonts/allura_regular.ttf");
         signIn.setTypeface(tf);
 
+
+
     }
 
 
@@ -106,10 +121,45 @@ public class LoginActivity extends AppCompatActivity {
 
         if(validateForm()) {
             Log.i(TAG, "Login");
-            String email=emailEdit.getText().toString().trim();
-            String password=passwordEdit.getText().toString().trim();
-            String login_params= BaseActivity.getLoginParams(email,password);
-            new LoginService(this).execute(login_params,email);
+            Map<String, String> user= new HashMap<>();
+            user.put(EMAIL_PARAM_KEY,emailEdit.getText().toString().trim());
+            user.put(PASSWORD_PARAM_KEY,passwordEdit.getText().toString().trim());
+            if(bzynessClient!=null){
+                bzynessClient.loginClient(user)
+                        .subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<LoginServerResponse>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.i(TAG,e.getMessage());
+                                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onNext(LoginServerResponse loginServerResponse) {
+
+
+                                if(!loginServerResponse.getError()){
+                                    authenticatedBzynessClient=ServiceGenerator.createService(ServiceGenerator.BzynessClient.class,loginServerResponse.getAccessToken());
+                                    Log.i(TAG,loginServerResponse.getAccessToken());
+                                    Toast.makeText(LoginActivity.this, "Successfully Logged in", Toast.LENGTH_SHORT).show();
+                                    Intent i=new Intent(LoginActivity.this, ValidateUserService.class);
+                                    i.putExtra("serverResponse",loginServerResponse);
+                                    startService(i);
+                                }else {
+                                    Toast.makeText(LoginActivity.this, "Try Again !!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+
+
+           // new LoginService(this).execute(login_params,email);
         }
     }
 
@@ -163,4 +213,5 @@ public class LoginActivity extends AppCompatActivity {
            }
         }
     }
+
 }

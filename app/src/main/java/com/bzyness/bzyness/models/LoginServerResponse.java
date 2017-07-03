@@ -3,7 +3,6 @@ package com.bzyness.bzyness.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -20,39 +19,38 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "expires"
 
 })
-public class ServerResponse implements Parcelable {
+public class LoginServerResponse implements Parcelable {
 
-    //Common
+
     @JsonProperty("error")
-    private boolean error;
+    private boolean error=false;
 
-    //Register , Login error
-    @JsonProperty("message")
-    private String message;
-
-    //Login
+    //onSuccess
     @JsonProperty("token")
-    private String accessToken;
+    private String token="";
     @JsonProperty("expires")
-    private Long expiresIn;
+    private Long expires=0L;
 
-    //startBzynessFirstcall
-    @JsonProperty("bzynessId")
-    private Integer bzynessId;
+    //onError
+    @JsonProperty("message")
+    private String message="";
 
-    public ServerResponse(){}
 
-    protected ServerResponse(Parcel in) {
+    public LoginServerResponse(){}
+
+    protected LoginServerResponse(Parcel in) {
         error = in.readByte() != 0;
         message = in.readString();
-        accessToken = in.readString();
+        token = in.readString();
+        expires=in.readLong();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeByte((byte) (error ? 1 : 0));
         dest.writeString(message);
-        dest.writeString(accessToken);
+        dest.writeString(token);
+        dest.writeLong(expires);
     }
 
     @Override
@@ -60,27 +58,18 @@ public class ServerResponse implements Parcelable {
         return 0;
     }
 
-    public static final Creator<ServerResponse> CREATOR = new Creator<ServerResponse>() {
+    public static final Creator<LoginServerResponse> CREATOR = new Creator<LoginServerResponse>() {
         @Override
-        public ServerResponse createFromParcel(Parcel in) {
-            return new ServerResponse(in);
+        public LoginServerResponse createFromParcel(Parcel in) {
+            return new LoginServerResponse(in);
         }
 
         @Override
-        public ServerResponse[] newArray(int size) {
-            return new ServerResponse[size];
+        public LoginServerResponse[] newArray(int size) {
+            return new LoginServerResponse[size];
         }
     };
 
-    @JsonProperty("bzynessId")
-    public Integer getBzynessId() {
-        return bzynessId;
-    }
-
-    @JsonProperty("bzynessId")
-    public void setBzynessId(Integer bzynessId) {
-        this.bzynessId = bzynessId;
-    }
 
     @JsonProperty("error")
     public boolean getError() {
@@ -105,22 +94,22 @@ public class ServerResponse implements Parcelable {
 
     @JsonProperty("token")
     public String getAccessToken() {
-        return accessToken;
+        return token;
     }
 
     @JsonProperty("token")
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setAccessToken(String token) {
+        this.token = token;
     }
 
     @JsonProperty("expires")
     public Long getExpiresIn() {
-        return expiresIn;
+        return expires;
     }
 
     @JsonProperty("expires")
-    public void setExpiresIn(Long expiresIn) {
-        this.expiresIn = expiresIn;
+    public void setExpiresIn(Long expires) {
+        this.expires = expires;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.bzyness.bzyness.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bzyness.bzyness.R;
+import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
+import com.bzyness.bzyness.fragment.NewBDetailsFragment;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,10 +30,10 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
 
     private Map<String,String> names=new HashMap<>();
     private Map<String,String> imagesURI=new HashMap<>();
-    private Context context;
     private OnMyItemClickListener onMyItemClickListener;
 
     private static String TAG=BusinessTypeAdapter.class.getSimpleName();
+    Context context;
 
 
     public BusinessTypeAdapter(Context context, Map<String,String > names, Map<String, String> imagesURI, OnMyItemClickListener onMyItemClickListener) {

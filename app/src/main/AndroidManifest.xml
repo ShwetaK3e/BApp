@@ -5,16 +5,14 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
          location permissions for the 'MyLocation' functionality.
     -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-
-
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name="android.support.multidex.MultiDexApplication"
@@ -61,7 +59,12 @@
         <activity android:name=".activity.ChatUsersActivity" />
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.HomeActivity" />
-        <activity android:name=".activity.AddProductActivity"></activity>
+        <activity android:name=".activity.AddProductActivity" />
+
+        <service
+            android:name=".services.ValidateUserService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

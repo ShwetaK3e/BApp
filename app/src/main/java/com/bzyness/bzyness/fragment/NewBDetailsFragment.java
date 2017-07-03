@@ -1,11 +1,6 @@
 package com.bzyness.bzyness.fragment;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,35 +13,26 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bzyness.bzyness.AppUtils.Constants;
-import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.BusinessCategoryAdapter;
 import com.bzyness.bzyness.adapters.BusinessSubCategoryAdapter;
 import com.bzyness.bzyness.adapters.BusinessTypeAdapter;
-import com.bzyness.bzyness.models.BusinessTypeDetails;
+import com.bzyness.bzyness.models.BzynessCategoryDetails;
 import com.bzyness.bzyness.models.BzynessDetails;
-import com.bzyness.bzyness.models.ServerResponse;
-import com.bzyness.bzyness.models.TypesOfBzyness;
-import com.bzyness.bzyness.services.LoginService;
-import com.bzyness.bzyness.services.RegistrationService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.bzyness.bzyness.models.BzynessTypeDetails;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.FormBody;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static android.view.View.VISIBLE;
+import static com.bzyness.bzyness.BaseActivity.bzynessClient;
 
 
 public class NewBDetailsFragment extends Fragment {
@@ -57,7 +43,7 @@ public class NewBDetailsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int page;
 
-    RecyclerView businessDetails;
+    RecyclerView bzynessDetailsList;
     RecyclerView.LayoutManager layoutManager;
     BusinessTypeAdapter typeAdapter;
     BusinessCategoryAdapter categoryAdapter;
@@ -154,9 +140,9 @@ public class NewBDetailsFragment extends Fragment {
         });
 
 
-        businessDetails = (RecyclerView) view.findViewById(R.id.grid_layout);
+        bzynessDetailsList = (RecyclerView) view.findViewById(R.id.grid_layout);
         layoutManager = new GridLayoutManager(getActivity(), 3);
-        businessDetails.setLayoutManager(layoutManager);
+        bzynessDetailsList.setLayoutManager(layoutManager);
 
         populateTypes();
 
@@ -165,12 +151,99 @@ public class NewBDetailsFragment extends Fragment {
 
 
     void populateTypes() {
-        new FetchBusinessTypeService().execute();
+        if(bzynessClient!=null){
+            bzynessClient.getBzynessTypes().subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<BzynessTypeDetails>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(BzynessTypeDetails typesOfBzynesses) {
+                              if(!typesOfBzynesses.getError()){
+
+                                  final Map<String, String> names=new HashMap<String, String>();
+                                  final Map<String,String> typeImages=new HashMap<String, String>();
+
+                                  for (BzynessTypeDetails.TypesOfBzyness type : typesOfBzynesses.getTypesOfBzyness()) {
+                                      names.put(type.getId(), type.getName());
+                                      typeImages.put(type.getId(), type.getName());
+                                  }
+
+                                  typeAdapter = new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
+                                      @Override
+                                      public void onClick(String type_id) {
+                                          String type_name = names.get(type_id).toUpperCase();
+                                          setCategoryGuideLine(type_name);
+                                          typeName.setText(type_name);
+                                          populateCategory(type_id);
+                                          bzynessDetails.setBzyness_type_id(type_id);
+                                          editDetails.setVisibility(VISIBLE);
+                                      }
+                                  });
+                                  bzynessDetailsList.setAdapter(typeAdapter);
+
+                              }
+                        }
+                    });
+        }
+
+
+        //new FetchBusinessTypeService().execute();
 
     }
 
     void populateCategory(String type_id) {
-        new FetchBusinessCategoryService().execute(type_id);
+        if(bzynessClient!=null){
+            bzynessClient.getBzynessCategories(type_id).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<BzynessCategoryDetails>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(BzynessCategoryDetails bzynessCategoryDetails) {
+
+                            if(!bzynessCategoryDetails.getError()){
+                                final List<String> names=new ArrayList<String>();
+                                final Map<String,String> mapID=new HashMap<String, String>();
+                                int i = 0;
+
+                                for (BzynessCategoryDetails.CategoryOfBzyness category : bzynessCategoryDetails.getCategories()) {
+                                    names.add(i, category.getName());
+                                    mapID.put(String.valueOf(i++), category.getId());
+                                }
+                                categoryAdapter = new BusinessCategoryAdapter(getActivity(), names, new BusinessCategoryAdapter.OnMyItemClickListener() {
+                                    @Override
+                                    public void onClick(String position) {
+                                        addSubCategory();
+                                        Log.i(TAG, position + "");
+                                        String CATEGORY_ID = mapID.get(position);
+                                        bzynessDetails.setBzyness_category_id(CATEGORY_ID);
+                                        categoryName.setText(names.get(Integer.parseInt(position)).toUpperCase());
+
+                                    }
+                                });
+                                bzynessDetailsList.setAdapter(categoryAdapter);
+                            }
+                        }
+                    });
+        }
+       // new FetchBusinessCategoryService().execute(type_id);
 
     }
 
@@ -185,7 +258,7 @@ public class NewBDetailsFragment extends Fragment {
                 subCategoryAdapter.notifyDataSetChanged();
             }
         });
-        businessDetails.setAdapter(subCategoryAdapter);
+        bzynessDetailsList.setAdapter(subCategoryAdapter);
         detailsSummaryLayout.setVisibility(VISIBLE);
         sub_category_layout.setVisibility(VISIBLE);
         subCategoryTag.setText("");
@@ -225,7 +298,7 @@ public class NewBDetailsFragment extends Fragment {
     }
 
 
-    class FetchBusinessTypeService extends AsyncTask<Void, Void, String> {
+    /*class FetchBusinessTypeService extends AsyncTask<Void, Void, String> {
         private OkHttpClient client;
         int responsecode = 0;
         private String TAG = FetchBusinessTypeService.class.getSimpleName();
@@ -293,16 +366,16 @@ public class NewBDetailsFragment extends Fragment {
                             editDetails.setVisibility(VISIBLE);
                         }
                     });
-                    businessDetails.setAdapter(typeAdapter);
+                    bzynessDetailsList.setAdapter(typeAdapter);
                 } else {
                     Log.i(TAG, "Error" + responsecode);
                 }
             }
         }
     }
+*/
 
-
-    class FetchBusinessCategoryService extends AsyncTask<String, Void, String> {
+   /* class FetchBusinessCategoryService extends AsyncTask<String, Void, String> {
         private OkHttpClient client;
         int responsecode = 0;
         private String TAG = FetchBusinessCategoryService.class.getSimpleName();
@@ -373,7 +446,7 @@ public class NewBDetailsFragment extends Fragment {
 
                         }
                     });
-                    businessDetails.setAdapter(categoryAdapter);
+                    bzynessDetailsList.setAdapter(categoryAdapter);
                 } else {
                     Log.i(TAG, "Error" + responsecode);
                 }
@@ -382,5 +455,6 @@ public class NewBDetailsFragment extends Fragment {
 
 
     }
+    */
 }
 

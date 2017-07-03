@@ -5,12 +5,22 @@ package com.bzyness.bzyness.AppUtils;
  */
 
 public class Constants {
-    public static final String REGISTRATION_URL="http://api.bzyness.com/v1/createUser";
-    public static final String LOGIN_URL="http://api.bzyness.com/v1/userLogin";
-    public static final String VALIDATE_LOGIN_URL="http://api.bzyness.com/v1/validateLogin";
-    public static final String BUSINESS_TYPE_URL="http://api.bzyness.com/v1/typesOfBzyness";
-    public static final String BUSINESS_CATEGORY_URL="http://api.bzyness.com/v1/chooseCategory/";
-    public static final String CREATE_BUSINESS_URL="http://api.bzyness.com/v1/startBzyness";
+    public static  final String BASE_URL="http://api.bzyness.com/v1/";
+    public static final String REGISTRATION_URL="createUser";
+    public static final String LOGIN_URL="userLogin";
+    public static final String VALIDATE_LOGIN_URL="validateLogin";
+    public static final String BUSINESS_TYPE_URL="typesOfBzyness";
+    public static final String BUSINESS_CATEGORY_URL="chooseCategory/{type_id}";
+    public static final String CREATE_BUSINESS_URL="startBzyness";
+
+
+
+    //public static final String REGISTRATION_URL="http://api.bzyness.com/v1/createUser";
+    //public static final String LOGIN_URL="http://api.bzyness.com/v1/userLogin";
+   // public static final String VALIDATE_LOGIN_URL="http://api.bzyness.com/v1/validateLogin";
+    //public static final String BUSINESS_TYPE_URL="http://api.bzyness.com/v1/typesOfBzyness";
+    //public static final String BUSINESS_CATEGORY_URL="http://api.bzyness.com/v1/chooseCategory/";
+   // public static final String CREATE_BUSINESS_URL="http://api.bzyness.com/v1/startBzyness";
     public static final String ADD_BUSINESS_TAG_URL="http://api.bzyness.com/v1/addBzynessTag";
     public static final String ADD_BUSINESS_LOGO_URL="http://api.bzyness.com/v1/uploadLogo";
     public static final String ADD_BUSINESS_COVER1_URL="http://api.bzyness.com/v1/uploadCoverImage";

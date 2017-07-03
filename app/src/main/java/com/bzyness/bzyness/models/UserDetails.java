@@ -26,16 +26,16 @@ public class UserDetails {
     @JsonProperty("message")
     private String message= null;
     @JsonProperty("token")
-    private String accessToken= null;
+    private String token= null;
 
     @JsonProperty("token")
     public String getAccessToken() {
-        return accessToken;
+        return  token;
     }
 
     @JsonProperty("token")
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
+    public void setAccessToken(String token) {
+        this. token = token;
     }
 
     @JsonProperty("error")

@@ -3,26 +3,20 @@ package com.bzyness.bzyness;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.widget.EditText;
 
 
-import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.AppUtils.SessionManager;
-import com.bzyness.bzyness.models.BusinessTypeDetails;
 import com.bzyness.bzyness.models.ChatUser;
 import com.bzyness.bzyness.models.ServerResponse;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.bzyness.bzyness.services.ServiceGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -41,9 +35,11 @@ public class BaseActivity {
     private static Context context;
     private static FirebaseDatabase mDatabase;
 
+
     public static ServerResponse error=new ServerResponse();
 
-
+    public static ServiceGenerator.BzynessClient bzynessClient= ServiceGenerator.createService(ServiceGenerator.BzynessClient.class);
+    public static ServiceGenerator.BzynessClient authenticatedBzynessClient;
 
 
     private static Map<String, ChatUser> chatuserList=new HashMap<>();
@@ -218,6 +214,7 @@ public class BaseActivity {
         BaseActivity.context=context;
         imgList.add(context.getResources().getDrawable(R.drawable.ic_add_product));
     }
+
 
 
 }
