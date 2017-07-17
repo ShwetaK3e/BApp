@@ -29,6 +29,7 @@ import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.models.LoginServerResponse;
+import com.bzyness.bzyness.services.LoginService;
 import com.bzyness.bzyness.services.ServiceGenerator;
 import com.bzyness.bzyness.services.ValidateUserService;
 
@@ -121,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if(validateForm()) {
             Log.i(TAG, "Login");
+            String login_params=BaseActivity.getLoginParams(emailEdit.getText().toString().trim(),passwordEdit.getText().toString().trim());
             Map<String, String> user= new HashMap<>();
             user.put(EMAIL_PARAM_KEY,emailEdit.getText().toString().trim());
             user.put(PASSWORD_PARAM_KEY,passwordEdit.getText().toString().trim());
@@ -158,8 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                         });
             }
 
-
-           // new LoginService(this).execute(login_params,email);
+           // new LoginService(this).execute(login_params);
         }
     }
 

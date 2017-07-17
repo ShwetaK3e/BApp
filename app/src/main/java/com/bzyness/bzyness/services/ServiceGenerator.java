@@ -14,6 +14,7 @@ import java.util.Map;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -21,6 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -87,25 +89,29 @@ public class ServiceGenerator {
 
         @POST(Constants.REGISTRATION_URL)
         @Multipart
-        Observable<RegistrationServerResponse> registerClient(@PartMap Map<String, String> newUser);
+        Observable<RegistrationServerResponse> registerClient(@PartMap Map<String, RequestBody> newUser);
 
         @POST(Constants.LOGIN_URL)
         @Headers("Content-Type:application/x-www-form-urlencoded")
         @FormUrlEncoded
-        Observable<LoginServerResponse> loginClient(@FieldMap Map<String, String> user);
+        Observable<LoginServerResponse> loginClient(@FieldMap Map<String,String> user);
 
         @GET(Constants.VALIDATE_LOGIN_URL)
-        Observable<UserDetails> validateClient();
+        Observable<UserDetails> validateClient(@Header("Authorization") String token);
 
-        @GET(Constants.BUSINESS_TYPE_URL)
-        Observable<BzynessTypeDetails> getBzynessTypes();
+        @GET(Constants.BZYNESS_TYPE_URL)
+        Observable<BzynessTypeDetails> getBzynessTypes(@Header("Authorization") String token);
 
-        @GET(Constants.BUSINESS_CATEGORY_URL)
-        Observable<BzynessCategoryDetails> getBzynessCategories(@Path("type_id") String type_id);
+        @GET(Constants.BZYNESS_CATEGORY_URL)
+        Observable<BzynessCategoryDetails> getBzynessCategories(@Header("Authorization") String token,@Path("type_id") String type_id);
 
-        @POST(Constants.CREATE_BUSINESS_URL)
+        @POST(Constants.CREATE_BZYNESS_URL)
         @Multipart
-        Observable<CreateBzynessServerResponse> createNewBzyness(@PartMap Map<String, String> newBzyness);
+        Observable<CreateBzynessServerResponse> createNewBzyness(@Header("Authorization") String token,@PartMap Map<String, RequestBody> newBzyness);
+
+        @POST(Constants.ADD_BZYNESS_TAG_URL)
+        @Multipart
+        Observable<CreateBzynessServerResponse> addBzynessTag(@Header("Authorization") String token, @PartMap Map<String, RequestBody> newTag);
 
     }
 

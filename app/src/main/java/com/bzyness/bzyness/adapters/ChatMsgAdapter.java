@@ -52,7 +52,7 @@ public class ChatMsgAdapter extends RecyclerView.Adapter<ChatMsgAdapter.Holder> 
               holder.bubbleLayout.setBackgroundResource(R.drawable.my_bubble);
               holder.parentBubbleLayout.setGravity(Gravity.RIGHT);
           }else{
-              holder.bubbleLayout.setBackgroundResource(R.drawable.friend_bubble);
+              holder.bubbleLayout.setBackgroundResource(R.drawable.my_bubble);
               holder.parentBubbleLayout.setGravity(Gravity.LEFT);
           }
           holder.name.setText(chatList.get(position).getMsg());

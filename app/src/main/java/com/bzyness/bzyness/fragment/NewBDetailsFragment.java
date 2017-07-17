@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.BusinessCategoryAdapter;
 import com.bzyness.bzyness.adapters.BusinessSubCategoryAdapter;
@@ -152,7 +153,7 @@ public class NewBDetailsFragment extends Fragment {
 
     void populateTypes() {
         if(bzynessClient!=null){
-            bzynessClient.getBzynessTypes().subscribeOn(Schedulers.newThread())
+            bzynessClient.getBzynessTypes("Bearer "+ BaseActivity.session.getAccessToken()).subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<BzynessTypeDetails>() {
                         @Override
@@ -202,7 +203,7 @@ public class NewBDetailsFragment extends Fragment {
 
     void populateCategory(String type_id) {
         if(bzynessClient!=null){
-            bzynessClient.getBzynessCategories(type_id).subscribeOn(Schedulers.newThread())
+            bzynessClient.getBzynessCategories("Bearer "+BaseActivity.session.getAccessToken(),type_id).subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<BzynessCategoryDetails>() {
                         @Override

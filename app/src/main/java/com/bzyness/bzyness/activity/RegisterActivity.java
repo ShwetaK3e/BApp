@@ -39,6 +39,8 @@ import com.google.firebase.database.ServerValue;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -60,6 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
     private static final String EMAIL_PARAM_KEY="email";
     private static final String PASSWORD_PARAM_KEY="password";
     private static final String PHONE_PARAM_KEY="mobile";
+    private static final String MEDIA_TYPE="text/plain";
 
     BroadcastReceiver nonetwork;
 
@@ -126,7 +129,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               btnRegister.setEnabled(false);
+
                register();
             }
         });
@@ -144,11 +147,16 @@ public class RegisterActivity extends AppCompatActivity {
         if(validateForm()) {
             Log.i(TAG,"register validated");
 
-                final Map<String, String> newUserDetails=new HashMap<>();
-                newUserDetails.put(FULL_NAME_PARAM_KEY,fullNameEdit.getText().toString().trim());
-                newUserDetails.put(EMAIL_PARAM_KEY,emailEdit.getText().toString().trim());
-                newUserDetails.put(PHONE_PARAM_KEY,phoneEdit.getText().toString().trim());
-                newUserDetails.put(PASSWORD_PARAM_KEY,passwordEdit.getText().toString().trim());
+                btnRegister.setEnabled(false);
+                String fullname=fullNameEdit.getText().toString();
+                final String email=emailEdit.getText().toString();
+                String phone=phoneEdit.getText().toString();
+                final String password=passwordEdit.getText().toString();
+                final Map<String, RequestBody> newUserDetails=new HashMap<>();
+                newUserDetails.put(FULL_NAME_PARAM_KEY,RequestBody.create(MediaType.parse(MEDIA_TYPE),fullname));
+                newUserDetails.put(EMAIL_PARAM_KEY,RequestBody.create(MediaType.parse(MEDIA_TYPE),email));
+                newUserDetails.put(PHONE_PARAM_KEY,RequestBody.create(MediaType.parse(MEDIA_TYPE),phone));
+                newUserDetails.put(PASSWORD_PARAM_KEY,RequestBody.create(MediaType.parse(MEDIA_TYPE),password));
                 if(bzynessClient!=null) {
                     bzynessClient.registerClient(newUserDetails)
                             .subscribeOn(Schedulers.newThread())
@@ -168,8 +176,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 public void onNext(RegistrationServerResponse registrationServerResponse) {
                                     if(!registrationServerResponse.getError()){
                                         Map<String,String> user=new HashMap<>();
-                                        user.put(EMAIL_PARAM_KEY,newUserDetails.get(EMAIL_PARAM_KEY));
-                                        user.put(PASSWORD_PARAM_KEY,newUserDetails.get(PASSWORD_PARAM_KEY));
+                                        user.put(EMAIL_PARAM_KEY,email);
+                                        user.put(PASSWORD_PARAM_KEY,password);
                                         Log.i(TAG,"registered successfully");
                                         Toast.makeText(RegisterActivity.this,"Successfully Registered",Toast.LENGTH_SHORT).show();
                                         login(user);

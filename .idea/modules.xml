@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Bzyness - Copy.iml" filepath="$PROJECT_DIR$/Bzyness - Copy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BApp.iml" filepath="$PROJECT_DIR$/BApp.iml" />
+      <module fileurl="file://C:\Users\cas\Desktop\BApp\Bzyness - Copy.iml" filepath="C:\Users\cas\Desktop\BApp\Bzyness - Copy.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

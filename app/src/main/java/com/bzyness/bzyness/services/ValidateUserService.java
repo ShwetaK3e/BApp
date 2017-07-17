@@ -33,7 +33,7 @@ public class ValidateUserService extends Service {
         Log.i(TAG,"accesstoken"+loginServerResponse.getAccessToken());
         if(BaseActivity.authenticatedBzynessClient!=null) {
             Log.i(TAG,"expiresIN"+loginServerResponse.getExpiresIn()+" ");
-            BaseActivity.authenticatedBzynessClient.validateClient().subscribeOn(Schedulers.newThread())
+            BaseActivity.bzynessClient.validateClient("Bearer "+loginServerResponse.getAccessToken()).subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Subscriber<UserDetails>() {
                         @Override
@@ -52,7 +52,6 @@ public class ValidateUserService extends Service {
                             if(!userDetails.getError()) {
                                 BaseActivity.session.createSession(loginServerResponse.getAccessToken(),loginServerResponse.getExpiresIn());
                                 BaseActivity.session.saveUser(userDetails.getUser().getEmail(), userDetails.getUser().getFullName(), userDetails.getUser().getRole(), userDetails.getUser().getTypeOfUser(), userDetails.getUser().getMobile(), userDetails.getUser().getUserId());
-                                Log.i(TAG,userDetails.getMessage());
                                 Intent i = new Intent(ValidateUserService.this, NewBusinessDetailsActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);

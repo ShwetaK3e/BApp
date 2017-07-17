@@ -1,5 +1,6 @@
 package com.bzyness.bzyness.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -61,6 +62,7 @@ import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.widget.Toast.LENGTH_LONG;
 import static com.bzyness.bzyness.BaseActivity.authenticatedBzynessClient;
 import static com.bzyness.bzyness.BaseActivity.bzynessClient;
 import static com.bzyness.bzyness.BaseActivity.getPath;
@@ -109,6 +111,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
 
 
     BroadcastReceiver nonetwork;
+
 
 
 
@@ -250,15 +253,16 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                                        Toast.makeText(NewBusinessDetailsActivity.this, "Select Bzyness Category", Toast.LENGTH_SHORT).show();
                                    } else {
 
+                                      createNewBzyness(bzynessDetails.getBzyness_name(), bzynessDetails.getAlias_name(), bzynessDetails.getBzyness_type_id(), bzynessDetails.getBzyness_category_id());
 
-
-                                       new SaveNewBzynessService(bzynessDetails.getBzyness_name(), bzynessDetails.getAlias_name(), bzynessDetails.getBzyness_type_id(), bzynessDetails.getBzyness_category_id()).execute();
+                                      // new SaveNewBzynessService(bzynessDetails.getBzyness_name(), bzynessDetails.getAlias_name(), bzynessDetails.getBzyness_type_id(), bzynessDetails.getBzyness_category_id()).execute();
                                    }
                                }
                            }
                            break;
                        case BZYNESS_TAG:
-                            new SaveNewBzynessTagService(String.valueOf( bzynessDetails.getBzyness_id()),bzynessDetails.getBzyness_tags()).execute();
+                            addTagtoBzyness(String.valueOf( bzynessDetails.getBzyness_id()),bzynessDetails.getBzyness_tags());
+                            //new SaveNewBzynessTagService(String.valueOf( bzynessDetails.getBzyness_id()),bzynessDetails.getBzyness_tags()).execute();
                             break;
                        case BZYNESS_LOC:
                             new SaveNewBzyNessLocationService(String.valueOf( bzynessDetails.getBzyness_id()),bzynessDetails.getLatitude(), bzynessDetails.getLongitude()).execute();
@@ -321,6 +325,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent,chooserTitle),requestCode);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
      if(requestCode == Constants.PICK_PROFILE_IMAGE_REQUEST){
@@ -332,9 +337,9 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
              addProfilePic.setVisibility(View.INVISIBLE);
              editProfilePic.setVisibility(View.VISIBLE);
              profilePicScheme.setVisibility(View.INVISIBLE);
-             Toast.makeText(this, "New Profile Pic Added", Toast.LENGTH_LONG).show();
+             Toast.makeText(this, "New Profile Pic Added", LENGTH_LONG).show();
          } else {
-             Toast.makeText(this, "No Profile Pic Added", Toast.LENGTH_LONG).show();
+             Toast.makeText(this, "No Profile Pic Added", LENGTH_LONG).show();
          }
      }else if(requestCode == Constants.PICK_LOGO_IMAGE_REQUEST){
          if (resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -345,9 +350,9 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
              addLogo.setVisibility(View.GONE);
              editLogo.setVisibility(View.VISIBLE);
              logoScheme.setVisibility(View.INVISIBLE);
-             Toast.makeText(this, "New Logo Added", Toast.LENGTH_LONG).show();
+             Toast.makeText(this, "New Logo Added", LENGTH_LONG).show();
          } else {
-             Toast.makeText(this, "No Logo Added", Toast.LENGTH_LONG).show();
+             Toast.makeText(this, "No Logo Added", LENGTH_LONG).show();
          }
      }else{
          for (android.support.v4.app.Fragment fragment : getSupportFragmentManager().getFragments()) {
@@ -364,7 +369,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
 
 
 
-    class SaveNewBzynessService extends AsyncTask<Void, Void, String> {
+    /*class SaveNewBzynessService extends AsyncTask<Void, Void, String> {
 
         OkHttpClient client;
         private int responseCode;
@@ -485,7 +490,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                         new SaveNewBzynessOtherService(String.valueOf(bzynessDetails.getBzyness_id()),"IPA",bzynessDetails.getPhone_no()).execute();
                     }
 
-                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness added Successfully !!!", LENGTH_LONG).show();
                     Log.i(TAG, "Add new Bzyness service , success");
                 }
                 Log.i(TAG, "Add new Bzyness service , responseCode:" + responseCode);
@@ -495,7 +500,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
         }
 
     }
-
+*/
     class SaveNewBzyNessLocationService extends AsyncTask<Void, Void, String> {
 
 
@@ -579,7 +584,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                     Toast.makeText(NewBusinessDetailsActivity.this, "Try Again 4 !!", Toast.LENGTH_SHORT).show();
                 } else {
                     done_lists.add(BZYNESS_LOC);
-                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness Loc added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness Loc added Successfully !!!", LENGTH_LONG).show();
                     Log.i(TAG, "Add new Bzyness Tag service , success");
                 }
                 Log.i(TAG, "Add new Bzyness Tag service , responseCode:" + responseCode);
@@ -590,7 +595,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
 
     }
 
-    class SaveNewBzynessTagService extends AsyncTask<Void, Void, String> {
+   /* class SaveNewBzynessTagService extends AsyncTask<Void, Void, String> {
 
         OkHttpClient client;
         private int responseCode;
@@ -673,7 +678,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                     Toast.makeText(NewBusinessDetailsActivity.this, "Try Again 1 !!", Toast.LENGTH_SHORT).show();
                 } else {
                     done_lists.add(BZYNESS_TAG);
-                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness Tag added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness Tag added Successfully !!!", LENGTH_LONG).show();
                     Log.i(TAG, "Add new Bzyness Tag service , success");
                 }
                 Log.i(TAG, "Add new Bzyness Tag service , responseCode:" + responseCode);
@@ -682,7 +687,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
             }
         }
     }
-
+*/
     class SaveNewBzynessPhotoService extends AsyncTask<Void, Void, String> {
 
         OkHttpClient client;
@@ -806,7 +811,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                     }else if(photo_title.startsWith("COVER5")) {
                         done_lists.add(BZYNESS_COVER_PIC5);
                     }
-                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness Photo added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness Photo added Successfully !!!", LENGTH_LONG).show();
                     Log.i(TAG, "Add new Bzyness Photo service , success");
                 }
                 Log.i(TAG, "Add new Bzyness Photo service , responseCode:" + responseCode);
@@ -924,7 +929,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                     }else if("IPA".equalsIgnoreCase(other_type)) {
                         done_lists.add(BZYNESS_IPA);
                     }
-                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness added Successfully !!!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(NewBusinessDetailsActivity.this, "New Bzyness added Successfully !!!", LENGTH_LONG).show();
                     Log.i(TAG, "Add new Bzyness other service , success");
                 }
                 Log.i(TAG, "Add new Bzyness other service , responseCode:" + responseCode);
@@ -983,14 +988,16 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
 
     private void createNewBzyness(String bzynessName, String aliasName, String typeId, String categoryId){
 
-       final Map<String, String> newBzyness=new HashMap<>();
-        newBzyness.put("name",bzynessName);
-        newBzyness.put("aliasName",aliasName);
-        newBzyness.put("typeId",typeId);
-        newBzyness.put("categoryId",categoryId);
 
-        if(authenticatedBzynessClient!=null){
-           authenticatedBzynessClient.createNewBzyness(newBzyness).subscribeOn(Schedulers.newThread())
+       final String MEDIA_TYPE="text/plain";
+       final Map<String, RequestBody> newBzyness=new HashMap<>();
+        newBzyness.put("name",RequestBody.create(MediaType.parse(MEDIA_TYPE),bzynessName));
+        newBzyness.put("aliasName",RequestBody.create(MediaType.parse(MEDIA_TYPE),aliasName));
+        newBzyness.put("typeId",RequestBody.create(MediaType.parse(MEDIA_TYPE),typeId));
+        newBzyness.put("categoryId",RequestBody.create(MediaType.parse(MEDIA_TYPE),categoryId));
+
+        if(bzynessClient!=null){
+           bzynessClient.createNewBzyness("Bearer "+BaseActivity.session.getAccessToken(),newBzyness).subscribeOn(Schedulers.newThread())
                    .observeOn(AndroidSchedulers.mainThread())
                    .subscribe(new Subscriber<CreateBzynessServerResponse>() {
                        @Override
@@ -1006,7 +1013,11 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                        @Override
                        public void onNext(CreateBzynessServerResponse createBzynessServerResponse) {
                           if(!createBzynessServerResponse.getError()){
+                              bzynessDetails.setBzyness_id(createBzynessServerResponse.getBzynessId());
                               done_lists.add(NEW_BZYNESS);
+                              if(bzynessDetails.getBzyness_tags()!=null){
+                                  addTagtoBzyness(String.valueOf(bzynessDetails.getBzyness_id()),bzynessDetails.getBzyness_tags());
+                              }
                           }else{
                               Toast.makeText(NewBusinessDetailsActivity.this, "Try Again !!", Toast.LENGTH_SHORT).show();
                           }
@@ -1014,6 +1025,42 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
                    });
         }
 
+    }
+    private void addTagtoBzyness(String bzynessID, List<String> tags) {
+
+
+        final String MEDIA_TYPE = "text/plain";
+        final Map<String, RequestBody> newBzynessTag = new HashMap<>();
+        newBzynessTag.put("bzynessId", RequestBody.create(MediaType.parse(MEDIA_TYPE), bzynessID));
+        for (String tag : tags) {
+            newBzynessTag.put("tag", RequestBody.create(MediaType.parse(MEDIA_TYPE), tag));
+            if (bzynessClient != null) {
+                bzynessClient.addBzynessTag("Bearer " + BaseActivity.session.getAccessToken(), newBzynessTag).subscribeOn(Schedulers.newThread())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Subscriber<CreateBzynessServerResponse>() {
+                            @Override
+                            public void onCompleted() {
+
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+
+                            @Override
+                            public void onNext(CreateBzynessServerResponse createBzynessServerResponse) {
+                                if (!createBzynessServerResponse.getError()) {
+                                    Toast.makeText(NewBusinessDetailsActivity.this, createBzynessServerResponse.getMessage(), Toast.LENGTH_SHORT).show();
+                                    done_lists.add(BZYNESS_TAG);
+                                } else {
+                                    Toast.makeText(NewBusinessDetailsActivity.this, "Try Again !!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+            }
+
+        }
     }
 
 }
