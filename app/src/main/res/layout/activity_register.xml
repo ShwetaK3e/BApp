@@ -294,7 +294,7 @@
         android:background="@android:color/transparent"
         android:text="@string/btn_link_to_login"
         android:textStyle="bold"
-        android:textColor="@color/first_color"
+        android:textColor="@color/textColorSecondary"
         android:textSize="15sp"
         android:onClick="gotoLogin"
         android:typeface="serif"

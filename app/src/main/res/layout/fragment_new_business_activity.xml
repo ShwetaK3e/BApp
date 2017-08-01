@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#e1e4ef">
+<RelativeLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/new_bzyness_layout"
+    android:weightSum="1">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="210dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
+            android:background="@android:color/transparent"
+            android:id="@+id/header"
+            android:layout_alignParentTop="true">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <ViewFlipper
+                    android:id="@+id/bprof_viewflipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@android:color/white" >
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_bprof_1"
+                        android:padding="2dp"
+                        android:id="@+id/bprof_pic1"
+                        android:scaleType="centerCrop"/>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_bprof_2"
+                        android:padding="2dp"
+                        android:id="@+id/bprof_pic2"
+                        android:scaleType="centerCrop"/>
+
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/ic_bprof_3"
+                        android:padding="2dp"
+                        android:id="@+id/bprof_pic3"
+                        android:scaleType="centerCrop"/>
+
+
+
+                </ViewFlipper>
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/scheme_color"
+                    android:id="@+id/bprof_scheme"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/add_profile_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    android:background="@color/add_layout"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppTextViewNormal
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Add Profile Image "
+                        android:textColor="@color/black"
+                        android:textSize="15sp"/>
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:paddingLeft="2dp"
+                        android:src="@drawable/ic_add_image"   />
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="2dp"
+                    android:background="@color/light_grey"
+                    android:id="@+id/edit_profile_pic"
+                    android:layout_alignBottom="@id/bprof_viewflipper"
+                    android:layout_alignRight="@id/bprof_viewflipper">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppTextViewNormal
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit "
+                        android:textColor="@color/colorPrimary" />
+
+                    <ImageView
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:paddingLeft="2dp"
+                        android:src="@drawable/ic_edit"   />
+                </LinearLayout>
+
+
+
+
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:weightSum="1">
+
+                <RelativeLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/top_rounded_corners_bg">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/ic_logo"
+                    android:scaleType="fitCenter"
+                    android:id="@+id/b_logo"
+                    android:layout_margin="5dp"
+                    android:padding="5dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:background="@color/scheme_color"
+                    android:id="@+id/logo_scheme"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/add_layout"
+                    android:gravity="center"
+                    android:id="@+id/add_logo">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppTextViewNormal
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Add Logo "
+                        android:textColor="@color/black"
+                        android:gravity="center"
+                        />
+
+                </LinearLayout>
+
+
+
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@color/light_grey"
+                    android:id="@+id/edit_logo"
+                    android:layout_alignRight="@id/b_logo"
+                    android:layout_alignBottom="@id/b_logo">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppTextViewNormal
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit "
+                        android:textColor="@color/colorPrimary"
+                        android:id="@+id/textView2"
+                        android:textSize="10sp"/>
+
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:paddingLeft="2dp"
+                        android:src="@drawable/ic_edit"   />
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp">
+
+                        <com.bzyness.bzyness.CustomWidgets.BAppEditTextBold
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_bzyness_name"
+                            android:textSize="15sp"
+                            android:typeface="serif"
+                            android:textColor="@color/black"
+                            android:textColorHint="@color/black"
+                            android:layout_gravity="left"
+                            android:background="@android:color/transparent"
+                            android:id="@+id/bName"
+                            />
+                        <ImageButton
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_edit_text"
+                            android:scaleType="centerInside"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="40dp"
+                            android:padding="6dp"
+                            android:id="@+id/edit_bName"
+                            android:visibility="gone"
+                            android:background="@android:color/transparent"/>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        >
+
+                        <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_alias_name"
+                            android:textColorHint="@color/colorPrimary"
+                            android:textSize="12sp"
+                            android:typeface="serif"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_gravity="left"
+                            android:background="@android:color/transparent"
+                            android:id="@+id/alias_name"
+                            />
+
+                        <ImageButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_edit_text"
+                            android:scaleType="centerInside"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="80dp"
+                            android:padding="6dp"
+                            android:id="@+id/edit_aliasName"
+                            android:background="@android:color/transparent"
+                            android:visibility="gone"/>
+                    </FrameLayout>
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+    <FrameLayout
+        android:id="@+id/select_details"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/header">
+
+
+
+        <LinearLayout
+            android:id="@+id/connector_layout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="135dp"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="52dp"
+            android:layout_marginRight="52dp"
+            >
+
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_circle_theme_color_border_trans"/>
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@android:color/transparent"
+            android:layout_marginBottom="100dp">
+
+
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/bg_circle_second_theme_color_border"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/type_layout"
+                android:layout_centerHorizontal="true"
+                android:elevation="10dp"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="27dp"
+                    android:src="@drawable/ic_add_type" />
+
+                <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
+                    android:id="@+id/type_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/type_header"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_margin="5dp"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/bg_circle_theme_color_border"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="-25dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/location_layout"
+                android:layout_below="@id/type_layout"
+                android:layout_toLeftOf="@id/type_layout"
+                android:elevation="5dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_add_type" />
+
+                <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
+                    android:id="@+id/other_guideline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/location_layout_header"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_margin="5dp"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/bg_circle_theme_color_border"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="-25dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/other_layout"
+                android:layout_below="@id/type_layout"
+                android:layout_toRightOf="@id/type_layout"
+                android:elevation="5dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_map_icon" />
+
+                <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
+                    android:id="@+id/location_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/other_layout_header"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_margin="5dp"/>
+
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@drawable/bg_circle_theme_color_border"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="-25dp"
+                android:layout_marginBottom="5dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:id="@+id/add_product_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/location_layout"
+                android:elevation="5dp">
+
+                <ImageView
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/ic_add_type" />
+
+                <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
+                    android:id="@+id/product_layout_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/product_layout_header"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_margin="5dp"/>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+        </RelativeLayout>
+
+
+</FrameLayout>
+
+
+
+
+</RelativeLayout>
+
+
+    <FrameLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="495dp"
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:id="@+id/all_details_forms"
+        android:elevation="5dp"
+        android:background="@android:color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/type_details_layout"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:elevation="5dp"
+            android:background="@android:color/transparent">
+            <include layout="@layout/fragment_new_bdeatils_1"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/location_details_layout"
+            android:orientation="vertical"
+            android:background="@android:color/transparent">
+
+            <include layout="@layout/fragment_new_bloc"/>
+
+
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/other_details_layout"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:background="@android:color/transparent">
+
+            <include layout="@layout/fragment_new_bothrdet"/>
+
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/prdct_details_layout"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:background="@android:color/transparent">
+
+            <include layout="@layout/fragment_add_product"/>
+
+
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
+
+
+</FrameLayout>

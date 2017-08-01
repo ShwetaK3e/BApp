@@ -247,7 +247,7 @@
             android:background="@android:color/transparent"
             android:text="@string/btn_link_to_register"
             android:textStyle="bold"
-            android:textColor="@color/first_color"
+            android:textColor="@color/textColorSecondary"
             android:textSize="15sp"
             android:onClick="gotoRegister"
             android:typeface="serif"

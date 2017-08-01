@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="450dp"
+    android:padding="30dp"
+    android:gravity="center"
+    android:background="@android:color/transparent"
+    android:layout_gravity="center">
+
+
+
+
+
+     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dialog"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:id="@+id/content">
+
+
+    <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ADD COVER PIC"
+        android:textStyle="bold"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="18sp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:id="@+id/header_text"
+        />
+
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:orientation="vertical"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             android:id="@+id/save_covers_layout">
+
+             <View
+                 android:layout_width="match_parent"
+                 android:layout_height="1dp"
+                 android:background="@color/textColorSecondary"/>
+
+         <Button
+             android:layout_width="wrap_content"
+             android:layout_height="30dp"
+             android:background="@android:color/transparent"
+             android:layout_gravity="center"
+             android:textColor="@color/textColorSecondary"
+             android:text="SAVE"
+             android:textSize="15sp"
+             android:id="@+id/save_covers"
+             android:layout_marginTop="8dp"
+
+             />
+
+         </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightTextColorSecondary"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/header_text"
+        android:id="@+id/separator_1"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/lightTextColorSecondary"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_below="@id/separator_1"
+        android:id="@+id/separator_2"/>
+
+
+         <ScrollView
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/separator_2"
+             android:layout_above="@id/save_covers_layout">
+         <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_ech_category_holder"
+        android:gravity="center"
+        android:layout_marginBottom="5dp">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:scaleType="centerCrop"
+            android:id="@+id/cover_img_1"/>
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_circle_white"
+            android:src="@drawable/ic_plus"
+            android:scaleType="fitCenter"
+            android:padding="8dp"
+            android:id="@+id/add_img_1"
+            android:layout_centerInParent="true"
+            />
+
+
+    </RelativeLayout>
+
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:background="@drawable/bg_ech_category_holder"
+             android:gravity="center"
+             android:layout_marginBottom="5dp">
+
+
+             <ImageView
+                 android:layout_width="match_parent"
+                 android:layout_height="100dp"
+                 android:layout_centerInParent="true"
+                 android:scaleType="centerCrop"
+                 android:id="@+id/cover_img_2"/>
+
+             <ImageButton
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
+                 android:background="@drawable/bg_circle_white"
+                 android:src="@drawable/ic_plus"
+                 android:scaleType="fitCenter"
+                 android:padding="8dp"
+                 android:id="@+id/add_img_2"
+                 android:layout_centerInParent="true"
+                 />
+
+
+         </RelativeLayout>
+
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:background="@drawable/bg_ech_category_holder"
+             android:gravity="center"
+             android:layout_marginBottom="5dp">
+
+
+             <ImageView
+                 android:layout_width="match_parent"
+                 android:layout_height="100dp"
+                 android:layout_centerInParent="true"
+                 android:scaleType="centerCrop"
+                 android:id="@+id/cover_img_3"/>
+
+             <ImageButton
+                 android:layout_width="40dp"
+                 android:layout_height="40dp"
+                 android:background="@drawable/bg_circle_white"
+                 android:src="@drawable/ic_plus"
+                 android:scaleType="fitCenter"
+                 android:padding="8dp"
+                 android:id="@+id/add_img_3"
+                 android:layout_centerInParent="true"
+                 />
+
+
+         </RelativeLayout>
+
+
+</LinearLayout>
+         </ScrollView>
+
+    
+
+
+
+
+
+
+</RelativeLayout>
+
+
+
+</RelativeLayout>

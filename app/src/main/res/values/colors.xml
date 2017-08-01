@@ -1,21 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+
+    <color name="colorPrimary">#6699ff</color>
+    <color name="colorPrimaryLight">#adc5f4</color>
+    <color name="colorPrimaryDark">#FF314981</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="windowBackground">#c1c1c1</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="colorAccent">#BBd6d6d6</color>
+    <color name="textColorSecondary">#FF9803</color>
+    <color name="lightTextColorSecondary">#AAFF9803</color>
+
+    <color name="selected_menu">#d6d6d6</color>
+    <color name="translucent_bg">#BB000000</color>
+
+
     <!-- brand color-->
     <color name="register_btn_color">#88975FFD</color>
-    <color name="theme_color">#779FFD</color>
-    <color name="light_theme_color">#66778FFD</color>
-    <color name="first_color">#FF9803</color>
-    <color name="light_first_color">#AAFF9803</color>
-    <color name="dark_first_color">#ff8401</color>
+
+    <color name="dark_textColorSecondary">#ff8401</color>
     <color name="second_color">#FEE767</color>
     <color name="third_color">#005371</color>
     <color name="fourth_color">#00A1E9</color>
     <color name="text_color">#a431b0</color>
     <color name="colorOnline">#2ebd59</color>
 
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="light_pink">#DAC2C2</color>
@@ -88,6 +99,9 @@
     <color name="other_pic_1_bg">#66d6d6d6</color>
     <color name="add_layout">#66FEE767</color>
     <color name="light_red">#AAd72d2d</color>
+
+
+
 
 
 </resources>

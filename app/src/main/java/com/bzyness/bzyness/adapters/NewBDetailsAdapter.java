@@ -16,8 +16,8 @@ import com.bzyness.bzyness.models.BzynessDetails;
  */
 
 public class NewBDetailsAdapter extends FragmentPagerAdapter {
-    final static int PAGE_COUNT=4;
-    final static String[] PAGE_TITLES={"Type","Photos","Location","Others"};
+    final static int PAGE_COUNT=3;
+    final static String[] PAGE_TITLES={"Type","Location","Others"};
     Context context;
     BzynessDetails bzynessDetails;
 
@@ -33,10 +33,8 @@ public class NewBDetailsAdapter extends FragmentPagerAdapter {
             case 0:
                 return NewBDetailsFragment.newInstance(position+1,bzynessDetails);
             case 1:
-                return NewBPhotosFragment.newInstance(position+1,bzynessDetails);
-            case 2:
                 return NewBLocFragment.newInstance(position+1,bzynessDetails);
-            case 3:
+            case 2:
                 return NewBOthrDetailsFragment.newInstance(position+1,bzynessDetails);
             default:
                 return NewBDetailsFragment.newInstance(position+1,bzynessDetails);

@@ -16,13 +16,13 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/theme_color" />
+            android:background="@color/colorPrimary" />
     </android.support.design.widget.AppBarLayout>
 
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="210dp"
             android:layout_marginBottom="5dp"
             android:padding="5dp">
 
@@ -101,11 +101,18 @@
             </RelativeLayout>
 
 
-            <RelativeLayout
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+                android:gravity="bottom"
+                android:weightSum="1">
+
+                <RelativeLayout
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentLeft="true"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/top_rounded_corners_bg">
 
@@ -176,6 +183,85 @@
 
             </RelativeLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_bzyness_name"
+                            android:textStyle="bold"
+                            android:textSize="20sp"
+                            android:typeface="serif"
+                            android:textColorHint="@color/text_color"
+                            android:textColor="@color/text_color"
+                            android:layout_gravity="left"
+                            android:background="@android:color/transparent"
+                            android:id="@+id/bName"
+                            />
+                        <ImageButton
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_edit_text"
+                            android:scaleType="centerInside"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="40dp"
+                            android:padding="6dp"
+                            android:id="@+id/edit_bName"
+                            android:visibility="gone"
+                            android:background="@android:color/transparent"/>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_alias_name"
+                            android:textColorHint="@color/colorPrimary"
+                            android:textSize="15sp"
+                            android:typeface="serif"
+                            android:textColor="@color/colorPrimary"
+                            android:layout_gravity="left"
+                            android:background="@android:color/transparent"
+                            android:id="@+id/alias_name"
+                            />
+
+                        <ImageButton
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_edit_text"
+                            android:scaleType="centerInside"
+                            android:layout_marginLeft="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="80dp"
+                            android:padding="6dp"
+                            android:id="@+id/edit_aliasName"
+                            android:background="@android:color/transparent"/>
+                    </FrameLayout>
+
+
+
+                </LinearLayout>
+
+
+
+
+
+            </LinearLayout>
+
         </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -196,7 +282,7 @@
                     android:textColor="@color/text_color"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    android:id="@+id/bName"
+                    android:id="@+id/bName1"
                     android:gravity="center"/>
                 <ImageButton
                     android:layout_width="28dp"
@@ -207,7 +293,7 @@
                     android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="40dp"
                     android:padding="6dp"
-                    android:id="@+id/edit_bName"
+                    android:id="@+id/edit_bName1"
                     android:background="@android:color/transparent"/>
             </FrameLayout>
 
@@ -225,7 +311,7 @@
                     android:textColor="@color/colorPrimary"
                     android:layout_gravity="center"
                     android:background="@android:color/transparent"
-                    android:id="@+id/alias_name"
+                    android:id="@+id/alias_name1"
                     android:gravity="center"/>
 
                 <ImageButton
@@ -237,7 +323,7 @@
                     android:layout_gravity="right|center_vertical"
                     android:layout_marginRight="80dp"
                     android:padding="6dp"
-                    android:id="@+id/edit_aliasName"
+                    android:id="@+id/edit_aliasName1"
                     android:background="@android:color/transparent"/>
             </FrameLayout>
 
@@ -278,7 +364,7 @@
         android:layout_marginRight="15dp" />
 
     <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
+        android:id="@+id/details_viewpager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

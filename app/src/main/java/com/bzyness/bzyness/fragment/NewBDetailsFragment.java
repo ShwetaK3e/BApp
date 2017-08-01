@@ -92,11 +92,11 @@ public class NewBDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_new_bdeatils, container, false);
+        View view = inflater.inflate(R.layout.fragment_new_bdeatils_1, container, false);
 
-        guideLine = (TextView) view.findViewById(R.id.guideline);
+        /*guideLine = (TextView) view.findViewById(R.id.guideline);
         detailsSummaryLayout = (LinearLayout) view.findViewById(R.id.details_summary_layout);
-        detailsSummaryLayout.setVisibility(View.GONE);
+        //detailsSummaryLayout.setVisibility(View.GONE);
         editDetails = (Button) view.findViewById(R.id.edit_details);
         editDetails.setVisibility(View.GONE);
         editDetails.setOnClickListener(new View.OnClickListener() {
@@ -145,8 +145,8 @@ public class NewBDetailsFragment extends Fragment {
         layoutManager = new GridLayoutManager(getActivity(), 3);
         bzynessDetailsList.setLayoutManager(layoutManager);
 
-        populateTypes();
-
+        //populateTypes();
+*/
         return view;
     }
 

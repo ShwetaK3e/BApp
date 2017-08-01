@@ -90,11 +90,14 @@
 
 
     <!--Business Details -->
-    <string name="type_guideline">WHAT IS THE TYPE OF YOUR BUSINESS ?</string>
+    <string name="type_guideline"> SELECT TYPE OF YOUR BZYNESS</string>
     <string name="subcategory_tag">SubCategory*</string>
     <string name="category_header">Category</string>
-    <string name="type_header">Type</string>
+    <string name="type_header">TYPE</string>
     <string name="subCategory_header">SubCategory</string>
+    <string name="other_layout_header">OTHER</string>
+    <string name="location_layout_header">LOCATION</string>
+    <string name="product_layout_header">PRODUCTS</string>
 
     <!--Types-->
     <string name="manufacturer">MANUFACTURER</string>
@@ -127,6 +130,10 @@
     <string name="hint_bzyness_name">Bzyness Name</string>
     <string name="hint_alias_name">Alias Name</string>
     <string name="product_category_name">Category Name</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="cancel">cancel</string>
 
 
 </resources>

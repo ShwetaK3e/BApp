@@ -2,23 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
-    <TextView
+    <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/type_guideline"
         android:textSize="15sp"
         android:typeface="serif"
-        android:textColor="@color/first_color"
+        android:textColor="@color/textColorSecondary"
         android:layout_gravity="center"
-        android:textStyle="bold"
-        android:id="@+id/guideline"
+        android:id="@+id/type_guideline"
         android:layout_marginTop="5dp"/>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/light_grey"
         android:layout_marginTop="5dp"
          />
@@ -103,7 +103,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/light_grey" />
 

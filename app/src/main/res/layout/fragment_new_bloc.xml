@@ -1,38 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="500dp"
+    android:padding="10dp"
+    android:background="@color/white"
+    android:elevation="5dp"
+    android:animateLayoutChanges="true">
 
-        <TextView
-            android:layout_width="wrap_content"
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:id="@+id/loc_header"
+        android:layout_alignParentTop="true">
+
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"
+            android:scaleType="fitCenter"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/back_loc"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
             android:layout_height="wrap_content"
-            android:text="ADD YOUR BUSINESS LOCATION"
-            android:textSize="15sp"
-            android:typeface="serif"
-            android:textColor="@color/first_color"
+            android:text="@string/save"
+            android:textColor="@color/white"
+            android:background="@color/textColorSecondary"
+            android:layout_margin="5dp"
+            android:id="@+id/save_loc"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:layout_height="wrap_content"
+            android:text="@string/edit"
+            android:textColor="@color/white"
+            android:background="@color/textColorSecondary"
+            android:layout_margin="5dp"
+            android:id="@+id/edit_loc"/>
+
+
+
+
+    </LinearLayout>
+
+
+
+
+        <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADD LOCATION OF YOUR BZYNESS"
+            android:textSize="18sp"
+            android:textColor="@color/textColorSecondary"
             android:layout_gravity="center"
-            android:textStyle="bold"
-            android:id="@+id/add_other_pic_text"
+            android:id="@+id/loc_guideline"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"/>
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/loc_header"/>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="1dp"
             android:background="@color/light_grey"
             android:layout_marginTop="5dp"
+            android:layout_below="@id/loc_guideline"
+            android:id="@+id/separator_1"
             />
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/new_bloc">
+
 
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/separator_1">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -43,7 +104,7 @@
             android:orientation="vertical">
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="300dp"
                 android:layout_marginTop="2dp"
                 android:id="@+id/map_layout">
 
@@ -459,6 +520,6 @@
 
     </LinearLayout>
 
-</ScrollView>
 
-</LinearLayout>
+
+</RelativeLayout>

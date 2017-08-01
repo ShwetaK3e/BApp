@@ -104,10 +104,10 @@
         android:text="CATEGORY OF PRODUCTS"
         android:textSize="15sp"
         android:typeface="serif"
-        android:textColor="@color/first_color"
+        android:textColor="@color/textColorSecondary"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:id="@+id/guideline"
+        android:id="@+id/type_guideline"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"/>
 

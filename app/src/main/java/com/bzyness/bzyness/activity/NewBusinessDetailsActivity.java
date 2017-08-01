@@ -1,22 +1,16 @@
 package com.bzyness.bzyness.activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.net.LinkAddress;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,7 +35,6 @@ import com.bzyness.bzyness.fragment.NewBPhotosFragment;
 import com.bzyness.bzyness.models.BzynessDetails;
 import com.bzyness.bzyness.models.CreateBzynessServerResponse;
 import com.bzyness.bzyness.models.ServerResponse;
-import com.bzyness.bzyness.services.LoginService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -63,7 +56,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static android.widget.Toast.LENGTH_LONG;
-import static com.bzyness.bzyness.BaseActivity.authenticatedBzynessClient;
 import static com.bzyness.bzyness.BaseActivity.bzynessClient;
 import static com.bzyness.bzyness.BaseActivity.getPath;
 
@@ -307,7 +299,7 @@ public class NewBusinessDetailsActivity extends AppCompatActivity {
 
         bzynessDetails=new BzynessDetails();
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.details_viewpager);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(new NewBDetailsAdapter(getSupportFragmentManager(), this,bzynessDetails));
 
