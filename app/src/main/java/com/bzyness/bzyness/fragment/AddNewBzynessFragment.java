@@ -4,13 +4,17 @@ import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +35,18 @@ import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.CustomWidgets.BAppEditTextBold;
 import com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal;
 import com.bzyness.bzyness.R;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -61,6 +77,9 @@ public class AddNewBzynessFragment extends Fragment {
     LinearLayout editProfilePic, editLogo;
 
     EditText businessName, aliasName;
+
+    MapView mapView;
+    GoogleMap googleMap;
 
 
 
@@ -618,28 +637,102 @@ public class AddNewBzynessFragment extends Fragment {
             }
         });
 
-        return view;
+
+
+
+        mapView = (MapView) view.findViewById(R.id.overall_map);
+        mapView.onCreate(savedInstanceState);
+
+       /* if (mapView != null) {
+            mapView.getMapAsync(new OnMapReadyCallback() {
+                @Override
+                public void onMapReady(GoogleMap map) {
+                    Log.i("MAP", "MAP");
+                    googleMap = map;
+                    googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                    googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style));
+                    MarkerOptions markerOptions = new MarkerOptions().position(new LatLng(0, 0));
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(-34, 151)));
+                    googleMap.getUiSettings().setAllGesturesEnabled(true);
+
+                    LatLng sydney = new LatLng(-34, 151);
+                    map.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+                    map.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+                    //googleMap.addMarker(markerOptions);
+                    // googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(0,0),14.0f));
+                    googleMap.addMarker(new MarkerOptions()
+                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_loc))
+                            .anchor(0.0f, 1.0f)
+                            .position(new LatLng(55.854049, 13.661331)));
+                    googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+                    if (!(ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+                        return;
+                    }
+                    googleMap.setMyLocationEnabled(true);
+                    googleMap.getUiSettings().setZoomControlsEnabled(true);
+                    MapsInitializer.initialize(getActivity());
+                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                    builder.include(new LatLng(55.854049, 13.661331));
+                    LatLngBounds bounds = builder.build();
+                    int padding = 0;
+                    // Updates the location and zoom of the MapView
+                    // CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+                    // googleMap.moveCamera(cameraUpdate);
+                }
+            });
+        }*/
+
+
+
+
+
+
+
+
+            return view;
     }
 
 
 
     @Override
     public void onAttach(Context context) {
-        super.onAttach(context);
+
        /* if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }*/
+
+       if(mapView!=null){
+           mapView.onResume();
+       }
+        super.onAttach(context);
     }
 
     @Override
     public void onDetach() {
+
+
+        if(mapView!=null){
+            mapView.onDestroy();
+        }
+
         super.onDetach();
         //mListener = null;
     }
 
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+
+        if(mapView!=null){
+            mapView.onLowMemory();
+        }
+
+    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

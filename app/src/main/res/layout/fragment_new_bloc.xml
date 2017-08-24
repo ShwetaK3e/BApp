@@ -29,42 +29,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone">
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:textColor="@color/white"
-            android:background="@color/textColorSecondary"
-            android:layout_margin="5dp"
-            android:id="@+id/save_loc"/>
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="0.5"
-            android:layout_height="wrap_content"
-            android:text="@string/edit"
-            android:textColor="@color/white"
-            android:background="@color/textColorSecondary"
-            android:layout_margin="5dp"
-            android:id="@+id/edit_loc"/>
-
-
-
-
-    </LinearLayout>
-
-
-
-
         <com.bzyness.bzyness.CustomWidgets.BAppTextViewBold
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -108,11 +72,21 @@
                 android:layout_marginTop="2dp"
                 android:id="@+id/map_layout">
 
-                <fragment
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/loc_map"
-                    android:name="com.google.android.gms.maps.SupportMapFragment"/>
+                    android:layout_height="match_parent">
+
+                    <com.google.android.gms.maps.MapView
+                        android:id="@+id/shop_loc"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:apiKey="@string/google_maps_key"
+                        />
+                </LinearLayout>
+
+
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -195,15 +169,7 @@
 
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=" If this is not your shop location, SKIP "
-                    android:gravity="center"
-                    android:textColor="@color/light_red"
-                    android:textStyle="bold"
-                    android:id="@+id/change_loc_guideline"
-                    android:padding="6dp"/>
+
 
 
 
@@ -519,6 +485,17 @@
 
 
     </LinearLayout>
+
+
+    <com.bzyness.bzyness.CustomWidgets.BAppTextViewItalic
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" If this is not your shop location, SKIP "
+        android:gravity="center"
+        android:textColor="@color/light_red"
+        android:id="@+id/change_loc_guideline"
+        android:layout_alignParentBottom="true"
+        android:padding="6dp"/>
 
 
 

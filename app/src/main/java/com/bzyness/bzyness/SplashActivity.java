@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.activity.AddProductActivity;
 import com.bzyness.bzyness.activity.HomeActivity;
+import com.bzyness.bzyness.activity.MainActivity;
 import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
 import com.bzyness.bzyness.activity.RegisterActivity;
 import com.bzyness.bzyness.adapters.ProductAlbumAdapter;
@@ -32,7 +33,7 @@ public class SplashActivity extends AppCompatActivity{
                 //Start your app main activity
                 Intent i;
                 if(BaseActivity.session.isLoggedIn()){
-                    i= new Intent(SplashActivity.this, NewBusinessDetailsActivity.class);
+                    i= new Intent(SplashActivity.this, MainActivity.class);
                 }else{
                     i= new Intent(SplashActivity.this, RegisterActivity.class);
                 }

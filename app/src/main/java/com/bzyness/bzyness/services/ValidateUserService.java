@@ -7,6 +7,7 @@ import android.support.annotation.IntDef;
 import android.util.Log;
 
 import com.bzyness.bzyness.BaseActivity;
+import com.bzyness.bzyness.activity.MainActivity;
 import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
 import com.bzyness.bzyness.models.LoginServerResponse;
 import com.bzyness.bzyness.models.ServerResponse;
@@ -52,7 +53,7 @@ public class ValidateUserService extends Service {
                             if(!userDetails.getError()) {
                                 BaseActivity.session.createSession(loginServerResponse.getAccessToken(),loginServerResponse.getExpiresIn());
                                 BaseActivity.session.saveUser(userDetails.getUser().getEmail(), userDetails.getUser().getFullName(), userDetails.getUser().getRole(), userDetails.getUser().getTypeOfUser(), userDetails.getUser().getMobile(), userDetails.getUser().getUserId());
-                                Intent i = new Intent(ValidateUserService.this, NewBusinessDetailsActivity.class);
+                                Intent i = new Intent(ValidateUserService.this, MainActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
                             }else{

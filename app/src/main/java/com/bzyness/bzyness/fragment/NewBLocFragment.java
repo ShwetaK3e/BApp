@@ -86,7 +86,7 @@ public class NewBLocFragment extends Fragment implements OnMapReadyCallback, Goo
         View view = inflater.inflate(R.layout.fragment_new_bloc, container, false);
 
 
-        mapScheme=(LinearLayout)view.findViewById(R.id.map_scheme);
+        /*mapScheme=(LinearLayout)view.findViewById(R.id.map_scheme);
 
         supportMapFragment = (SupportMapFragment)getChildFragmentManager().findFragmentById(R.id.loc_map);
         supportMapFragment.getMapAsync(this);
@@ -116,7 +116,7 @@ public class NewBLocFragment extends Fragment implements OnMapReadyCallback, Goo
             }
         });
 
-
+*/
         return view;
     }
 
@@ -136,8 +136,8 @@ public class NewBLocFragment extends Fragment implements OnMapReadyCallback, Goo
     public void onResume() {
         Log.i(TAG,"NewBLocFragment onResume");
         super.onResume();
-        if (supportMapFragment != null && REMOVED) {
-            getChildFragmentManager().beginTransaction().add(R.id.loc_map, supportMapFragment).commit();
+        /*if (supportMapFragment != null && REMOVED) {
+           // getChildFragmentManager().beginTransaction().add(R.id.loc_map, supportMapFragment).commit();
         }
 
         if (mGoogleApiClient == null) {
@@ -147,7 +147,7 @@ public class NewBLocFragment extends Fragment implements OnMapReadyCallback, Goo
                     .addApi(LocationServices.API)
                     .build();
             mGoogleApiClient.connect();
-        }
+        }*/
     }
 
 

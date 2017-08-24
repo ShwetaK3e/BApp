@@ -77,7 +77,7 @@ public class NewBOthrDetailsFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_new_bothrdet, container, false);
 
-        details1Layout = (LinearLayout) view.findViewById(R.id.detail_1_layout);
+        /*details1Layout = (LinearLayout) view.findViewById(R.id.detail_1_layout);
         details2Layout = (LinearLayout) view.findViewById(R.id.detail_2_layout);
         details2Layout.setVisibility(View.GONE);
         details1 = (EditText) view.findViewById(R.id.detail_1);
@@ -156,7 +156,8 @@ public class NewBOthrDetailsFragment extends Fragment {
                 iphoneAppSaved= true;
                 bzynessDetails.setIpa_link(details1.getText().toString().trim());
             }
-        });
+        });*/
+
 
         return view;
     }

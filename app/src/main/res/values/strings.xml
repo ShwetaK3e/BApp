@@ -80,9 +80,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="submit_location">Yes,This is my Location.</string>
     <string name="curr_position_marker_title">My Current Position</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyCyCKDT0LVg3kkQ6EXMZrD5tldKyvRhrdw
-    </string>
+    <string name="google_maps_key" translatable="false">AIzaSyAlhUzt0KDJ2-6ok7QjrUwynx4aFXjL2lk</string>
     <string name="title_activity_first">FirstActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
