@@ -1,14 +1,11 @@
 package com.bzyness.bzyness.adapters;
 
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bzyness.bzyness.R;

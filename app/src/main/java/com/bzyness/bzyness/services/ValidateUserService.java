@@ -3,14 +3,11 @@ package com.bzyness.bzyness.services;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-import android.support.annotation.IntDef;
 import android.util.Log;
 
 import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.activity.MainActivity;
-import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
 import com.bzyness.bzyness.models.LoginServerResponse;
-import com.bzyness.bzyness.models.ServerResponse;
 import com.bzyness.bzyness.models.UserDetails;
 
 import rx.Subscriber;

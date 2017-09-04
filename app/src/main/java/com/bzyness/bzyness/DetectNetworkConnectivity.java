@@ -1,18 +1,10 @@
 package com.bzyness.bzyness;
 
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * Created by Pervacio on 4/26/2017.

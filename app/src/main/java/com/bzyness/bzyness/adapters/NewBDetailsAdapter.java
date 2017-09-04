@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.bzyness.bzyness.fragment.NewBDetailsFragment;
 import com.bzyness.bzyness.fragment.NewBLocFragment;
 import com.bzyness.bzyness.fragment.NewBOthrDetailsFragment;
-import com.bzyness.bzyness.fragment.NewBPhotosFragment;
 import com.bzyness.bzyness.models.BzynessDetails;
 
 /**

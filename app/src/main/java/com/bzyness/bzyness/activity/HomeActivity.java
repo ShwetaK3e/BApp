@@ -1,19 +1,16 @@
 package com.bzyness.bzyness.activity;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.BusinessTypeHomeAdapter;
-import com.bzyness.bzyness.adapters.ChatUsersAdapter;
 import com.bzyness.bzyness.adapters.FeaturedBusinessHomeAdapter;
 
 import java.util.ArrayList;

@@ -29,7 +29,6 @@ import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.DetectNetworkConnectivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.models.LoginServerResponse;
-import com.bzyness.bzyness.services.LoginService;
 import com.bzyness.bzyness.services.ServiceGenerator;
 import com.bzyness.bzyness.services.ValidateUserService;
 

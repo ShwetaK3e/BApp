@@ -1,16 +1,9 @@
 package com.bzyness.bzyness.models;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.fasterxml.jackson.core.sym.Name;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Pervacio on 2/14/2017.

@@ -62,6 +62,225 @@
         android:layout_below="@id/separator_1">
 
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add_phone_no"
+                    android:background="@drawable/bg_circle_white"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bzyness Contact"
+                    android:textColorHint="@color/light_grey">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Bzyness Contact"
+                        android:gravity="center"
+                        android:id="@+id/add_bzyness_contact"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add_phone_no"
+                    android:background="@drawable/bg_circle_white"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bzyness Contact"
+                    android:textColorHint="@color/light_grey">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="www.bzyness.com"
+                        android:gravity="center"
+                        android:id="@+id/add_bzyness_website"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add_phone_no"
+                    android:background="@drawable/bg_circle_white"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bzyness Contact"
+                    android:textColorHint="@color/light_grey">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Bzyness iphone App"
+                        android:gravity="center"
+                        android:id="@+id/add_bzyness_iphone_link"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:weightSum="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_add_phone_no"
+                    android:background="@drawable/bg_circle_white"
+                    android:elevation="5dp"
+                    android:padding="5dp"
+                    android:layout_margin="5dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="wrap_content">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Bzyness Contact"
+                    android:textColorHint="@color/light_grey">
+
+                    <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Bzyness Android App"
+                        android:gravity="center"
+                        android:id="@+id/add_bzyness_android_link"
+                        />
+
+
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
 
 
 

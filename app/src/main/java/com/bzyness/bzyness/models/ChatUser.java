@@ -1,10 +1,5 @@
 package com.bzyness.bzyness.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
 /**
  * Created by Pervacio on 3/28/2017.
  */

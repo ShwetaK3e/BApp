@@ -3,18 +3,11 @@ package com.bzyness.bzyness.AppUtils;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
-import android.icu.util.Calendar;
 import android.util.Log;
 
-import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.activity.LoginActivity;
-import com.bzyness.bzyness.models.UserDetails;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.bzyness.bzyness.AppUtils.Constants.pref_Login_Date;
 import static com.bzyness.bzyness.AppUtils.Constants.pref_accessToken;

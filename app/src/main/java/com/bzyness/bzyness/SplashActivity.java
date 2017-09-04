@@ -1,17 +1,13 @@
 package com.bzyness.bzyness;
 
 import android.content.Intent;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
 import com.bzyness.bzyness.AppUtils.SessionManager;
-import com.bzyness.bzyness.activity.AddProductActivity;
-import com.bzyness.bzyness.activity.HomeActivity;
 import com.bzyness.bzyness.activity.MainActivity;
-import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
 import com.bzyness.bzyness.activity.RegisterActivity;
-import com.bzyness.bzyness.adapters.ProductAlbumAdapter;
 
 
 public class SplashActivity extends AppCompatActivity{

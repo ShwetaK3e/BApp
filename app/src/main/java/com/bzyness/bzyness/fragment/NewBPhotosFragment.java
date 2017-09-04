@@ -1,10 +1,8 @@
 package com.bzyness.bzyness.fragment;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,6 @@ import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.models.BzynessDetails;
 
 import java.io.File;
-import java.io.IOException;
 
 import static android.app.Activity.RESULT_OK;
 import static com.bzyness.bzyness.BaseActivity.getPath;

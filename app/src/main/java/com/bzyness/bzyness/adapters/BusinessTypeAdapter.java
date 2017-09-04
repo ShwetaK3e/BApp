@@ -1,8 +1,6 @@
 package com.bzyness.bzyness.adapters;
 
-import android.app.Activity;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,13 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.activity.NewBusinessDetailsActivity;
-import com.bzyness.bzyness.fragment.NewBDetailsFragment;
 
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +24,7 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
     private Map<String,String> names=new HashMap<>();
     private Map<String,String> imagesURI=new HashMap<>();
     private OnMyItemClickListener onMyItemClickListener;
+    private  Holder lastSelectedpostion=null;
 
     private static String TAG=BusinessTypeAdapter.class.getSimpleName();
     Context context;
@@ -45,6 +39,8 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
     }
 
 
+
+
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.i(TAG,"adapter onCreateViewHolder");
@@ -54,7 +50,7 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, final int position) {
+    public void onBindViewHolder(final Holder holder, final int position) {
         Log.i(TAG,"adapter onBindViewHolder");
         final String key= String.valueOf(position+1);
         holder.name.setText(names.get(key).toUpperCase());
@@ -63,6 +59,12 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
             @Override
             public void onClick(View v) {
                 onMyItemClickListener.onClick(key);
+                if(lastSelectedpostion!=null){
+                    lastSelectedpostion.itemView.setSelected(false);
+                }
+                holder.itemView.setSelected(true);
+
+                lastSelectedpostion=holder;
             }
         });
     }

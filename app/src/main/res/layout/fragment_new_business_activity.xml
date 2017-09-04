@@ -486,7 +486,7 @@
     <FrameLayout
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:layout_height="495dp"
+        android:layout_height="490dp"
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:id="@+id/all_details_forms"

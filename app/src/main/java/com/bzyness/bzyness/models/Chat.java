@@ -1,13 +1,7 @@
 package com.bzyness.bzyness.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
-
-import java.util.Date;
 
 /**
  * Created by Pervacio on 3/30/2017.

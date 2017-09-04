@@ -3,7 +3,6 @@ package com.bzyness.bzyness.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

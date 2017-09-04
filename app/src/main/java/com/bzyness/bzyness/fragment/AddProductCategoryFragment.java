@@ -1,8 +1,6 @@
 package com.bzyness.bzyness.fragment;
 
 import android.app.Dialog;
-import android.app.FragmentTransaction;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,7 +18,6 @@ import android.widget.Toast;
 
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.ProductCategoryAdapter;
-import com.bzyness.bzyness.models.BzynessDetails;
 import com.bzyness.bzyness.models.ProductCategory;
 
 import java.util.LinkedList;

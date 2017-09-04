@@ -76,12 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <com.google.android.gms.maps.MapView
-                        android:id="@+id/shop_loc"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:apiKey="@string/google_maps_key"
-                        />
+
                 </LinearLayout>
 
 
@@ -97,7 +92,7 @@
 
 
                     <LinearLayout
-                        android:id="@+id/add_loc_from_google"
+                        android:id="@+id/set_loc"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
                         android:orientation="horizontal"

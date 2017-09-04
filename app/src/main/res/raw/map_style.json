@@ -32,7 +32,7 @@
     ]
   },
   {
-    "featureType": "administrative.locality",
+    "featureType": "administrative.land_parcel",
     "elementType": "labels.text.fill",
     "stylers": [
       {
@@ -59,8 +59,8 @@
     ]
   },
   {
-    "featureType": "poi.business",
-    "elementType": "geometry.fill",
+    "featureType": "poi.park",
+    "elementType": "geometry",
     "stylers": [
       {
         "color": "#e5e5e5"
@@ -68,11 +68,11 @@
     ]
   },
   {
-    "featureType": "poi.business",
+    "featureType": "poi.park",
     "elementType": "labels.text.fill",
     "stylers": [
       {
-        "color": "#e5e5e5"
+        "color": "#9e9e9e"
       }
     ]
   },

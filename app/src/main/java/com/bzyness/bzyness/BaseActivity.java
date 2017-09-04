@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 
-
 import com.bzyness.bzyness.AppUtils.SessionManager;
 import com.bzyness.bzyness.models.ChatUser;
 import com.bzyness.bzyness.models.ServerResponse;

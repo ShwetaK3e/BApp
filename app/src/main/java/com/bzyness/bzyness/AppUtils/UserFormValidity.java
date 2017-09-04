@@ -1,14 +1,6 @@
 package com.bzyness.bzyness.AppUtils;
 
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.util.Log;
-import android.widget.EditText;
-
-import com.bzyness.bzyness.models.LocationDetails;
 
 import java.util.regex.Pattern;
 

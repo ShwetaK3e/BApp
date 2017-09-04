@@ -24,7 +24,8 @@
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             android:id="@+id/type_list"
             android:background="@color/white"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            >
 
         </android.support.v7.widget.RecyclerView>
 
