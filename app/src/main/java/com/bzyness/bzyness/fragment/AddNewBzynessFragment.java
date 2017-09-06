@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -85,7 +86,7 @@ import static com.bzyness.bzyness.BaseActivity.bzynessClient;
  * Use the {@link AddNewBzynessFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddNewBzynessFragment extends Fragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class AddNewBzynessFragment extends Fragment implements LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
 
     private static final String TAG = AddNewBzynessFragment.class.getSimpleName();
@@ -654,22 +655,34 @@ public class AddNewBzynessFragment extends Fragment implements GoogleApiClient.C
 
         mapView = view.findViewById(R.id.overall_map);
         mapView.onCreate(savedInstanceState);
+        mLocationRequest = LocationRequest.create();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        mGoogleApiClient = new GoogleApiClient.Builder(getContext())
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(AddNewBzynessFragment.this)
+                .addOnConnectionFailedListener(AddNewBzynessFragment.this)
+                .build();
 
         if (mapView != null) {
             mapView.getMapAsync(map -> {
-
                 Log.i("MAP", "MAP");
                 googleMap = map;
                 googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(), R.raw.map_style));
-                googleMap.getUiSettings().setAllGesturesEnabled(false);
-                mLocationRequest = LocationRequest.create();
-                mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                mGoogleApiClient = new GoogleApiClient.Builder(getContext())
-                        .addApi(LocationServices.API)
-                        .addConnectionCallbacks(AddNewBzynessFragment.this)
-                        .addOnConnectionFailedListener(AddNewBzynessFragment.this)
-                        .build();
+               // googleMap.getUiSettings().setAllGesturesEnabled(false);
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
+                }
+                googleMap.setMyLocationEnabled(true);
+
+
             });
 
         }
@@ -733,12 +746,6 @@ public class AddNewBzynessFragment extends Fragment implements GoogleApiClient.C
     @Override
     public void onAttach(Context context) {
 
-       /* if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
 
         super.onAttach(context);
     }
@@ -749,16 +756,8 @@ public class AddNewBzynessFragment extends Fragment implements GoogleApiClient.C
 
         if (mapView != null) {
             mapView.onResume();
-            if (mGoogleApiClient != null) {
-                mGoogleApiClient.connect();
-                googleMap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_loc))
-                            .anchor(0.0f, 1.0f)
-                            .position(new LatLng(current_location.getLatitude(),current_location.getLongitude())));
-                googleMap.getUiSettings().setMyLocationButtonEnabled(false);
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom( new LatLng(current_location.getLatitude(),current_location.getLongitude()), 10.0f));
+            mGoogleApiClient.connect();
 
-            }
         }
 
     }
@@ -787,6 +786,8 @@ public class AddNewBzynessFragment extends Fragment implements GoogleApiClient.C
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+
+        Log.i("MAP", "MAP1");
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -795,20 +796,46 @@ public class AddNewBzynessFragment extends Fragment implements GoogleApiClient.C
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-           // return;
+            return;
         }
         current_location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        Log.i("MAP","MAP1");
+        googleMap.addMarker(new MarkerOptions()
+                .anchor(0.0f, 1.0f)
+                .position(new LatLng(current_location.getLatitude(), current_location.getLongitude())));
+        googleMap.getUiSettings().setMyLocationButtonEnabled(false);
+        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(current_location.getLatitude(), current_location.getLongitude()), 10.0f));
+
 
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
+        Log.i("MAP","MAP3");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.i("MAP","MAP4");
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        Log.i("MAP","MAP2");
+        current_location=location;
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
 
     }
 
