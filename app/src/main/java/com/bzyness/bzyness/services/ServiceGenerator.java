@@ -5,6 +5,8 @@ import com.bzyness.bzyness.models.BzynessCategoryDetails;
 import com.bzyness.bzyness.models.BzynessTypeDetails;
 import com.bzyness.bzyness.models.CreateBzynessServerResponse;
 import com.bzyness.bzyness.models.LoginServerResponse;
+import com.bzyness.bzyness.models.ProductCatList;
+import com.bzyness.bzyness.models.ProductList;
 import com.bzyness.bzyness.models.RegistrationServerResponse;
 import com.bzyness.bzyness.models.UserDetails;
 
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -26,6 +29,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import rx.Observable;
@@ -113,6 +117,17 @@ public class ServiceGenerator {
         @Multipart
         Observable<CreateBzynessServerResponse> addBzynessTag(@Header("Authorization") String token, @PartMap Map<String, RequestBody> newTag);
 
+
+        @GET(Constants.GET_PRODUCT_CAT_LIST)
+        Observable<ProductCatList> getBzynessProductCat(@Path("bzynessId") Integer bzynessId);
+
+
+        @POST(Constants.ADD_PRODUCT_CAT)
+        @Multipart
+        Observable<Void> addBzynessProductCat(@Header("Authorization") String token, @Part("bzynessId") Integer bzynessId, @Part("categoryName") String  categoryName , @Part("description") String description, @Part MultipartBody.Part file);
+
+        @GET(Constants.GET_PRODUCT_LIST)
+        Observable<ProductList> getBzynessCatProduct(@Path("categoryId") Integer categoryId);
     }
 
 

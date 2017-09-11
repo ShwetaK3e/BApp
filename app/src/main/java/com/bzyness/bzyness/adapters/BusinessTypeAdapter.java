@@ -55,17 +55,13 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
         final String key= String.valueOf(position+1);
         holder.name.setText(names.get(key).toUpperCase());
         Glide.with(context).load(imagesURI.get(key)).into(holder.img);
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.itemView.setOnClickListener(view->{
                 onMyItemClickListener.onClick(key);
                 if(lastSelectedpostion!=null){
                     lastSelectedpostion.itemView.setSelected(false);
                 }
                 holder.itemView.setSelected(true);
-
                 lastSelectedpostion=holder;
-            }
         });
     }
 
@@ -81,8 +77,8 @@ public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapte
        ImageView img;
         public Holder(View itemView) {
             super(itemView);
-            name=(TextView)itemView.findViewById(R.id.name);
-            img=(ImageView)itemView.findViewById(R.id.image);
+            name=itemView.findViewById(R.id.name);
+            img=itemView.findViewById(R.id.image);
         }
     }
 

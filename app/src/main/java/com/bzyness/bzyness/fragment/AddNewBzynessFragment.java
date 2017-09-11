@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -44,20 +45,16 @@ import com.bzyness.bzyness.adapters.BusinessTypeAdapter;
 import com.bzyness.bzyness.models.BzynessCategoryDetails;
 import com.bzyness.bzyness.models.BzynessDetails;
 import com.bzyness.bzyness.models.BzynessTypeDetails;
+import com.bzyness.bzyness.models.ProductCatList;
+import com.bzyness.bzyness.models.ProductList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -126,8 +123,7 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
     BAppEditTextNormal contact, website, iphone_app, android_app;
 
     // Loc
-    LinearLayout snap_location;
-
+    Button snap_location;
 
     private List<String> done_lists = new ArrayList<>();
     private final String NONE = "NONE";
@@ -733,9 +729,10 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
 
         //loc
 
-        snap_location = view.findViewById(R.id.set_loc);
+        snap_location = view.findViewById(R.id.add_location);
         snap_location.setOnClickListener(click -> {
-            // displayLocation();
+            bzynessDetails.setLatitude(String.valueOf(current_location.getLatitude()));
+            bzynessDetails.setLongitude(String.valueOf(current_location.getLongitude()));
         });
 
 
@@ -1004,5 +1001,110 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
 
         }
     }
+
+
+    void populateProductCategory(int bzynessId) {
+        if(bzynessClient!=null){
+            bzynessClient.getBzynessProductCat(bzynessId).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ProductCatList>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ProductCatList productCatList) {
+
+                            if(!productCatList.getError()){
+                                final Map<String,String> mapID=new HashMap<String, String>();
+                                final Map<String, String> images=new HashMap<>();
+                                final Map<String, String> names=new HashMap<String, String>();
+                                int i = 1;
+
+                                names.put(String.valueOf(i),"");
+                                images.put(String.valueOf(i),"drawable://"+R.drawable.ic_plus);
+                                mapID.put(String.valueOf(i++), "");
+
+                                for (ProductCatList.BzynessCategory productCat : productCatList.getBzynessCategories()) {
+                                    names.put(String.valueOf(i), productCat.getCategoryName());
+                                    images.put(String.valueOf(i), productCat.getCategoryThumbnail());
+                                    mapID.put(String.valueOf(i++), String.valueOf(productCat.getId()));
+                                }
+                                typeAdapter = new BusinessTypeAdapter(getActivity(), names,images, new BusinessTypeAdapter.OnMyItemClickListener() {
+                                    @Override
+                                    public void onClick(String position) {
+
+
+                                        String CATEGORY_ID = mapID.get(position);
+                                        if(!CATEGORY_ID.isEmpty()) {
+                                            prdct_guideline.setText(names.get(position).toUpperCase());
+                                            populateCategoryProduct(Integer.parseInt(CATEGORY_ID));
+                                        }else{
+                                            
+                                        }
+
+                                    }
+                                });
+                                bzynessDetailsList.setAdapter(typeAdapter);
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    void populateCategoryProduct(int categoryId) {
+        if(bzynessClient!=null){
+            bzynessClient.getBzynessCatProduct(categoryId).subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<ProductList>() {
+                        @Override
+                        public void onCompleted() {
+
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+
+                        }
+
+                        @Override
+                        public void onNext(ProductList productList) {
+
+                            if(!productList.getError()){
+
+                                final Map<String,String> mapID=new HashMap<String, String>();
+                                final Map<String, String> images=new HashMap<>();
+                                final Map<String, String> names=new HashMap<String, String>();
+                                int i = 1;
+
+                                names.put(String.valueOf(i),"");
+                                images.put(String.valueOf(i),"drawable://"+R.drawable.ic_plus);
+                                mapID.put(String.valueOf(i++), "");
+                                for (ProductList.BzynessPhoto product : productList.getBzynessPhotos()) {
+                                    names.put(String.valueOf(i), product.getProductName());
+                                    images.put(String.valueOf(i), product.getImageUrl());
+                                    mapID.put(String.valueOf(i++), String.valueOf(product.getId()));
+                                }
+                                typeAdapter = new BusinessTypeAdapter(getActivity(), names,images, new BusinessTypeAdapter.OnMyItemClickListener() {
+                                    @Override
+                                    public void onClick(String position) {
+
+                                    }
+                                });
+                                bzynessDetailsList.setAdapter(typeAdapter);
+                            }
+                        }
+                    });
+        }
+
+    }
+
 
 }

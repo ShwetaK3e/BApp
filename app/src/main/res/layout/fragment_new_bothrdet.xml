@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="500dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:background="@color/white"
     android:elevation="5dp"
@@ -77,7 +78,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_add_phone_no"
+                    android:src="@drawable/ic_phone"
                     android:background="@drawable/bg_circle_white"
                     android:elevation="5dp"
                     android:padding="5dp"
@@ -99,7 +100,6 @@
                     <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Bzyness Contact"
                         android:gravity="center"
                         android:id="@+id/add_bzyness_contact"
                         />
@@ -130,7 +130,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_add_phone_no"
+                    android:src="@drawable/ic_web"
                     android:background="@drawable/bg_circle_white"
                     android:elevation="5dp"
                     android:padding="5dp"
@@ -146,13 +146,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bzyness Contact"
+                    android:hint="www.bzyness.com"
                     android:textColorHint="@color/light_grey">
 
                     <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="www.bzyness.com"
                         android:gravity="center"
                         android:id="@+id/add_bzyness_website"
                         />
@@ -183,7 +182,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_add_phone_no"
+                    android:src="@drawable/ic_android"
                     android:background="@drawable/bg_circle_white"
                     android:elevation="5dp"
                     android:padding="5dp"
@@ -199,13 +198,12 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bzyness Contact"
+                    android:hint="Android Play Store"
                     android:textColorHint="@color/light_grey">
 
                     <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Bzyness iphone App"
                         android:gravity="center"
                         android:id="@+id/add_bzyness_iphone_link"
                         />
@@ -237,7 +235,7 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@drawable/ic_add_phone_no"
+                    android:src="@drawable/ic_ios"
                     android:background="@drawable/bg_circle_white"
                     android:elevation="5dp"
                     android:padding="5dp"
@@ -253,13 +251,13 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bzyness Contact"
+                    android:hint="iOS App Store"
+                    app:hintAnimationEnabled="true"
                     android:textColorHint="@color/light_grey">
 
                     <com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Bzyness Android App"
                         android:gravity="center"
                         android:id="@+id/add_bzyness_android_link"
                         />

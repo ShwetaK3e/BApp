@@ -13,8 +13,9 @@ public class Constants {
     public static final String BZYNESS_CATEGORY_URL="chooseCategory/{type_id}";
     public static final String CREATE_BZYNESS_URL="startBzyness";
     public static final String ADD_BZYNESS_TAG_URL="addBzynessTag";
-
-
+    public static final String GET_PRODUCT_CAT_LIST="bzyness_categories/{bzynessId}";
+    public static final String GET_PRODUCT_LIST="categories_photos/{categoryId}";
+    public static final String ADD_PRODUCT_CAT="addBzynessCategory";
 
     //public static final String REGISTRATION_URL="http://api.bzyness.com/v1/createUser";
    // public static final String LOGIN_URL="http://api.bzyness.com/v1/userLogin";
