@@ -132,6 +132,9 @@
 
     <string name="action_settings">Settings</string>
     <string name="cancel">cancel</string>
+    <string name="add_bzyness_prdct">ADD YOUR BZYNESS PRODUCT</string>
+    <string name="no_bzyness_added">You don\'t have any Bzyness yet.</string>
+    <string name="add_new_bzyness">Add a New Bzyness</string>
 
 
 </resources>

@@ -38,7 +38,7 @@
         android:padding="10dp"
         android:id="@+id/content"
          android:layout_below="@id/cancel_layout">
-    <TextView
+    <com.bzyness.bzyness.CustomWidgets.BAppEditTextBold
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NEW PRODUCT CATEGORY"
@@ -47,6 +47,7 @@
         android:textSize="18sp"
         android:layout_marginTop="5dp"
         android:gravity="center"
+        android:id="@+id/dialog_header"
         />
 
     <View

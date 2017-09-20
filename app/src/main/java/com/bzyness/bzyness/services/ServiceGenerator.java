@@ -2,6 +2,7 @@ package com.bzyness.bzyness.services;
 
 import com.bzyness.bzyness.AppUtils.Constants;
 import com.bzyness.bzyness.models.BzynessCategoryDetails;
+import com.bzyness.bzyness.models.BzynessList;
 import com.bzyness.bzyness.models.BzynessTypeDetails;
 import com.bzyness.bzyness.models.CreateBzynessServerResponse;
 import com.bzyness.bzyness.models.LoginServerResponse;
@@ -126,8 +127,17 @@ public class ServiceGenerator {
         @Multipart
         Observable<Void> addBzynessProductCat(@Header("Authorization") String token, @Part("bzynessId") Integer bzynessId, @Part("categoryName") String  categoryName , @Part("description") String description, @Part MultipartBody.Part file);
 
+        @POST(Constants.ADD_PRODUCT)
+        @Multipart
+        Observable<Void> addBzynessProduct(@Header("Authorization") String token,@Part("productName") String productName, @Part("bzynessId") String bzynessId, @Part("categoryId") String categoryId, @Part("description") String description, @Part MultipartBody.Part file);
+
+
         @GET(Constants.GET_PRODUCT_LIST)
         Observable<ProductList> getBzynessCatProduct(@Path("categoryId") Integer categoryId);
+
+        @GET(Constants.GET_ALL_YOUR_BZYNESS)
+        Observable<BzynessList> getAllYourBzyness(@Header("Authorization") String token, @Path("userId") Integer userId );
+
     }
 
 

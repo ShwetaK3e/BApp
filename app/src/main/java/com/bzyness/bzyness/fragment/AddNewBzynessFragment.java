@@ -41,7 +41,7 @@ import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.CustomWidgets.BAppEditTextBold;
 import com.bzyness.bzyness.CustomWidgets.BAppEditTextNormal;
 import com.bzyness.bzyness.R;
-import com.bzyness.bzyness.adapters.BusinessTypeAdapter;
+import com.bzyness.bzyness.adapters.BzynessTypeAdapter;
 import com.bzyness.bzyness.models.BzynessCategoryDetails;
 import com.bzyness.bzyness.models.BzynessDetails;
 import com.bzyness.bzyness.models.BzynessTypeDetails;
@@ -115,7 +115,7 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
 
 
     // Type
-    BusinessTypeAdapter typeAdapter;
+    BzynessTypeAdapter typeAdapter;
     RecyclerView bzynessDetailsList;
     boolean type_selected = false;
 
@@ -897,7 +897,7 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
                                     typeImages.put(type.getId(), type.getName());
                                 }
 
-                                typeAdapter = new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
+                                typeAdapter = new BzynessTypeAdapter(getActivity(), names, typeImages, new BzynessTypeAdapter.OnMyItemClickListener() {
                                     @Override
                                     public void onClick(String type_id) {
                                         String type_name = names.get(type_id).toUpperCase();
@@ -947,7 +947,7 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
                                     images.put(String.valueOf(i), category.getName());
                                     mapID.put(String.valueOf(i++), category.getId());
                                 }
-                                typeAdapter = new BusinessTypeAdapter(getActivity(), names,images, new BusinessTypeAdapter.OnMyItemClickListener() {
+                                typeAdapter = new BzynessTypeAdapter(getActivity(), names,images, new BzynessTypeAdapter.OnMyItemClickListener() {
                                     @Override
                                     public void onClick(String position) {
 
@@ -1003,108 +1003,7 @@ public class AddNewBzynessFragment extends Fragment implements LocationListener,
     }
 
 
-    void populateProductCategory(int bzynessId) {
-        if(bzynessClient!=null){
-            bzynessClient.getBzynessProductCat(bzynessId).subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<ProductCatList>() {
-                        @Override
-                        public void onCompleted() {
 
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(ProductCatList productCatList) {
-
-                            if(!productCatList.getError()){
-                                final Map<String,String> mapID=new HashMap<String, String>();
-                                final Map<String, String> images=new HashMap<>();
-                                final Map<String, String> names=new HashMap<String, String>();
-                                int i = 1;
-
-                                names.put(String.valueOf(i),"");
-                                images.put(String.valueOf(i),"drawable://"+R.drawable.ic_plus);
-                                mapID.put(String.valueOf(i++), "");
-
-                                for (ProductCatList.BzynessCategory productCat : productCatList.getBzynessCategories()) {
-                                    names.put(String.valueOf(i), productCat.getCategoryName());
-                                    images.put(String.valueOf(i), productCat.getCategoryThumbnail());
-                                    mapID.put(String.valueOf(i++), String.valueOf(productCat.getId()));
-                                }
-                                typeAdapter = new BusinessTypeAdapter(getActivity(), names,images, new BusinessTypeAdapter.OnMyItemClickListener() {
-                                    @Override
-                                    public void onClick(String position) {
-
-
-                                        String CATEGORY_ID = mapID.get(position);
-                                        if(!CATEGORY_ID.isEmpty()) {
-                                            prdct_guideline.setText(names.get(position).toUpperCase());
-                                            populateCategoryProduct(Integer.parseInt(CATEGORY_ID));
-                                        }else{
-                                            
-                                        }
-
-                                    }
-                                });
-                                bzynessDetailsList.setAdapter(typeAdapter);
-                            }
-                        }
-                    });
-        }
-
-    }
-
-    void populateCategoryProduct(int categoryId) {
-        if(bzynessClient!=null){
-            bzynessClient.getBzynessCatProduct(categoryId).subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Subscriber<ProductList>() {
-                        @Override
-                        public void onCompleted() {
-
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onNext(ProductList productList) {
-
-                            if(!productList.getError()){
-
-                                final Map<String,String> mapID=new HashMap<String, String>();
-                                final Map<String, String> images=new HashMap<>();
-                                final Map<String, String> names=new HashMap<String, String>();
-                                int i = 1;
-
-                                names.put(String.valueOf(i),"");
-                                images.put(String.valueOf(i),"drawable://"+R.drawable.ic_plus);
-                                mapID.put(String.valueOf(i++), "");
-                                for (ProductList.BzynessPhoto product : productList.getBzynessPhotos()) {
-                                    names.put(String.valueOf(i), product.getProductName());
-                                    images.put(String.valueOf(i), product.getImageUrl());
-                                    mapID.put(String.valueOf(i++), String.valueOf(product.getId()));
-                                }
-                                typeAdapter = new BusinessTypeAdapter(getActivity(), names,images, new BusinessTypeAdapter.OnMyItemClickListener() {
-                                    @Override
-                                    public void onClick(String position) {
-
-                                    }
-                                });
-                                bzynessDetailsList.setAdapter(typeAdapter);
-                            }
-                        }
-                    });
-        }
-
-    }
 
 
 }

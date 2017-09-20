@@ -16,6 +16,10 @@ public class Constants {
     public static final String GET_PRODUCT_CAT_LIST="bzyness_categories/{bzynessId}";
     public static final String GET_PRODUCT_LIST="categories_photos/{categoryId}";
     public static final String ADD_PRODUCT_CAT="addBzynessCategory";
+    public static final String ADD_PRODUCT ="uploadBzynessPhotos" ;
+    public static final String GET_ALL_YOUR_BZYNESS="/bzynesses/{userId}";
+
+
 
     //public static final String REGISTRATION_URL="http://api.bzyness.com/v1/createUser";
    // public static final String LOGIN_URL="http://api.bzyness.com/v1/userLogin";
@@ -46,7 +50,9 @@ public class Constants {
     public static final int PICK_IMAGE3_REQUEST = 105;
     public static final int PICK_IMAGE4_REQUEST = 106;
     public static final int PICK_IMAGE5_REQUEST = 107;
-    public static final int PICK_PRODUCT_IMG_REQUEST = 108;
+    public static final int PICK_PRODUCT_CAT_IMG_REQUEST = 108;
+    public static final int PICK_PRODUCT_IMG_REQUEST = 109;
+
 
     //chat Urls
     public static final String CHAT_USERS_TABLE = "https://bzyness-84772.firebaseio.com/users";
@@ -69,6 +75,9 @@ public class Constants {
     public static final String pref_isFIRST_INSTALLED="IS_FIRSTINSTALLED";
     public static final String pref_Login_Date="LOGIN_DATE";
     public static final String pref_Business_Name="BUSINESSNAME";
+
+    public  static final String PREF_NAME="BZYNESS_PREF";
+    public  static final String BZYNESSID="BZYNESS_ID";
 
 
     // Network Connections

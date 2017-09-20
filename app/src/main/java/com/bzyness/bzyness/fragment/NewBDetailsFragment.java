@@ -17,7 +17,7 @@ import com.bzyness.bzyness.BaseActivity;
 import com.bzyness.bzyness.R;
 import com.bzyness.bzyness.adapters.BusinessCategoryAdapter;
 import com.bzyness.bzyness.adapters.BusinessSubCategoryAdapter;
-import com.bzyness.bzyness.adapters.BusinessTypeAdapter;
+import com.bzyness.bzyness.adapters.BzynessTypeAdapter;
 import com.bzyness.bzyness.models.BzynessCategoryDetails;
 import com.bzyness.bzyness.models.BzynessDetails;
 import com.bzyness.bzyness.models.BzynessTypeDetails;
@@ -45,7 +45,7 @@ public class NewBDetailsFragment extends Fragment {
 
     RecyclerView bzynessDetailsList;
     RecyclerView.LayoutManager layoutManager;
-    BusinessTypeAdapter typeAdapter;
+    BzynessTypeAdapter typeAdapter;
     BusinessCategoryAdapter categoryAdapter;
     BusinessSubCategoryAdapter subCategoryAdapter;
 
@@ -177,7 +177,7 @@ public class NewBDetailsFragment extends Fragment {
                                       typeImages.put(type.getId(), type.getName());
                                   }
 
-                                  typeAdapter = new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
+                                  typeAdapter = new BzynessTypeAdapter(getActivity(), names, typeImages, new BzynessTypeAdapter.OnMyItemClickListener() {
                                       @Override
                                       public void onClick(String type_id) {
                                           String type_name = names.get(type_id).toUpperCase();
@@ -353,7 +353,7 @@ public class NewBDetailsFragment extends Fragment {
                         names.put(type.getId(), type.getName());
                         typeImages.put(type.getId(), type.getName());
                     }
-                    typeAdapter = new BusinessTypeAdapter(getActivity(), names, typeImages, new BusinessTypeAdapter.OnMyItemClickListener() {
+                    typeAdapter = new BzynessTypeAdapter(getActivity(), names, typeImages, new BzynessTypeAdapter.OnMyItemClickListener() {
                         @Override
                         public void onClick(String type_id) {
                             String type_name = names.get(type_id).toUpperCase();

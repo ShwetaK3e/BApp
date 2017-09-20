@@ -19,18 +19,18 @@ import java.util.Map;
  * Created by Pervacio on 3/14/2017.
  */
 
-public class BusinessTypeAdapter extends RecyclerView.Adapter<BusinessTypeAdapter.Holder> {
+public class BzynessTypeAdapter extends RecyclerView.Adapter<BzynessTypeAdapter.Holder> {
 
     private Map<String,String> names=new HashMap<>();
     private Map<String,String> imagesURI=new HashMap<>();
     private OnMyItemClickListener onMyItemClickListener;
     private  Holder lastSelectedpostion=null;
 
-    private static String TAG=BusinessTypeAdapter.class.getSimpleName();
+    private static String TAG=BzynessTypeAdapter.class.getSimpleName();
     Context context;
 
 
-    public BusinessTypeAdapter(Context context, Map<String,String > names, Map<String, String> imagesURI, OnMyItemClickListener onMyItemClickListener) {
+    public BzynessTypeAdapter(Context context, Map<String,String > names, Map<String, String> imagesURI, OnMyItemClickListener onMyItemClickListener) {
         Log.i(TAG,"Adapter Constructor");
         this.context=context;
         this.names = names;
